@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +34,7 @@ public class NewAccountActivity extends Activity {
 		
 		accountName = (EditText) findViewById(R.id.new_account_name_edit_text);
 		accountBalance = (EditText) findViewById(R.id.new_account_balance_edit_text);
+		accountBalance.setFilters(new InputFilter[] {new DecimalInputFilter(2)} );
 		done = (Button) findViewById(R.id.new_account_done_button);
 		
 		done.setOnClickListener(new OnClickListener(){

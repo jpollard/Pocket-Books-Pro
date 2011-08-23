@@ -11,7 +11,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class AccountAdapter extends SimpleCursorAdapter{
-	private static String TAG = "AccounAdapter";
+	private static String TAG = "AccountAdapter";
 	
 	Context context;
 	int layout;

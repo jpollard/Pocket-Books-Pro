@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,7 @@ public class NewTransactionActivity extends Activity {
 		depositRadioButton = (RadioButton) findViewById(R.id.desposit_RadioButton);
 		withdrawlRadioButton = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
 		amountEditText = (EditText) findViewById(R.id.amount_EditText);
+		amountEditText.setFilters(new InputFilter[] {new DecimalInputFilter(2)});
 		dateEditText = (EditText) findViewById(R.id.date_EditText);
 		noteEditText = (EditText) findViewById(R.id.note_EditText);
 		//categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
