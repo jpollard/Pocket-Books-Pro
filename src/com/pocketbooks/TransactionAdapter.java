@@ -6,8 +6,6 @@ import java.util.Date;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class TransactionAdapter extends SimpleCursorAdapter{
-	private static String TAG = "TransactionAdapter";
+	//private static String TAG = "TransactionAdapter";
 	private int[] colors = new int[] {AccountData.YELLOW, AccountData.YELLOWGREEN};
 	Context context;
 	int layout;
@@ -96,7 +94,8 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Log.d(TAG, date.toLocaleString());
+	//	Log.d(TAG, date.toLocaleString());
+		
 		transactionDate.setText(new StringBuilder().append(cal.get(Calendar.MONTH) + 1).append("/").append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.YEAR)));
 		
 		

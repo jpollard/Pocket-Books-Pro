@@ -1,18 +1,14 @@
 package com.pocketbooks;
 
-import com.admob.android.ads.AdView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,9 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import com.pocketbooks.R;
 
 public class AccountsActivity extends Activity{
-	private static final String TAG = "ListActivity: ";
+	//private static final String TAG = "ListActivity: ";
 	AccountData accounts;
 	CursorAdapter cursorAdapter;
 	Cursor cursor;
@@ -32,11 +29,10 @@ public class AccountsActivity extends Activity{
 	LinearLayout mNewAccount;
 	LinearLayout header;
 	TextView headerId;
-	AdView adView;	
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Log.d(TAG, "Starting account");
+		//Log.d(TAG, "Starting account");
 		
 		// Setup UI
 		//requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -50,7 +46,6 @@ public class AccountsActivity extends Activity{
         headerId.setTextColor(Color.WHITE);
         headerId.setText("Pocket Books");
         list = (ListView) findViewById(R.id.accountNameListView);
-        adView = (AdView) findViewById(R.id.ad);
         
         final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
         final Intent transactionIntent = new Intent(this, TransactionsActivity.class);
@@ -79,7 +74,7 @@ public class AccountsActivity extends Activity{
         
         //Query current accountNames
         accounts = new AccountData(this);
-        Log.d(TAG, "Starting getTables.");
+        //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
         startManagingCursor(cursor);
         
@@ -97,8 +92,8 @@ public class AccountsActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "id is " + id + " position is " + position + " action is " + getIntent().getAction());
-				Log.d(TAG, "Hopefully _id ");
+				//Log.d(TAG, "id is " + id + " position is " + position + " action is " + getIntent().getAction());
+				//Log.d(TAG, "Hopefully _id ");
 				
 				cursor.moveToPosition(position);
 				
@@ -114,7 +109,6 @@ public class AccountsActivity extends Activity{
 	public void onResume(){
 		super.onResume();
 		cursor.requery();
-		adView.requestFreshAd();
 	}
 	
 	@Override
@@ -146,7 +140,7 @@ public class AccountsActivity extends Activity{
     	
     	switch(item.getItemId()){
     		case R.id.account_delete:
-    			Log.d(TAG, "Deleting account with id " + info.id);
+    			//Log.d(TAG, "Deleting account with id " + info.id);
     			accounts.deleteAccount(info.id);
     			cursor.deactivate();
     			cursor.requery();

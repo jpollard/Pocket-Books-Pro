@@ -10,7 +10,6 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -18,12 +17,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class NewTransactionActivity extends Activity {
 	private static final int DATE_DIALOG = 0;
-	private static String TAG = "NewTransactionActivity";
+	//private static String TAG = "NewTransactionActivity";
 	
 	EditText payeeEditText;
 	EditText amountEditText;
@@ -40,6 +40,7 @@ public class NewTransactionActivity extends Activity {
 	long id;
 	Intent transactionIntent;
 	TextView headerAccount;
+	private SimpleCursorAdapter adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -49,9 +50,11 @@ public class NewTransactionActivity extends Activity {
 		setContentView(R.layout.new_transaction_activity_layout);
 		
 		headerAccount = (TextView) findViewById(R.id.header_account);
-		headerAccount.setText("New Transaction");
+		headerAccount.setText(R.string.new_transaction);
 		transactionIntent = getIntent();
 		id = transactionIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
+		
+		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null, null, null);
 		
 		accounts = new AccountData(this);
 		payeeEditText = (EditText) findViewById(R.id.Payee_editText);
@@ -78,7 +81,7 @@ public class NewTransactionActivity extends Activity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "date focus" + hasFocus);
+				//Log.d(TAG, "date focus" + hasFocus);
 				
 				if(hasFocus){
 					showDialog(DATE_DIALOG);
@@ -93,7 +96,7 @@ public class NewTransactionActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "date clickity clack");
+				//Log.d(TAG, "date clickity clack");
 				showDialog(DATE_DIALOG);
 			}
 			
@@ -115,7 +118,7 @@ public class NewTransactionActivity extends Activity {
 					amountBD = amountBD.setScale(2, BigDecimal.ROUND_HALF_UP);
 					
 					if(withdrawlRadioButton.isChecked()){
-						Log.d(TAG, "NEGATE!!!!! Biatch!");
+						//Log.d(TAG, "NEGATE!!!!! Biatch!");
 						amountBD = amountBD.negate();
 					}
 				}

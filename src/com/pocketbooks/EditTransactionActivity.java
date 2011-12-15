@@ -10,7 +10,6 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -23,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class EditTransactionActivity extends Activity {
-	final static String TAG = EditTransactionActivity.class.getSimpleName();
+	//final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 	
 	AccountData transaction;
@@ -56,7 +55,7 @@ public class EditTransactionActivity extends Activity {
 		header.setBackgroundColor(AccountData.GREEN);
 		
 		headerAccount = (TextView) findViewById(R.id.header_account);
-		headerAccount.setText("Edit Transaction");
+		headerAccount.setText(R.string.edit_transaction);
 		
 		transaction = new AccountData(this);
 		editTransactionName = (EditText) findViewById(R.id.Payee_editText);
@@ -67,12 +66,12 @@ public class EditTransactionActivity extends Activity {
 		editDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
 		editWithdrawl = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
 		editTransactionDone = (Button) findViewById(R.id.new_transaction_activity_done_Button);
-		Log.d(TAG, "Yay, made it!");
+		//Log.d(TAG, "Yay, made it!");
 		transactionIntent = getIntent();
-		Log.d(TAG, "Got intent");
+		//Log.d(TAG, "Got intent");
 		
 		id = transactionIntent.getLongExtra(AccountData.TRANSACTION_ID, 0);
-		Log.d(TAG, "GOT ID " + id);
+		//Log.d(TAG, "GOT ID " + id);
 		
 		editTransactionInfo = transaction.getTransactionInfo(id);
 		editTransactionInfo.moveToFirst();
@@ -93,7 +92,7 @@ public class EditTransactionActivity extends Activity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "date focus" + hasFocus);
+				//Log.d(TAG, "date focus" + hasFocus);
 				
 				if(hasFocus){
 					showDialog(DATE_DIALOG);
@@ -108,7 +107,7 @@ public class EditTransactionActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "date clickity clack");
+				//Log.d(TAG, "date clickity clack");
 				showDialog(DATE_DIALOG);
 			}
 			
@@ -148,7 +147,7 @@ public class EditTransactionActivity extends Activity {
 				Calendar cal = Calendar.getInstance();
 				cal.set(year, month, day);
 				
-				Log.d(TAG, "Trying to update");
+				//Log.d(TAG, "Trying to update");
 				transaction.updateTransaction(id, editTransactionName.getText().toString(), newAmount, cal.getTimeInMillis(), editTransactionMemo.getText().toString());
 				finish();
 			}

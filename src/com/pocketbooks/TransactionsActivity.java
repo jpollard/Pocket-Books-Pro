@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-
-import com.admob.android.ads.AdManager;
-import com.admob.android.ads.AdView;
+import com.pocketbooks.R;
 
 public class TransactionsActivity extends Activity {
-	private static String TAG = "PocketBooks::Transactions Activity";
+	//private static String TAG = "PocketBooks::Transactions Activity";
 	
-	AdView adView;
 	ListView list;
 	AccountData transactions;
 	Cursor accountInfo;
@@ -57,8 +53,7 @@ public class TransactionsActivity extends Activity {
         startManagingCursor(accountInfo);
         
         //AdManager.setTestDevices( new String[] { "61288A13F61EE945752EE32D7DB60B3D" } );
-        adView = (AdView) findViewById(R.id.ad);
-        
+                
         mNewTransaction = (LinearLayout) findViewById(R.id.footer);
           
         mNewTransaction.setOnClickListener(new OnClickListener(){
@@ -73,19 +68,19 @@ public class TransactionsActivity extends Activity {
         
         list = (ListView) findViewById(R.id.transactionListView);
         
-        Log.d(TAG, "Getting transactions");
+        //Log.d(TAG, "Getting transactions");
         cursor = transactions.getTransactions(id);
         startManagingCursor(cursor);
         
         int[] to = {R.id.transaction_name, R.id.transaction_amount, R.id.transaction_date, R.id.transaction_category, R.id.transaction_memo};
         String[] from = {AccountData.TRANSACTION_NAME, AccountData.TRANSACTION_AMOUNT, AccountData.TRANSACTION_DATE, AccountData.TRANSACTION_CATEGORY, AccountData.TRANSACTION_MEMO};
         
-        Log.d(TAG, "Starting adapter");
+        //Log.d(TAG, "Starting adapter");
        // SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
        TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
 
 
-        Log.d(TAG, "Setting adapter");
+        //Log.d(TAG, "Setting adapter");
         
         list.setAdapter(adapter);
         registerForContextMenu(list);
@@ -96,24 +91,20 @@ public class TransactionsActivity extends Activity {
     public void onResume(){
     	//TODO SET Header method 
     	super.onResume();
-    	Log.d(TAG, "transactionActivity: onResume");
+    	//Log.d(TAG, "transactionActivity: onResume");
     	accountInfo.requery();
     	cursor.requery();
     	
     	accountInfo.moveToFirst();
-    	Log.d(TAG, "" + accountInfo.getColumnCount());
-    	updateBalance();
-    	
-    	adView.requestFreshAd();
-    	adView.bringToFront();
-    	    
+    	//Log.d(TAG, "" + accountInfo.getColumnCount());
+    	updateBalance();    	    
     }
     
     
     @Override
     public void onPause(){
     	super.onPause();
-    	Log.d(TAG, "transactionActivity: onPause");
+    	//Log.d(TAG, "transactionActivity: onPause");
     	accountInfo.deactivate();
     	cursor.deactivate();
     }
@@ -121,7 +112,7 @@ public class TransactionsActivity extends Activity {
     @Override
     public void onStop(){
     	super.onStop();
-    	Log.d(TAG, "transactionActivity: onStop");
+    	//Log.d(TAG, "transactionActivity: onStop");
     }
     
     @Override
@@ -162,9 +153,9 @@ public class TransactionsActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo ){
     	super.onCreateContextMenu(menu, v, menuInfo);
     	
-    	menu.setHeaderTitle("Transactions Options");
-    	menu.add(0, 0, 0, "Edit");
-    	menu.add(0, 1, 0, "Delete");
+    	menu.setHeaderTitle(R.string.options);
+    	menu.add(0, 0, 0, R.string.edit);
+    	menu.add(0, 1, 0, R.string.delete);
     }
     
     @Override
@@ -174,7 +165,7 @@ public class TransactionsActivity extends Activity {
     	switch(item.getItemId()){
     		case 0:
     			editTransactionIntent = new Intent(this, EditTransactionActivity.class);
-    			Log.d(TAG, "id of editTran " + info.id);
+    			//Log.d(TAG, "id of editTran " + info.id);
     			editTransactionIntent.putExtra(AccountData.TRANSACTION_ID, info.id);
     			startActivity(editTransactionIntent);
     			return true;
