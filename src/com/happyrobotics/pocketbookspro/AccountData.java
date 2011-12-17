@@ -1,4 +1,4 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

@@ -1,8 +1,10 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.happyrobotics.pocketbookspro.R;
 
 import android.content.Context;
 import android.database.Cursor;

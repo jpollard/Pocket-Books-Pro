@@ -1,4 +1,4 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import com.pocketbooks.R;
+import com.happyrobotics.pocketbookspro.R;
 
 public class AccountsActivity extends Activity{
 	//private static final String TAG = "ListActivity: ";

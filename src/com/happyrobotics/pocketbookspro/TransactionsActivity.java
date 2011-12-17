@@ -1,4 +1,4 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
 
@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import com.pocketbooks.R;
+import com.happyrobotics.pocketbookspro.R;
 
 public class TransactionsActivity extends Activity {
 	//private static String TAG = "PocketBooks::Transactions Activity";

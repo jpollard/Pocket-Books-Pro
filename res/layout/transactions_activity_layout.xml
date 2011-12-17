@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:myapp="http://schemas.android.com/apk/res/com.pocketbooks"
+	xmlns:myapp="http://schemas.android.com/apk/res/com.happyrobotics.pocketbookspro"
 	
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:background="#F5FFDA">
