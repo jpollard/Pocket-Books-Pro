@@ -3,35 +3,43 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import com.happyrobotics.pocketbookspro.R;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class NewTransactionActivity extends Activity {
 	private static final int DATE_DIALOG = 0;
 	//private static String TAG = "NewTransactionActivity";
+	
+	PocketBooksApplication pb;
 	
 	EditText payeeEditText;
 	EditText amountEditText;
 	EditText dateEditText;
 	EditText noteEditText;
 	Spinner	categorySpinner;
+	RadioGroup radioGroup;
 	RadioButton depositRadioButton;
 	RadioButton withdrawlRadioButton;
 	Button doneButton;
@@ -42,12 +50,18 @@ public class NewTransactionActivity extends Activity {
 	long id;
 	Intent transactionIntent;
 	TextView headerAccount;
-	private SimpleCursorAdapter adapter;
+	private SimpleCursorAdapter incomeAdapter;
+	Cursor cursor;
+	int catId;
+	
+	SharedPreferences prefs;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
+		pb = (PocketBooksApplication) this.getApplication();
+		prefs = pb.getPrefs();
 		
 		setContentView(R.layout.new_transaction_activity_layout);
 		
@@ -55,18 +69,56 @@ public class NewTransactionActivity extends Activity {
 		headerAccount.setText(R.string.new_transaction);
 		transactionIntent = getIntent();
 		id = transactionIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
-		
-		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null, null, null);
-		
 		accounts = new AccountData(this);
+		
+		cursor = accounts.getIncomeCategories();
+		startManagingCursor(cursor);
+		String[] from = {AccountData.INCOME_CATEGORIES};
+		int[] to = {R.id.category_name};
+		incomeAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, cursor, from, to);
+		
 		payeeEditText = (EditText) findViewById(R.id.Payee_editText);
+		radioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
 		depositRadioButton = (RadioButton) findViewById(R.id.desposit_RadioButton);
 		withdrawlRadioButton = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
 		amountEditText = (EditText) findViewById(R.id.amount_EditText);
 		amountEditText.setFilters(new InputFilter[] {new DecimalInputFilter(2)});
 		dateEditText = (EditText) findViewById(R.id.date_EditText);
 		noteEditText = (EditText) findViewById(R.id.note_EditText);
-		//categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
+		categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
+		catId = 0;
+		
+		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				// TODO Auto-generated method stub
+				if(checkedId == depositRadioButton.getId()){
+					categorySpinner.setAdapter(incomeAdapter);
+				}
+			}
+			
+		});
+
+		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int itemId, long arg3) {
+				catId = itemId + 1; //Add one since the spinner is zero indexed whereas sql is one indexed.
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		if(!prefs.getBoolean("category", false)){
+			((TableRow)categorySpinner.getParent()).setVisibility(View.GONE);
+		}
+		
 		doneButton = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 		
 		Calendar c = Calendar.getInstance();
@@ -97,8 +149,6 @@ public class NewTransactionActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//Log.d(TAG, "date clickity clack");
 				showDialog(DATE_DIALOG);
 			}
 			
@@ -108,7 +158,6 @@ public class NewTransactionActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				String payeeString = payeeEditText.getEditableText().toString();
 				
 				BigDecimal amountBD = new BigDecimal(0.00);
@@ -120,21 +169,16 @@ public class NewTransactionActivity extends Activity {
 					amountBD = amountBD.setScale(2, BigDecimal.ROUND_HALF_UP);
 					
 					if(withdrawlRadioButton.isChecked()){
-						//Log.d(TAG, "NEGATE!!!!! Biatch!");
 						amountBD = amountBD.negate();
 					}
 				}
-				
-				
-				//String dateString = dateEditText.getText().toString();
 				
 				Calendar cal = Calendar.getInstance();
 				cal.set(year, month, day);
 				
 				String memoString = noteEditText.getEditableText().toString();
 				
-				
-				accounts.addTransaction(id, payeeString, amountBD, cal.getTimeInMillis(), memoString);
+				accounts.addTransaction(id, payeeString, amountBD, cal.getTimeInMillis(), catId, memoString);
 				finish();
 			}
 		});
@@ -166,6 +210,28 @@ public class NewTransactionActivity extends Activity {
 	public void updateDate(){
 		
 		dateEditText.setText(new StringBuilder().append(month + 1).append("/").append(day).append("/").append(year));
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		cursor.close();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		cursor.deactivate();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		cursor.requery();
 	}
 	
 }

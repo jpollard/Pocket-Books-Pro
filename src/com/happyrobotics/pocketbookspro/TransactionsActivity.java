@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -16,10 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import com.happyrobotics.pocketbookspro.R;
 
 public class TransactionsActivity extends Activity {
 	//private static String TAG = "PocketBooks::Transactions Activity";
+	PocketBooksApplication pb;
 	
 	ListView list;
 	AccountData transactions;
@@ -27,11 +30,13 @@ public class TransactionsActivity extends Activity {
 	Cursor cursor;
 	Intent transactionIntent;
 	Intent editTransactionIntent;
+	Intent prefsIntent;
 	TextView mAccountName;
 	TextView mAccountBalance;
 	LinearLayout mNewTransaction;
 	LinearLayout mHeader;
 	long id;
+	SharedPreferences prefs;
 	
     /** Called when the activity is first created. */
     @Override
@@ -39,7 +44,9 @@ public class TransactionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
-        
+        prefsIntent = new Intent(this, Prefs.class);
+        pb = (PocketBooksApplication) this.getApplication();
+        prefs = pb.getPrefs();
         setContentView(R.layout.transactions_activity_layout);
         
         mHeader = (LinearLayout) findViewById(R.id.header);
@@ -77,7 +84,7 @@ public class TransactionsActivity extends Activity {
         
         //Log.d(TAG, "Starting adapter");
        // SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
-       TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
+       TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to, prefs.getBoolean("category", false));
 
 
         //Log.d(TAG, "Setting adapter");
@@ -87,7 +94,8 @@ public class TransactionsActivity extends Activity {
         
     }
     
-    @Override
+
+	@Override
     public void onResume(){
     	//TODO SET Header method 
     	super.onResume();
@@ -183,4 +191,24 @@ public class TransactionsActivity extends Activity {
     	}
     	return false;
     }
+    
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		//return super.onOptionsItemSelected(item);
+		switch(item.getItemId()){
+			case R.id.preferences:
+				startActivity(prefsIntent);
+		}
+		return false;
+	}
+
 }

@@ -2,10 +2,14 @@ package com.happyrobotics.pocketbookspro;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +22,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import com.happyrobotics.pocketbookspro.R;
 
 public class AccountsActivity extends Activity{
-	//private static final String TAG = "ListActivity: ";
+	private static final String TAG = "ListActivity: ";
+	PocketBooksApplication pb;
+	
 	AccountData accounts;
 	CursorAdapter cursorAdapter;
 	Cursor cursor;
@@ -29,9 +34,12 @@ public class AccountsActivity extends Activity{
 	LinearLayout mNewAccount;
 	LinearLayout header;
 	TextView headerId;
+	Intent prefIntent;
+	SharedPreferences prefs;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		pb = (PocketBooksApplication) getApplication();
 		//Log.d(TAG, "Starting account");
 		
 		// Setup UI
@@ -49,6 +57,7 @@ public class AccountsActivity extends Activity{
         
         final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
         final Intent transactionIntent = new Intent(this, TransactionsActivity.class);
+        prefIntent = new Intent(this, Prefs.class);
         
 //        View v = getLayoutInflater().inflate(R.layout.accounts_activity_header, null);
 //        v.setOnClickListener(new OnClickListener(){
@@ -72,6 +81,8 @@ public class AccountsActivity extends Activity{
         	
         }); 
         
+        PreferenceManager.setDefaultValues(this, R.xml.settings, true);
+       
         //Query current accountNames
         accounts = new AccountData(this);
         //Log.d(TAG, "Starting getTables.");
@@ -108,6 +119,11 @@ public class AccountsActivity extends Activity{
 	@Override
 	public void onResume(){
 		super.onResume();
+		prefs = pb.getPrefs();
+	        
+	        if(prefs.getBoolean("category", false)){
+	        	Log.d(TAG, "prefs retained------------------------------------------------------------------");
+	        }
 		cursor.requery();
 	}
 	
@@ -148,4 +164,23 @@ public class AccountsActivity extends Activity{
     	}
     	return false;
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	switch(item.getItemId()){
+    		case R.id.preferences:
+    			startActivity(prefIntent);
+    			
+    	}
+    	
+    	return false;
+    }
+  
 }

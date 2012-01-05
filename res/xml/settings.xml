@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+        <CheckBoxPreference android:summary="Enable the use of categories and budgets for advanced tracking." android:key="category" android:title="Categories and Budgets" android:enabled="true"/><CheckBoxPreference android:key="passwordSet" android:summary="Enable password protection for Pocket Books." android:enabled="true" android:selectable="true" android:title="Enable Password"/>
+        
+        <EditTextPreference android:title="Change Password" android:enabled="true" android:key="password" android:dependency="passwordSet"/>
+    </PreferenceCategory>
+
+    
+
+</PreferenceScreen>

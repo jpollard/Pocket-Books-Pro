@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.happyrobotics.pocketbookspro.R;
-
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class TransactionAdapter extends SimpleCursorAdapter{
-	//private static String TAG = "TransactionAdapter";
+	PocketBooksApplication pb;
+	
+	private static String TAG = "TransactionAdapter";
 	private int[] colors = new int[] {AccountData.YELLOW, AccountData.YELLOWGREEN};
 	Context context;
 	int layout;
@@ -27,9 +29,21 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 	private int transactionAmountIndex;
 	private int transactionDateIndex;
 	private int transactionMemoIndex;
+	private int transactionCategoryIndex;
+	boolean showCategory;
 
+	/**
+	 * Custom cursor adapter extending Simple Cursor Adapter. 
+	 * 
+	 * @param context
+	 * @param layout
+	 * @param c
+	 * @param from
+	 * @param to
+	 * @param showCategory - boolean to show categories in the cursor items.
+	 */
 	public TransactionAdapter(Context context, int layout, Cursor c,
-			String[] from, int[] to) {
+			String[] from, int[] to, boolean showCategory) {
 		super(context, layout, c, from, to);
 		// TODO Auto-generated constructor stub
 		this.context = context;
@@ -37,13 +51,14 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 		this.c = c;
 		this.from = from;
 		this.to = to;
+		this.showCategory = showCategory;
 		inflater = LayoutInflater.from(context);
-		
+	
 		transactionNameIndex = c.getColumnIndex(AccountData.TRANSACTION_NAME);
 		transactionDateIndex = c.getColumnIndex(AccountData.TRANSACTION_DATE);
 		transactionAmountIndex = c.getColumnIndex(AccountData.TRANSACTION_AMOUNT);
 		transactionMemoIndex = c.getColumnIndex(AccountData.TRANSACTION_MEMO);
-		
+		transactionCategoryIndex = c.getColumnIndex(AccountData.TRANSACTION_CATEGORY);
 	}
 
 	@Override
@@ -67,19 +82,20 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 	@Override 
 	public void bindView(View view, Context context, Cursor cursor){
 		super.bindView(view, context, cursor);
-		
-		
 		TextView transactionName = (TextView) view.findViewById(R.id.transaction_name);
 		TextView transactionAmount = (TextView) view.findViewById(R.id.transaction_amount);
 		TextView transactionDate = (TextView) view.findViewById(R.id.transaction_date);
 		TextView transactionMemo = (TextView) view.findViewById(R.id.transaction_memo);
+		TextView transactionCategory = (TextView) view.findViewById(R.id.transaction_category);
 		
 		transactionName.setText(cursor.getString(transactionNameIndex));
 		transactionMemo.setText(cursor.getString(transactionMemoIndex));
+		transactionCategory.setText("");
+		if(showCategory){
+			transactionCategory.setText(cursor.getString(transactionCategoryIndex));
+		}
 		
 		//TODO Setup BigDecimal - CurrencyFormat
-		
-		
 		BigDecimal amount = new BigDecimal(cursor.getString(transactionAmountIndex));
 		amount = amount.movePointLeft(2);
 		transactionAmount.setTextColor(AccountData.GREEN);
