@@ -9,7 +9,7 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/headerBackground" >
+        android:theme="@style/headerBackground" android:name=".PocketBooksApplication" android:debuggable="true">
         <activity
             android:label="@string/app_name"
             android:name="com.happyrobotics.pocketbookspro.AccountsActivity" >
@@ -29,6 +29,7 @@
         </activity>
         <activity android:name="com.happyrobotics.pocketbookspro.EditTransactionActivity" >
         </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.Prefs"></activity>
     </application>
 
 </manifest>
