@@ -1,8 +1,39 @@
 <income>
-	<item>Uncategorized</item>
-	<item>Bonus</item>
-	<item>Gifts Received</item>
-	<item>Salary</item>
-	<item>Other Income</item>
-	<item>Interest Income</item>
+	<item>Uncategorized<type>I</type></item>
+	<item>Bonus<type>I</type></item>
+	<item>Gifts Received<type>I</type></item>
+	<item>Salary<type>I</type></item>
+	<item>Other Income<type>I</type></item>
+	<item>Interest Income<type>I</type></item>
+	<item>Auto Fees<type>E</type></item>
+	<item>Auto Gas<type>E</type></item>
+	<item>Auto Parking<type>E</type></item>
+	<item>Auto Repairs<type>E</type></item>
+	<item>Books<type>E</type></item>
+	<item>Cable/Satelite<type>E</type></item>
+	<item>Charity<type>E</type></item>
+	<item>Clothes<type>E</type></item>
+	<item>Computer<type>E</type></item>
+	<item>Dining<type>E</type></item>
+	<item>Education<type>E</type></item>
+	<item>Movies<type>E</type></item>
+	<item>Music<type>E</type></item>
+	<item>Recreation<type>E</type></item>
+	<item>Travel<type>E</type></item>
+	<item>Gifts<type>E</type></item>
+	<item>Groceries<type>E</type></item>
+	<item>Hobbies<type>E</type></item>
+	<item>Auto Insurance<type>E</type></item>
+	<item>Health Insurance<type>E</type></item>
+	<item>Life Insurance<type>E</type></item>
+	<item>Laundry<type>E</type></item>
+	<item>Medical<type>E</type></item>
+	<item>Online Services<type>E</type></item>
+	<item>Phone<type>E</type></item>
+	<item>Public Transportation<type>E</type></item>
+	<item>Subscriptions<type>E</type></item>
+	<item>Supplies<type>E</type></item>
+	<item>Utilities<type>E</type></item>
+	<item>Rent<type>E</type></item>
 </income>
+	

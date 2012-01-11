@@ -51,8 +51,10 @@ public class NewTransactionActivity extends Activity {
 	Intent transactionIntent;
 	TextView headerAccount;
 	private SimpleCursorAdapter incomeAdapter;
-	Cursor cursor;
-	int catId;
+	SimpleCursorAdapter expenseAdapter;
+	Cursor incomeCursor;
+	Cursor expenseCursor;
+	long catId;
 	
 	SharedPreferences prefs;
 	
@@ -71,11 +73,18 @@ public class NewTransactionActivity extends Activity {
 		id = transactionIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
 		accounts = new AccountData(this);
 		
-		cursor = accounts.getIncomeCategories();
-		startManagingCursor(cursor);
-		String[] from = {AccountData.INCOME_CATEGORIES};
+		incomeCursor = accounts.getCategories("I");
+		incomeCursor.moveToFirst();
+		expenseCursor = accounts.getCategories("E");
+		expenseCursor.moveToFirst();
+		
+		startManagingCursor(incomeCursor);
+		startManagingCursor(expenseCursor);
+		
+		String[] from = {AccountData.TRANSACTION_CATEGORY};
 		int[] to = {R.id.category_name};
-		incomeAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, cursor, from, to);
+		incomeAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, incomeCursor, from, to);
+		expenseAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, expenseCursor, from, to);
 		
 		payeeEditText = (EditText) findViewById(R.id.Payee_editText);
 		radioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
@@ -85,7 +94,9 @@ public class NewTransactionActivity extends Activity {
 		amountEditText.setFilters(new InputFilter[] {new DecimalInputFilter(2)});
 		dateEditText = (EditText) findViewById(R.id.date_EditText);
 		noteEditText = (EditText) findViewById(R.id.note_EditText);
+		
 		categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
+		categorySpinner.setAdapter(expenseAdapter);
 		catId = 0;
 		
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
@@ -96,6 +107,9 @@ public class NewTransactionActivity extends Activity {
 				if(checkedId == depositRadioButton.getId()){
 					categorySpinner.setAdapter(incomeAdapter);
 				}
+				if(checkedId == withdrawlRadioButton.getId()){
+					categorySpinner.setAdapter(expenseAdapter);
+				}
 			}
 			
 		});
@@ -103,8 +117,9 @@ public class NewTransactionActivity extends Activity {
 		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int itemId, long arg3) {
-				catId = itemId + 1; //Add one since the spinner is zero indexed whereas sql is one indexed.
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int itemSelected, long arg3) {
+				catId = arg0.getItemIdAtPosition(itemSelected);
+				//catId = itemId + 1; //Add one since the spinner is zero indexed whereas sql is one indexed.
 			}
 
 			@Override
@@ -211,27 +226,37 @@ public class NewTransactionActivity extends Activity {
 		
 		dateEditText.setText(new StringBuilder().append(month + 1).append("/").append(day).append("/").append(year));
 	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		incomeCursor.close();
+		expenseCursor.close();
+	}
 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		
-		cursor.close();
+		incomeCursor.close();
+		expenseCursor.close();
 	}
 
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		cursor.deactivate();
+		incomeCursor.deactivate();
+		expenseCursor.deactivate();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		cursor.requery();
+		incomeCursor.requery();
+		incomeCursor.requery();
 	}
 	
 }
