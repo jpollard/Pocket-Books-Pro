@@ -227,18 +227,19 @@ public class NewTransactionActivity extends Activity {
 		dateEditText.setText(new StringBuilder().append(month + 1).append("/").append(day).append("/").append(year));
 	}
 	
-	@Override
-	public void onStop(){
-		super.onStop();
-		incomeCursor.close();
-		expenseCursor.close();
-	}
+//	@Override
+//	public void onStop(){
+//		super.onStop();
+//		incomeCursor.close();
+//		expenseCursor.close();
+//	}
 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		
+		//accounts.close();
 		incomeCursor.close();
 		expenseCursor.close();
 	}

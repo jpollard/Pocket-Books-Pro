@@ -22,4 +22,8 @@
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="options">Options</string>
+    <string name="categories">Categories</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="category_name">Category Name</string>
 </resources>

@@ -35,6 +35,7 @@ public class AccountsActivity extends Activity{
 	LinearLayout header;
 	TextView headerId;
 	Intent prefIntent;
+	Intent categoriesEditIntent;
 	SharedPreferences prefs;
 	
 	public void onCreate(Bundle savedInstanceState){
@@ -57,6 +58,7 @@ public class AccountsActivity extends Activity{
         
         final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
         final Intent transactionIntent = new Intent(this, TransactionsActivity.class);
+        categoriesEditIntent = new Intent(this, CategoriesEditActivity.class);
         prefIntent = new Intent(this, Prefs.class);
         
 //        View v = getLayoutInflater().inflate(R.layout.accounts_activity_header, null);
@@ -169,6 +171,17 @@ public class AccountsActivity extends Activity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
+
+        if(prefs.getBoolean("category", false)){
+        	menu.findItem(R.id.categories).setEnabled(true);
+        	menu.findItem(R.id.categories).setVisible(true);
+        }
+        
+        
+//        if(prefs.getBoolean("category", false)){
+//        	inflater.inflate(R.menu.settings_category_menu, menu);
+//        }
+//        
         return true;
     }
     
@@ -177,7 +190,10 @@ public class AccountsActivity extends Activity{
     	switch(item.getItemId()){
     		case R.id.preferences:
     			startActivity(prefIntent);
-    			
+    			return true;
+    		case R.id.categories:
+    			startActivity(categoriesEditIntent);
+    			return true;    			
     	}
     	
     	return false;

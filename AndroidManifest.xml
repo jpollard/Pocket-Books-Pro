@@ -23,6 +23,7 @@
         </activity>
         <activity android:name="com.happyrobotics.pocketbookspro.TransactionsActivity" >
         </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.CategoriesEditActivity" ></activity>
         <activity
             android:name="com.happyrobotics.pocketbookspro.NewTransactionActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" >
@@ -30,6 +31,7 @@
         <activity android:name="com.happyrobotics.pocketbookspro.EditTransactionActivity" >
         </activity>
         <activity android:name="com.happyrobotics.pocketbookspro.Prefs"></activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.NewCategory"></activity>
     </application>
 
 </manifest>

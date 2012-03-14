@@ -3,30 +3,36 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import com.happyrobotics.pocketbookspro.R;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class EditTransactionActivity extends Activity {
 	//final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 	
+	PocketBooksApplication pb;
 	AccountData transaction;
 	EditText editTransactionName;
 	EditText editTransactionAmount;
@@ -36,21 +42,28 @@ public class EditTransactionActivity extends Activity {
 	Button editTransactionDone;
 	Cursor editTransactionInfo;
 	Intent transactionIntent;
+	RadioGroup editRadioGroup;
 	RadioButton editDeposit;
 	RadioButton editWithdrawl;
 	LinearLayout header;
 	TextView headerAccount;
+	long catId;
 	long id;
 	int year;
 	int month;
 	int day;
-	
+	Cursor incomeCursor;
+	Cursor expenseCursor;
+	SimpleCursorAdapter incomeAdapter;
+	SimpleCursorAdapter expenseAdapter;
+	SharedPreferences prefs;
+	boolean catEnabled;
 	
 	@Override
 	public void onCreate(Bundle SavedInstance){
 		super.onCreate(SavedInstance);
 		
-
+		int positionId = 0;
 		setContentView(R.layout.new_transaction_activity_layout);
 		
 		header = (LinearLayout) findViewById(R.id.header);
@@ -60,24 +73,94 @@ public class EditTransactionActivity extends Activity {
 		headerAccount.setText(R.string.edit_transaction);
 		
 		transaction = new AccountData(this);
+		pb = (PocketBooksApplication) this.getApplication();
+		
+		prefs = pb.getPrefs();
+		catEnabled = prefs.getBoolean("category", false);
+		
 		editTransactionName = (EditText) findViewById(R.id.Payee_editText);
 		editTransactionAmount = (EditText) findViewById(R.id.amount_EditText);
 		editTransactionDate = (EditText) findViewById(R.id.date_EditText);
-		//editTransactionCategory = (Spinner) findViewById(R.id.category_Spinner);
+		editTransactionCategory = (Spinner) findViewById(R.id.category_Spinner);
+		((TableRow)editTransactionCategory.getParent()).setVisibility(View.GONE);
 		editTransactionMemo = (EditText) findViewById(R.id.note_EditText);
+		editRadioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
 		editDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
 		editWithdrawl = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
 		editTransactionDone = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 		//Log.d(TAG, "Yay, made it!");
-		transactionIntent = getIntent();
-		//Log.d(TAG, "Got intent");
 		
+		transactionIntent = getIntent();
 		id = transactionIntent.getLongExtra(AccountData.TRANSACTION_ID, 0);
-		//Log.d(TAG, "GOT ID " + id);
 		
 		editTransactionInfo = transaction.getTransactionInfo(id);
 		editTransactionInfo.moveToFirst();
 		startManagingCursor(editTransactionInfo);
+		
+		catId = editTransactionInfo.getLong(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_CATEGORY));
+		
+		editDeposit.setChecked(true);
+		
+		
+		if(catEnabled){
+			((TableRow)editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
+			editTransactionCategory.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long id) {
+					// TODO Auto-generated method stub
+					catId = id;
+					
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					catId = 0;
+				}
+				
+			});
+			
+			incomeCursor = transaction.getCategories("I");
+			startManagingCursor(incomeCursor);
+			expenseCursor = transaction.getCategories("E");
+			startManagingCursor(expenseCursor);
+		
+			String[] from = {AccountData.TRANSACTION_CATEGORY};
+			int[] to = {R.id.category_name};
+		
+			incomeAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, incomeCursor, from, to);
+			expenseAdapter = new SimpleCursorAdapter(this, R.layout.category_listview_row, expenseCursor, from, to);
+			
+		
+			editTransactionCategory.setAdapter(incomeAdapter);
+			int incomeCount = incomeAdapter.getCount();
+			for(int i = 0; i < incomeCount; i++){
+				if(catId == incomeAdapter.getItemId(i)){
+					positionId = i;
+				}
+			}
+			editTransactionCategory.setSelection(positionId);
+		}
+		
+		editRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if(checkedId == editDeposit.getId() && catEnabled){
+					editTransactionCategory.setAdapter(incomeAdapter);
+				}
+				if(checkedId == editWithdrawl.getId() && catEnabled){
+					editTransactionCategory.setAdapter(expenseAdapter);
+				}
+				
+			}
+			
+		});
+		//Log.d(TAG, "GOT ID " + id);
+		
+		
 		
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(editTransactionInfo.getLong(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_DATE)));
@@ -115,22 +198,36 @@ public class EditTransactionActivity extends Activity {
 			
 		});
 		
-		editDeposit.setChecked(true);
+		
+		
 		BigDecimal amount = new BigDecimal(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_AMOUNT)));
 		amount = amount.movePointLeft(2);
 		
+		
 		if(amount.signum() < 0){
+			
 			editWithdrawl.setChecked(true);
 			amount = amount.abs();
+			
+			if(catEnabled){
+				expenseCursor.moveToFirst();
+				editTransactionCategory.setAdapter(expenseAdapter);
+				int expenseCount = expenseAdapter.getCount();
+				for(int i = 0; i < expenseCount; i++){
+					if(catId == expenseAdapter.getItemId(i)){
+						positionId = i;
+					}
+				}
+				editTransactionCategory.setSelection(positionId);
+			}
 		}
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(editTransactionInfo.getLong(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_DATE)));
 		
 		editTransactionName.setText(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_NAME)));
 		editTransactionAmount.setText(amount.toString());
-		//editTransactionAmount.setText(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_AMOUNT)));
 		editTransactionDate.setText(new StringBuilder().append(cal.get(Calendar.MONTH)).append("/").append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.YEAR)));
-		//editTransactionCategory.setText(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_CATEGORY)));
 		editTransactionMemo.setText(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_MEMO)));
 		
 		editTransactionDone.setOnClickListener(new OnClickListener(){
@@ -150,7 +247,7 @@ public class EditTransactionActivity extends Activity {
 				cal.set(year, month, day);
 				
 				//Log.d(TAG, "Trying to update");
-				transaction.updateTransaction(id, editTransactionName.getText().toString(), newAmount, cal.getTimeInMillis(), editTransactionMemo.getText().toString());
+				transaction.updateTransaction(id, editTransactionName.getText().toString(), newAmount, cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
 				finish();
 			}
 			
@@ -174,6 +271,43 @@ public class EditTransactionActivity extends Activity {
 	        	}, year, month, day);
 	    }
 	    return null;
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		editTransactionInfo.deactivate();
+		prefs = pb.getPrefs();
+		if(prefs.getBoolean("category", false)){
+			incomeCursor.deactivate();
+			expenseCursor.deactivate();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		editTransactionInfo.requery();
+		prefs = pb.getPrefs();
+		if(prefs.getBoolean("category", false)){
+			incomeCursor.requery();
+			expenseCursor.requery();
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		editTransactionInfo.close();
+		prefs = pb.getPrefs();
+		if(prefs.getBoolean("category", false)){
+			incomeCursor.close();
+			expenseCursor.close();
+			
+		}
 	}
 
 	/**

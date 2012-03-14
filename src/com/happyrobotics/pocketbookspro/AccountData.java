@@ -84,7 +84,7 @@ public class AccountData {
 	 * into the ACCOUNTS_TABLE.ACCOUNT_NAME column and "100.00" into
 	 * ACCOUNTS_TABLE.ACCOUNT_BALANCE.
 	 * 
-	 * @param nam, balance
+	 * @param name, balance
 	 */
 	public void createAccount(String name, BigDecimal balance) {
 		ContentValues values = new ContentValues();
@@ -248,13 +248,19 @@ public class AccountData {
 		return cursor;
 	}
 
+	/***
+	 * Returns a cursor populated with a list of categories that are a part of category type, income or expenses.
+	 *
+	 * @param categoryType
+	 * @return
+	 */
 	public Cursor getCategories(String categoryType) {
 		// Log.d(TAG, "Trying to get transactions");
 		Cursor cursor;
 		String[] columnsToQuery = {ACCOUNT_ID, TRANSACTION_CATEGORY, CATEGORY_TYPE};
 
 		// Log.d(TAG, "Trying to open DB");
-		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		db = dbHelper.getReadableDatabase();
 		// Log.d(TAG, "Opened DB");
 
 		// Log.d(TAG, "Querying DB");
@@ -266,6 +272,18 @@ public class AccountData {
 
 		return cursor;
 	}
+	
+	public void addCategory(String categoryName, char categoryType){
+		db = dbHelper.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(TRANSACTION_CATEGORY, categoryName);
+		values.put(CATEGORY_TYPE, Character.toString(categoryType));
+		
+		db.insert(CATEGORY_TABLE, null, values);
+		db.close();
+	}
+	//TODO deleteCategory(
 
 	/**
 	 * <b>public void addTransaction(long id, String payee, BigDecimal amount,
@@ -331,7 +349,7 @@ public class AccountData {
 	 * 
 	 */
 	public void updateTransaction(long id, String payee, BigDecimal amount,
-			long date, String memo) {
+			long date, long catId, String memo) {
 		// Log.d(TAG, "Updating Transaction");
 
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -343,6 +361,7 @@ public class AccountData {
 		values.put(AccountData.TRANSACTION_NAME, payee);
 		values.put(AccountData.TRANSACTION_AMOUNT, amount.toPlainString());
 		values.put(AccountData.TRANSACTION_DATE, date);
+		values.put(AccountData.TRANSACTION_CATEGORY, catId);
 		values.put(AccountData.TRANSACTION_MEMO, memo);
 
 		db.update(DBHelper.TRANSACTIONS_TABLE, values, "_id = " + id, null);
