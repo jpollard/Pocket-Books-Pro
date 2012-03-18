@@ -273,6 +273,14 @@ public class AccountData {
 		return cursor;
 	}
 	
+	/***
+	 * <b> public void addCategory(String categoryName, char categoryType) </b>
+	 * 
+	 * Adds a category of categoryType (I = income, E = expense) with categoryName as its identifier.
+	 * 
+	 * @param categoryName
+	 * @param categoryType
+	 */
 	public void addCategory(String categoryName, char categoryType){
 		db = dbHelper.getWritableDatabase();
 		
@@ -284,6 +292,12 @@ public class AccountData {
 		db.close();
 	}
 	//TODO deleteCategory(
+	public void deleteCategory(long id){
+		db = dbHelper.getWritableDatabase();
+		
+		db.delete(CATEGORY_TABLE, "_id = " + id, null);
+		
+	}
 
 	/**
 	 * <b>public void addTransaction(long id, String payee, BigDecimal amount,

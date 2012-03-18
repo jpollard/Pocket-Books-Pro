@@ -1,6 +1,7 @@
 package com.happyrobotics.pocketbookspro;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,8 @@ public class NewCategory extends Activity{
 		
 		setContentView(R.layout.new_category_activity_layout);
 		
+		Intent myIntent = getIntent();
+		//TODO get intent extras and change buttons for update.
 		
 		data = new AccountData(this);
 		editTextCategoryName = (EditText) findViewById(R.id.editTextCategoryName);
