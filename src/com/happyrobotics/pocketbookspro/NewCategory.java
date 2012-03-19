@@ -84,10 +84,10 @@ public class NewCategory extends Activity{
 			editTextCategoryName.setText(categoryName);
 			if(categoryTypeString.contentEquals("I")){
 				buttonDone.setEnabled(true);
-				radioButtonIncome.setChecked(true);
+				radioGroupExpenseOrIncome.check(R.id.radioButtonIncome);
 			}else if(categoryTypeString.contentEquals("E")){
 				buttonDone.setEnabled(true);
-				radioButtonExpense.setChecked(true);
+				radioGroupExpenseOrIncome.check(R.id.radioButtonExpense);
 			}
 		}
 		
@@ -95,7 +95,7 @@ public class NewCategory extends Activity{
 
 			@Override
 			public void onCheckedChanged(RadioGroup radioGroup, int radioButton) {
-				
+				Log.d("CHANING THE ENDO FHTEJ", "BLAH");
 				switch(radioButton){
 					case R.id.radioButtonExpense:
 						buttonDone.setEnabled(true);
@@ -120,7 +120,9 @@ public class NewCategory extends Activity{
 				categoryName = editTextCategoryName.getText().toString();
 				
 				if(extras){
-					data.updateCategory(categoryId, categoryName, categoryTypeString);					
+					categoryTypeString = String.valueOf(categoryType);
+					Log.d("UDPATEDjKFJDKJ", categoryTypeString);
+					data.updateCategory(categoryId, categoryName, categoryTypeString);
 				} else {
 					data.addCategory(categoryName, categoryType);
 				}

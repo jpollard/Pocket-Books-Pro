@@ -291,7 +291,7 @@ public class AccountData {
 		db.insert(CATEGORY_TABLE, null, values);
 		db.close();
 	}
-	//TODO deleteCategory(
+	
 	public void deleteCategory(long id){
 		db = dbHelper.getWritableDatabase();
 		
@@ -327,24 +327,14 @@ public class AccountData {
 	}
 	
 	/**
-	 * <b> public void updateTransaction (long id, String payee, BigDecimal
-	 * amount, String date, String memo)</b>
+	 * <b> public void updateTransaction (long id, String categoryName, String categoryType)</b>
 	 * 
 	 * Update the transaction represented by id to the new values that have been
 	 * passed in.
 	 * 
-	 * @param id
-	 *            - the transaction id
-	 * @param payee
-	 *            - a string to describe the name of the transaction (i.e.
-	 *            "Walmart" or "Paycheck")
-	 * @param amount
-	 *            - the amount of the transaction
-	 * @param date
-	 *            - a string date of the transaction
-	 * @param memo
-	 *            - a simple, but more thorough description of the transaction
-	 *            (i.e. "Groceries" or "2/17/09")
+	 * @param id - the category id
+	 * @param categoryName - the name/description of the category
+	 * @param categoryType - the type of category, E - expense: I - income:
 	 * 
 	 */
 	public void updateCategory(long id, String categoryName, String categoryType) {
