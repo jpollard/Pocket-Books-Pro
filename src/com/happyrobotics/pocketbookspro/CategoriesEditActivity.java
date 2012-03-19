@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -43,7 +44,6 @@ public class CategoriesEditActivity extends Activity {
 
 		pb = (PocketBooksApplication) getApplication();
 
-		addCategory = new Intent(this, NewCategory.class);
 
 		setContentView(R.layout.categories_list_activity);
 
@@ -83,6 +83,9 @@ public class CategoriesEditActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		addCategory = new Intent(this, NewCategory.class);
+
 
 		cursorIncome.requery();
 		cursorExpense.requery();
@@ -144,19 +147,23 @@ public class CategoriesEditActivity extends Activity {
 	public boolean onContextItemSelected(MenuItem item) {
 		
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		long id = info.id;
+		Log.d("POCKETBOOKS _______----------", "ID  is " + id );
 		switch(item.getItemId()){
 			case R.id.delete:
 				//TODO delete code
 				cursorExpense.deactivate();
 				cursorIncome.deactivate();
-				accountData.deleteCategory(info.id);
+				accountData.deleteCategory(id);
 				cursorExpense.requery();
 				cursorIncome.requery();
 				
 				return true;
 			case R.id.edit:
-				//TODO edit code
 				
+				addCategory.putExtra("id", id);
+				
+				startActivity(addCategory);
 				return true;
 		}
 		return super.onContextItemSelected(item);

@@ -298,6 +298,67 @@ public class AccountData {
 		db.delete(CATEGORY_TABLE, "_id = " + id, null);
 		
 	}
+	
+	 /* <b> public Cursor getCategoryInfo(Long id) </b>
+	 * 
+	 * Get the details of the category that has the _id passed in by the
+	 * parameter.
+	 * 
+	 * @param id - the transaction id of the transaction that the info needs to come from
+	 * @return - cursor populated with the request data
+	 */
+	public Cursor getCategoryInfo(long id) {
+		// Log.d(TAG, "trying to get transaction info for transaction_id " +
+		// id);
+		Cursor cursor;
+		String[] columnsToQuery = {TRANSACTION_ID, AccountData.CATEGORY_TYPE,
+				AccountData.TRANSACTION_CATEGORY};
+		db = dbHelper.getReadableDatabase();
+
+		cursor = db.query(CATEGORY_TABLE, columnsToQuery,
+				TRANSACTION_ID + " LIKE " + Long.toString(id), null, null, null, null);
+		// Log.d(TAG,cursor.toString());
+		
+		
+		
+		// Investigate the complaints of the db not being closed.
+		// db.close(); 
+		return cursor;
+	}
+	
+	/**
+	 * <b> public void updateTransaction (long id, String payee, BigDecimal
+	 * amount, String date, String memo)</b>
+	 * 
+	 * Update the transaction represented by id to the new values that have been
+	 * passed in.
+	 * 
+	 * @param id
+	 *            - the transaction id
+	 * @param payee
+	 *            - a string to describe the name of the transaction (i.e.
+	 *            "Walmart" or "Paycheck")
+	 * @param amount
+	 *            - the amount of the transaction
+	 * @param date
+	 *            - a string date of the transaction
+	 * @param memo
+	 *            - a simple, but more thorough description of the transaction
+	 *            (i.e. "Groceries" or "2/17/09")
+	 * 
+	 */
+	public void updateCategory(long id, String categoryName, String categoryType) {
+		// Log.d(TAG, "Updating Transaction");
+
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(AccountData.TRANSACTION_CATEGORY, categoryName);
+		values.put(AccountData.CATEGORY_TYPE, categoryType);
+
+		db.update(AccountData.CATEGORY_TABLE, values, "_id = " + id, null);
+		db.close();
+	}
 
 	/**
 	 * <b>public void addTransaction(long id, String payee, BigDecimal amount,
