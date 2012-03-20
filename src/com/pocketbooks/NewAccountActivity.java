@@ -1,8 +1,6 @@
-package com.happyrobotics.pocketbookspro;
+package com.pocketbooks;
 
 import java.math.BigDecimal;
-
-import com.happyrobotics.pocketbookspro.R;
 
 import android.app.Activity;
 import android.os.Bundle;

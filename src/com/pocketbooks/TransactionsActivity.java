@@ -1,6 +1,7 @@
-package com.happyrobotics.pocketbookspro;
+package com.pocketbooks;
 
 import java.math.BigDecimal;
+
 
 import android.app.Activity;
 import android.content.Intent;

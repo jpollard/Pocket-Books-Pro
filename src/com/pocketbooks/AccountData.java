@@ -1,4 +1,4 @@
-package com.happyrobotics.pocketbookspro;
+package com.pocketbooks;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -615,6 +616,12 @@ public class AccountData {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
 
+			//TODO create category tables
+			
+			sql = String.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, %s CHARVAR, %s CHARVAR)",
+					CATEGORY_TABLE, TRANSACTION_CATEGORY, CATEGORY_TYPE);
+			db.execSQL(sql);
+			
 			buildCategories(db);
 		}
 

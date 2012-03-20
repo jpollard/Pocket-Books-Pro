@@ -1,7 +1,8 @@
-package com.happyrobotics.pocketbookspro;
+package com.pocketbooks;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

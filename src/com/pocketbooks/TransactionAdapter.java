@@ -1,8 +1,9 @@
-package com.happyrobotics.pocketbookspro;
+package com.pocketbooks;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;
