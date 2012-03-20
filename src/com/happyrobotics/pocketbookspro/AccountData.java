@@ -447,6 +447,7 @@ public class AccountData {
 
 		db.delete(DBHelper.TRANSACTIONS_TABLE, "_id = " + id, null);
 	}
+	
 	/**
 	 * 
 	 * @author jwp
@@ -456,7 +457,7 @@ public class AccountData {
 		private static final String SQL_NAME = "pocketBooks.db";
 		private static final String ACCOUNTS_TABLE = "pocketBooksAccounts";
 		private static final String TRANSACTIONS_TABLE = "pocketBooksTransactions";
-		private static final int SQL_VERSION = 1;
+		private static final int SQL_VERSION = 2;
 
 		public DBHelper() {
 			super(context, SQL_NAME, null, SQL_VERSION);
@@ -535,8 +536,7 @@ public class AccountData {
 				db.execSQL(sql);
 
 				// Create update trigger
-				sql = String
-						.format(
+				sql = String.format(
 								"CREATE TRIGGER transaction_update_trigger BEFORE UPDATE ON %s "
 										+ "BEGIN "
 										+ "UPDATE %s SET "
@@ -547,27 +547,31 @@ public class AccountData {
 
 				// Log.d(TAG,
 				// "done with TABLES############################################");
-				//buildCategories();
-				InputStream in = context.getResources().openRawResource(
-						R.raw.income);
-				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-						.newDocumentBuilder();
-				Document doc = builder.parse(in);
-				NodeList list = doc.getElementsByTagName("item");
-				NodeList typeList = doc.getElementsByTagName("type");
-				for (int i = 0; i < list.getLength(); i++) {
-					String item = list.item(i).getChildNodes().item(0).getNodeValue();
-					String type = typeList.item(i).getChildNodes().item(0).getNodeValue();
-					ContentValues val = new ContentValues();
-					val.put(TRANSACTION_CATEGORY, item);
-					val.put(CATEGORY_TYPE, type);
-					db.insert(CATEGORY_TABLE, null, val);
-
-					// sql =
-					// String.format("INSERT INTO %s (income_category) VALUES ('%s')",
-					// INCOME_CATEGORIES);
-					// db.execSQL(sql);
-				}
+				buildCategories(db);
+				
+				
+				
+				
+//				InputStream in = context.getResources().openRawResource(
+//						R.raw.income);
+//				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+//						.newDocumentBuilder();
+//				Document doc = builder.parse(in);
+//				NodeList list = doc.getElementsByTagName("item");
+//				NodeList typeList = doc.getElementsByTagName("type");
+//				for (int i = 0; i < list.getLength(); i++) {
+//					String item = list.item(i).getChildNodes().item(0).getNodeValue();
+//					String type = typeList.item(i).getChildNodes().item(0).getNodeValue();
+//					ContentValues val = new ContentValues();
+//					val.put(TRANSACTION_CATEGORY, item);
+//					val.put(CATEGORY_TYPE, type);
+//					db.insert(CATEGORY_TABLE, null, val);
+//
+//					// sql =
+//					// String.format("INSERT INTO %s (income_category) VALUES ('%s')",
+//					// INCOME_CATEGORIES);
+//					// db.execSQL(sql);
+//				}
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				// Log.d(TAG,
@@ -576,20 +580,26 @@ public class AccountData {
 			}
 		}
 
-		public void buildCategories() {
+		public void buildCategories(SQLiteDatabase db) {
 			// Get the input stream from a raw resource
 			try {
+				
 				InputStream in = context.getResources().openRawResource(
 						R.raw.income);
 				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 						.newDocumentBuilder();
 				Document doc = builder.parse(in);
 				NodeList list = doc.getElementsByTagName("item");
+				NodeList typeList = doc.getElementsByTagName("type");
 				for (int i = 0; i < list.getLength(); i++) {
-					String item = list.item(i).getChildNodes().item(0)
-							.getNodeValue();
+					
+					String item = list.item(i).getChildNodes().item(0).getNodeValue();
+					String type = typeList.item(i).getChildNodes().item(0).getNodeValue();
+					
 					ContentValues val = new ContentValues();
 					val.put(TRANSACTION_CATEGORY, item);
+					val.put(CATEGORY_TYPE, type);
+					
 					db.insert(CATEGORY_TABLE, null, val);
 
 					// sql =
@@ -600,12 +610,12 @@ public class AccountData {
 			} catch (Throwable t) {
 
 			}
-			db.close();
 		}
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
 
+			buildCategories(db);
 		}
 
 	}
