@@ -2,6 +2,8 @@ package com.pocketbooks;
 
 
 
+import java.math.BigDecimal;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,34 +13,37 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class AccountsActivity extends Activity{
 	private static final String TAG = "ListActivity: ";
 	PocketBooksApplication pb;
 	
 	AccountData accounts;
-	CursorAdapter cursorAdapter;
+	CursorAdapter cursorAdapter;	
+	Cursor accountsSum;
 	Cursor cursor;
 	ListView list;
 	LinearLayout mNewAccount;
 	LinearLayout header;
 	TextView headerId;
+	TextView headerSum;
 	Intent prefIntent;
 	Intent categoriesEditIntent;
 	SharedPreferences prefs;
+	BigDecimal sum;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -56,6 +61,8 @@ public class AccountsActivity extends Activity{
         headerId = (TextView) findViewById(R.id.header_account);
         headerId.setTextColor(Color.WHITE);
         headerId.setText("Pocket Books");
+        headerSum = (TextView) findViewById(R.id.header_balance);
+        
         list = (ListView) findViewById(R.id.accountNameListView);
         
         final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
@@ -91,7 +98,10 @@ public class AccountsActivity extends Activity{
         accounts = new AccountData(this);
         //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
+        accountsSum = accounts.getAccountsSum();
+        
         startManagingCursor(cursor);
+        startManagingCursor(accountsSum);
         
         // Construct adapter
         int[] to = {R.id.account_name, R.id.account_balance};
@@ -126,22 +136,34 @@ public class AccountsActivity extends Activity{
 		prefs = pb.getPrefs();
 	        
 	        if(prefs.getBoolean("category", false)){
+	        	
 	        	Log.d(TAG, "prefs retained------------------------------------------------------------------");
 	        }
 		cursor.requery();
+		accountsSum.requery();
+		accountsSum.moveToFirst();
+		
+		sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+		sum = sum.movePointLeft(2);
+		
+		headerSum.setText(sum.toPlainString());
+		
 	}
 	
 	@Override
 	public void onPause(){
 		super.onPause();
 		cursor.deactivate();
+		accountsSum.deactivate();
 	}
 
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		cursor.close();
+		accountsSum.close();
 		accounts.close();
+		
 	}
 	
 	// Context Menu
@@ -174,10 +196,6 @@ public class AccountsActivity extends Activity{
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
 
-        if(prefs.getBoolean("category", false)){
-        	menu.findItem(R.id.categories).setEnabled(true);
-        	menu.findItem(R.id.categories).setVisible(true);
-        }
         
         
 //        if(prefs.getBoolean("category", false)){
@@ -188,6 +206,21 @@ public class AccountsActivity extends Activity{
     }
     
     @Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		
+    	if(prefs.getBoolean("category", false)){
+    		
+    		menu.findItem(R.id.categories).setEnabled(true);
+    		menu.findItem(R.id.categories).setVisible(true);
+    	} else {
+    		menu.findItem(R.id.categories).setEnabled(false);
+    		menu.findItem(R.id.categories).setVisible(false);
+    	}
+    	
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
     public boolean onOptionsItemSelected(MenuItem item){
     	switch(item.getItemId()){
     		case R.id.preferences:

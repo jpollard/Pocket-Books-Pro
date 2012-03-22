@@ -115,8 +115,19 @@ public class AccountData {
 		}
 	}
 
-	/**
-	 * public Cursor getAccounts()
+	public Cursor getAccountsSum(){
+		Cursor cursor;
+		
+		db = dbHelper.getReadableDatabase();
+		sql = "SELECT SUM(" + ACCOUNT_BALANCE + ") AS " + ACCOUNT_BALANCE + " FROM " + DBHelper.ACCOUNTS_TABLE;
+		cursor = db.rawQuery(sql, null);
+		
+		return cursor;
+	}
+	
+	
+	
+	/*** public Cursor getAccounts()
 	 * 
 	 * returns a Cursor containing all the rows in ACCOUNTS_TABLE, unsorted.
 	 * 

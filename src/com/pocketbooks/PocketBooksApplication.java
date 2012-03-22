@@ -25,7 +25,7 @@ public class PocketBooksApplication extends Application implements OnPreferenceC
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		// TODO Auto-generated method stub
-		preference.
+		
 		return false;
 	}
 }
