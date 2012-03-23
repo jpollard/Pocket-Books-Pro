@@ -3,31 +3,33 @@ package com.pocketbooks;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class NewTransactionActivity extends Activity {
 	private static final int DATE_DIALOG = 0;
@@ -50,6 +52,7 @@ public class NewTransactionActivity extends Activity {
 	int day;
 	long id;
 	Intent transactionIntent;
+	Intent categoryIntent;
 	TextView headerAccount;
 	private SimpleCursorAdapter incomeAdapter;
 	SimpleCursorAdapter expenseAdapter;
@@ -67,6 +70,8 @@ public class NewTransactionActivity extends Activity {
 		prefs = pb.getPrefs();
 		
 		setContentView(R.layout.new_transaction_activity_layout);
+		
+		categoryIntent = new Intent(this, CategoriesEditActivity.class);
 		
 		headerAccount = (TextView) findViewById(R.id.header_account);
 		headerAccount.setText(R.string.new_transaction);
@@ -98,6 +103,7 @@ public class NewTransactionActivity extends Activity {
 		
 		categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
 		categorySpinner.setAdapter(expenseAdapter);
+		
 		catId = 0;
 		
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
@@ -201,6 +207,8 @@ public class NewTransactionActivity extends Activity {
 		
 	}
 	
+	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 	    switch (id) {
@@ -258,7 +266,41 @@ public class NewTransactionActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		incomeCursor.requery();
-		incomeCursor.requery();
+		expenseCursor.requery();
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		MenuInflater menuLayout = getMenuInflater();
+		menuLayout.inflate(R.menu.settings_category_menu, menu);
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		menu.findItem(R.id.preferences).setEnabled(false);
+		menu.findItem(R.id.preferences).setVisible(false);
+		if(prefs.getBoolean("category", false)){
+			menu.findItem(R.id.categories).setEnabled(true);
+			menu.findItem(R.id.categories).setVisible(true);
+		}
+		
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+			case R.id.categories:
+				startActivity(categoryIntent);
+				return true;				
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
