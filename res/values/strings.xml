@@ -28,5 +28,5 @@
     <string name="category_name">Category Name</string>
     <string name="add_a_new_category_">Add a new category.</string>
     <string name="new_category">New Category</string>
-    <string name="edit_categories">Edit Categories</string>
+    <string name="edit_categories">Categories</string>
 </resources>

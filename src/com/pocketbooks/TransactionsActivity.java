@@ -32,6 +32,7 @@ public class TransactionsActivity extends Activity {
 	Intent transactionIntent;
 	Intent editTransactionIntent;
 	Intent prefsIntent;
+	Intent categoryIntent; 
 	TextView mAccountName;
 	TextView mAccountBalance;
 	LinearLayout mNewTransaction;
@@ -46,6 +47,7 @@ public class TransactionsActivity extends Activity {
         
         final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
         prefsIntent = new Intent(this, Prefs.class);
+        categoryIntent = new Intent(this, CategoriesEditActivity.class);
         pb = (PocketBooksApplication) this.getApplication();
         prefs = pb.getPrefs();
         setContentView(R.layout.transactions_activity_layout);
@@ -167,7 +169,9 @@ public class TransactionsActivity extends Activity {
     	menu.add(0, 1, 0, R.string.delete);
     }
     
-    @Override
+
+
+	@Override
     public boolean onContextItemSelected(MenuItem item){
     	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     	
@@ -196,10 +200,24 @@ public class TransactionsActivity extends Activity {
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
+        inflater.inflate(R.menu.settings_category_menu, menu);
         return true;
 	}
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	// TODO Auto-generated method stub
+    	
+    	if(prefs.getBoolean("category", false)){
+    		menu.findItem(R.id.categories).setEnabled(true);
+    		menu.findItem(R.id.categories).setVisible(true);
+    	} else {
+    		menu.findItem(R.id.categories).setEnabled(false);
+    		menu.findItem(R.id.categories).setVisible(false);
+    	}
+    	
+    	return super.onPrepareOptionsMenu(menu);
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -208,6 +226,10 @@ public class TransactionsActivity extends Activity {
 		switch(item.getItemId()){
 			case R.id.preferences:
 				startActivity(prefsIntent);
+				return true;
+			case R.id.categories:
+				startActivity(categoryIntent);
+				return true;
 		}
 		return false;
 	}
