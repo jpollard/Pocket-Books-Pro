@@ -101,13 +101,7 @@ public class AccountsActivity extends Activity{
         accounts = new AccountData(this);
         //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
-        if(cursor.getCount() > 0){
-        	hasAccounts = true;
-        }
-        if(hasAccounts){
-        	accountsSum = accounts.getAccountsSum();
-        	startManagingCursor(accountsSum);
-        }
+        
         startManagingCursor(cursor);
         
         // Construct adapter
@@ -148,14 +142,20 @@ public class AccountsActivity extends Activity{
 	        }
 		cursor.requery();
 		
+		if(cursor.getCount() > 0){
+        	hasAccounts = true;
+        }
+		
 		if(hasAccounts){
+			accountsSum = accounts.getAccountsSum();
+			startManagingCursor(accountsSum);
 			accountsSum.requery();
 			accountsSum.moveToFirst();
 		
 			sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
-			sum = sum.movePointLeft(2);
 		}
 		
+		sum = sum.movePointLeft(2);
 		headerSum.setText(sum.toPlainString());
 		
 	}
@@ -200,6 +200,20 @@ public class AccountsActivity extends Activity{
     			accounts.deleteAccount(info.id);
     			cursor.deactivate();
     			cursor.requery();
+    			if(cursor.getCount() > 0){
+    				accountsSum = accounts.getAccountsSum();
+    				accountsSum.requery();
+    				accountsSum.moveToFirst();
+    			
+    				sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+    				
+    			} else {
+    				hasAccounts = false;
+    				sum = BigDecimal.ZERO;
+    			}
+    			
+    			sum = sum.movePointLeft(2);
+    			headerSum.setText(sum.toPlainString());
     			return true;
     	}
     	return false;
