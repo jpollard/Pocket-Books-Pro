@@ -43,11 +43,13 @@ public class AccountsActivity extends Activity{
 	Intent prefIntent;
 	Intent categoriesEditIntent;
 	SharedPreferences prefs;
+	Boolean hasAccounts;
 	BigDecimal sum;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		pb = (PocketBooksApplication) getApplication();
+		hasAccounts = false;
 		//Log.d(TAG, "Starting account");
 		
 		// Setup UI
@@ -62,6 +64,7 @@ public class AccountsActivity extends Activity{
         headerId.setTextColor(Color.WHITE);
         headerId.setText("Pocket Books");
         headerSum = (TextView) findViewById(R.id.header_balance);
+        sum = BigDecimal.ZERO;
         
         list = (ListView) findViewById(R.id.accountNameListView);
         
@@ -98,10 +101,14 @@ public class AccountsActivity extends Activity{
         accounts = new AccountData(this);
         //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
-        accountsSum = accounts.getAccountsSum();
-        
+        if(cursor.getCount() > 0){
+        	hasAccounts = true;
+        }
+        if(hasAccounts){
+        	accountsSum = accounts.getAccountsSum();
+        	startManagingCursor(accountsSum);
+        }
         startManagingCursor(cursor);
-        startManagingCursor(accountsSum);
         
         // Construct adapter
         int[] to = {R.id.account_name, R.id.account_balance};
@@ -140,11 +147,14 @@ public class AccountsActivity extends Activity{
 	        	Log.d(TAG, "prefs retained------------------------------------------------------------------");
 	        }
 		cursor.requery();
-		accountsSum.requery();
-		accountsSum.moveToFirst();
 		
-		sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
-		sum = sum.movePointLeft(2);
+		if(hasAccounts){
+			accountsSum.requery();
+			accountsSum.moveToFirst();
+		
+			sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+			sum = sum.movePointLeft(2);
+		}
 		
 		headerSum.setText(sum.toPlainString());
 		
@@ -154,14 +164,18 @@ public class AccountsActivity extends Activity{
 	public void onPause(){
 		super.onPause();
 		cursor.deactivate();
-		accountsSum.deactivate();
+		if(hasAccounts){
+			accountsSum.deactivate();
+		}
 	}
 
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		cursor.close();
-		accountsSum.close();
+		if(hasAccounts){
+			accountsSum.close();
+		}
 		accounts.close();
 		
 	}
