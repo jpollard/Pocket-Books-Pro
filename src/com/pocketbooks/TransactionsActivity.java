@@ -177,7 +177,7 @@ public class TransactionsActivity extends Activity {
     	
     	switch(item.getItemId()){
     		case 0:
-    			editTransactionIntent = new Intent(this, EditTransactionActivity.class);
+    			editTransactionIntent = new Intent(this, TransactionActivity.class);
     			//Log.d(TAG, "id of editTran " + info.id);
     			editTransactionIntent.putExtra(AccountData.TRANSACTION_ID, info.id);
     			startActivity(editTransactionIntent);

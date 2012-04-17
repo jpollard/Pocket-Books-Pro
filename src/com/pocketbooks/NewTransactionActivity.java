@@ -100,6 +100,7 @@ public class NewTransactionActivity extends Activity {
 		amountEditText.setFilters(new InputFilter[] {new DecimalInputFilter(2)});
 		dateEditText = (EditText) findViewById(R.id.date_EditText);
 		noteEditText = (EditText) findViewById(R.id.note_EditText);
+		doneButton = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 		
 		categorySpinner = (Spinner) findViewById(R.id.category_Spinner);
 		categorySpinner.setAdapter(expenseAdapter);
@@ -141,7 +142,6 @@ public class NewTransactionActivity extends Activity {
 			((TableRow)categorySpinner.getParent()).setVisibility(View.GONE);
 		}
 		
-		doneButton = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 		
 		Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);

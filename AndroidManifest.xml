@@ -28,7 +28,7 @@
             android:name="com.pocketbooks.NewTransactionActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" >
         </activity>
-        <activity android:name="com.pocketbooks.EditTransactionActivity" >
+        <activity android:name=".TransactionActivity" >
         </activity>
         <activity android:name="com.pocketbooks.Prefs"></activity>
         <activity android:name="com.pocketbooks.NewCategory"></activity>

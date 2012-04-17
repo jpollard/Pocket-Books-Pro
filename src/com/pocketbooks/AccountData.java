@@ -277,7 +277,7 @@ public class AccountData {
 
 		// Log.d(TAG, "Querying DB");
 		cursor = db.query(CATEGORY_TABLE, columnsToQuery, CATEGORY_TYPE + " like \""+ categoryType + "\" ", null, null, null,
-				null);
+				TRANSACTION_CATEGORY + " ASC");
 		// Log.d(TAG, "returning tables in a cursor");
 		// Log.d(TAG,
 		// cursor.getColumnName(cursor.getColumnIndex(TRANSACTION_ID)));
