@@ -48,6 +48,8 @@ public class TransactionsActivity extends Activity {
         final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
         prefsIntent = new Intent(this, Prefs.class);
         categoryIntent = new Intent(this, CategoriesEditActivity.class);
+        editTransactionIntent = new Intent(this, EditTransactionActivity.class);
+        
         pb = (PocketBooksApplication) this.getApplication();
         prefs = pb.getPrefs();
         setContentView(R.layout.transactions_activity_layout);
@@ -71,7 +73,9 @@ public class TransactionsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(newTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id));
+				editTransactionIntent.putExtra("edit", false);
+				editTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id);
+				startActivity(editTransactionIntent);
 			}
         	
         });  
@@ -177,8 +181,9 @@ public class TransactionsActivity extends Activity {
     	
     	switch(item.getItemId()){
     		case 0:
-    			editTransactionIntent = new Intent(this, EditTransactionActivity.class);
+    			
     			//Log.d(TAG, "id of editTran " + info.id);
+    			editTransactionIntent.putExtra("edit", true);
     			editTransactionIntent.putExtra(AccountData.TRANSACTION_ID, info.id);
     			startActivity(editTransactionIntent);
     			return true;
