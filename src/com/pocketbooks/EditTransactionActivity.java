@@ -223,7 +223,17 @@ public class EditTransactionActivity extends Activity {
 							.toString(), newAmount, cal.getTimeInMillis(),
 							catId, transactionMemo.getText().toString());
 				}
-
+				
+				if (editTransactionInfo != null) {
+					editTransactionInfo.close();
+				}
+				
+				if (incomeCursor != null) {
+					incomeCursor.close();
+				}
+				if (expenseCursor != null){
+					expenseCursor.close();
+				}
 				finish();
 			}
 
@@ -239,7 +249,7 @@ public class EditTransactionActivity extends Activity {
 			editTransactionInfo.deactivate();
 		}
 
-		prefs = pb.getPrefs();
+	
 		if (prefs.getBoolean("category", false)) {
 			incomeCursor.deactivate();
 			expenseCursor.deactivate();
@@ -261,6 +271,12 @@ public class EditTransactionActivity extends Activity {
 		if (editingTransaction) {
 			headerAccount.setText(R.string.edit_transaction);
 
+			prefs = pb.getPrefs();
+			if (prefs.getBoolean("category", false)) {
+				incomeCursor.requery();
+				expenseCursor.requery();
+			}
+			
 			editTransactionInfo.requery();
 			editTransactionInfo.moveToFirst();
 
@@ -312,26 +328,14 @@ public class EditTransactionActivity extends Activity {
 		// ---------------------------------------------------------------------
 		// ---------------------------------------------------------------------
 
-		prefs = pb.getPrefs();
-		if (prefs.getBoolean("category", false)) {
-			incomeCursor.requery();
-			expenseCursor.requery();
-		}
+		
 	}
 
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		if (editTransactionInfo != null) {
-			editTransactionInfo.close();
-		}
-		prefs = pb.getPrefs();
-		if (prefs.getBoolean("category", false)) {
-			incomeCursor.close();
-			expenseCursor.close();
-
-		}
+		
 	}
 
 	@Override
