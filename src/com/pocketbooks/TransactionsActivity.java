@@ -48,7 +48,7 @@ public class TransactionsActivity extends Activity {
         final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
         prefsIntent = new Intent(this, Prefs.class);
         categoryIntent = new Intent(this, CategoriesEditActivity.class);
-        editTransactionIntent = new Intent(this, TransactionActivity.class);
+        editTransactionIntent = new Intent(this, EditTransactionActivity.class);
         
         pb = (PocketBooksApplication) this.getApplication();
         prefs = pb.getPrefs();
