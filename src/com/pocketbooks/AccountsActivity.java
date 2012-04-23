@@ -102,7 +102,11 @@ public class AccountsActivity extends Activity{
         //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
         
+        
         startManagingCursor(cursor);
+        if(cursor.getCount() < 1){
+        	startActivity(newAccountIntent);
+        }
         
         // Construct adapter
         int[] to = {R.id.account_name, R.id.account_balance};

@@ -60,6 +60,7 @@ public class NewTransactionActivity extends Activity {
 	Cursor expenseCursor;
 	long catId;
 	
+	
 	SharedPreferences prefs;
 	
 	@Override
@@ -75,8 +76,10 @@ public class NewTransactionActivity extends Activity {
 		
 		headerAccount = (TextView) findViewById(R.id.header_account);
 		headerAccount.setText(R.string.new_transaction);
+		
 		transactionIntent = getIntent();
 		id = transactionIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
+		
 		accounts = new AccountData(this);
 		
 		incomeCursor = accounts.getCategories("I");
