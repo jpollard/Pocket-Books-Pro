@@ -82,8 +82,7 @@ public class TransactionActivity extends Activity {
 		editTransactionAmount = (EditText) findViewById(R.id.amount_EditText);
 		editTransactionDate = (EditText) findViewById(R.id.date_EditText);
 		editTransactionCategory = (Spinner) findViewById(R.id.category_Spinner);
-		((TableRow) editTransactionCategory.getParent())
-				.setVisibility(View.GONE);
+		((TableRow) editTransactionCategory.getParent()).setVisibility(View.GONE);
 		editTransactionMemo = (EditText) findViewById(R.id.note_EditText);
 		editRadioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
 		editDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
@@ -93,17 +92,16 @@ public class TransactionActivity extends Activity {
 
 		transactionIntent = getIntent();
 
-		if (transactionIntent.hasExtra(AccountData.TRANSACTION_ID)) {
-			intentHasExtras = true;
-			id = transactionIntent.getLongExtra(AccountData.TRANSACTION_ID, 0);
-
-			editTransactionInfo = transaction.getTransactionInfo(id);
-			editTransactionInfo.moveToFirst();
-			startManagingCursor(editTransactionInfo);
-
-			catId = editTransactionInfo.getLong(editTransactionInfo
-					.getColumnIndex(AccountData.TRANSACTION_CATEGORY));
-		}
+		
+		
+//		if (transactionIntent.getBooleanExtra("edit", false)) {
+//
+//			editTransactionInfo = transaction.getTransactionInfo(id);
+//			editTransactionInfo.moveToFirst();
+//			startManagingCursor(editTransactionInfo);
+//
+//			catId = editTransactionInfo.getLong(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_CATEGORY));
+//		}
 		editDeposit.setChecked(true);
 
 		if (catEnabled) {
@@ -202,9 +200,14 @@ public class TransactionActivity extends Activity {
 				cal.set(year, month, day);
 
 				// Log.d(TAG, "Trying to update");
-				transaction.updateTransaction(id, editTransactionName.getText()
+				if(transactionIntent.getBooleanExtra("edit", false)){
+					transaction.updateTransaction(id, editTransactionName.getText()
 						.toString(), newAmount, cal.getTimeInMillis(), catId,
 						editTransactionMemo.getText().toString());
+				} else {
+					transaction.addTransaction(id, editTransactionName.getText().toString(), newAmount, 
+							cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
+				}
 				finish();
 			}
 
@@ -235,10 +238,14 @@ public class TransactionActivity extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		editTransactionInfo.deactivate();
+		if(transactionIntent.getBooleanExtra("edit", false)){
+			editTransactionInfo.deactivate();
+		}
 		prefs = pb.getPrefs();
-		if (prefs.getBoolean("category", false)) {
+		if (incomeCursor != null) {
 			incomeCursor.deactivate();
+		}
+		if (expenseCursor != null) {
 			expenseCursor.deactivate();
 		}
 	}
@@ -246,25 +253,34 @@ public class TransactionActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		id = transactionIntent.getLongExtra(AccountData.TRANSACTION_ID, 0);
 		int positionId = 0;
 		prefs = pb.getPrefs();
-		if (prefs.getBoolean("category", false)) {
+		if (incomeCursor != null) {
 			incomeCursor.requery();
+		}
+		if (expenseCursor != null){
 			expenseCursor.requery();
 		}
 		
-		int incomeCount = incomeAdapter.getCount();
-		for (int i = 0; i < incomeCount; i++) {
-			if (catId == incomeAdapter.getItemId(i)) {
-				positionId = i;
-			}
-		}
 		
 		editTransactionCategory.setSelection(positionId);
-		if (intentHasExtras) {
+		if (transactionIntent.getBooleanExtra("edit", false)) {
+			if(editTransactionInfo == null){
+
+				editTransactionInfo = transaction.getTransactionInfo(id);
+				startManagingCursor(editTransactionInfo);
+			}
+			
+			int incomeCount = incomeAdapter.getCount();
+			for (int i = 0; i < incomeCount; i++) {
+				if (catId == incomeAdapter.getItemId(i)) {
+					positionId = i;
+				}
+			}
 
 			editTransactionInfo.requery();
+			editTransactionInfo.moveToFirst();
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(editTransactionInfo.getLong(editTransactionInfo
@@ -300,17 +316,14 @@ public class TransactionActivity extends Activity {
 					editTransactionCategory.setSelection(positionId);
 				}
 			}
-			editTransactionName.setText(editTransactionInfo
-					.getString(editTransactionInfo
+			editTransactionName.setText(editTransactionInfo.getString(editTransactionInfo
 							.getColumnIndex(AccountData.TRANSACTION_NAME)));
 			editTransactionAmount.setText(amount.toString());
 			editTransactionDate.setText(new StringBuilder()
 					.append(cal.get(Calendar.MONTH)).append("/")
 					.append(cal.get(Calendar.DAY_OF_MONTH)).append("/")
 					.append(cal.get(Calendar.YEAR)));
-			editTransactionMemo.setText(editTransactionInfo
-					.getString(editTransactionInfo
-							.getColumnIndex(AccountData.TRANSACTION_MEMO)));
+			editTransactionMemo.setText(editTransactionInfo.getString(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_MEMO)));
 
 		}
 	}
@@ -319,13 +332,22 @@ public class TransactionActivity extends Activity {
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		editTransactionInfo.close();
+		if(transactionIntent.getBooleanExtra("edit", false)){
+			editTransactionInfo.close();
+		}
 		prefs = pb.getPrefs();
 		if (prefs.getBoolean("category", false)) {
 			incomeCursor.close();
 			expenseCursor.close();
 
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		transaction.close();
 	}
 
 	/**
