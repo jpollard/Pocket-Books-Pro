@@ -9,5 +9,6 @@
         android:visible="true">
         
     </item>
+    <item android:id="@+id/account_edit" android:title="Edit" android:titleCondensed="Edit" android:enabled="true" android:visible="true"></item>
     
 </menu>

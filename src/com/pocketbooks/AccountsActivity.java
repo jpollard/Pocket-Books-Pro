@@ -40,6 +40,7 @@ public class AccountsActivity extends Activity{
 	LinearLayout header;
 	TextView headerId;
 	TextView headerSum;
+	Intent newAccountIntent;
 	Intent prefIntent;
 	Intent categoriesEditIntent;
 	SharedPreferences prefs;
@@ -68,21 +69,10 @@ public class AccountsActivity extends Activity{
         
         list = (ListView) findViewById(R.id.accountNameListView);
         
-        final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
+        newAccountIntent = new Intent(this, NewAccountActivity.class);
         final Intent transactionIntent = new Intent(this, TransactionsActivity.class);
         categoriesEditIntent = new Intent(this, CategoriesEditActivity.class);
         prefIntent = new Intent(this, Prefs.class);
-        
-//        View v = getLayoutInflater().inflate(R.layout.accounts_activity_header, null);
-//        v.setOnClickListener(new OnClickListener(){
-//
-//			@Override
-//			public void onClick(View v) {
-//				Log.d(TAG, "Clickity Clack: in onClick method in AccountLists starting NewAccountActivity.");
-//				startActivity(newAccountIntent);
-//				
-//			}	
-//        });
        
         mNewAccount = (LinearLayout) findViewById(R.id.footer);  
         mNewAccount.setOnClickListener(new OnClickListener(){
@@ -99,6 +89,7 @@ public class AccountsActivity extends Activity{
        
         //Query current accountNames
         accounts = new AccountData(this);
+        
         //Log.d(TAG, "Starting getTables.");
         cursor = accounts.getAccounts();
         
@@ -117,6 +108,7 @@ public class AccountsActivity extends Activity{
         //list.addHeaderView(v);
         list.setAdapter(adapter);
         registerForContextMenu(list);
+        
         list.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -220,6 +212,15 @@ public class AccountsActivity extends Activity{
     			sum = sum.movePointLeft(2);
     			headerSum.setText(sum.toPlainString());
     			return true;
+    			
+    		case R.id.account_edit:
+    			
+    			newAccountIntent.putExtra("edit", true);
+    			newAccountIntent.putExtra(AccountData.ACCOUNT_ID, info.id);
+    			//Start the account activity for editing;
+    			startActivity(newAccountIntent);
+    			return true;
+    			
     	}
     	return false;
     }

@@ -104,41 +104,7 @@ public class TransactionActivity extends Activity {
 //		}
 		editDeposit.setChecked(true);
 
-		if (catEnabled) {
-			((TableRow) editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
-			
-			editTransactionCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-						@Override
-						public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long id) {
-							// TODO Auto-generated method stub
-							catId = id;
-						}
-
-						@Override
-						public void onNothingSelected(AdapterView<?> arg0) {
-							// TODO Auto-generated method stub
-							catId = 0;
-						}
-
-			});
-
-			incomeCursor = transaction.getCategories("I");
-			startManagingCursor(incomeCursor);
-			expenseCursor = transaction.getCategories("E");
-			startManagingCursor(expenseCursor);
-
-			String[] from = {AccountData.TRANSACTION_CATEGORY};
-			int[] to = {R.id.category_name};
-
-			incomeAdapter = new SimpleCursorAdapter(this,
-					R.layout.category_listview_row, incomeCursor, from, to);
-			expenseAdapter = new SimpleCursorAdapter(this,
-					R.layout.category_listview_row, expenseCursor, from, to);
-
-			editTransactionCategory.setAdapter(incomeAdapter);
-			
-		}
+		
 
 		editRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -255,12 +221,59 @@ public class TransactionActivity extends Activity {
 		super.onResume();
 		id = transactionIntent.getLongExtra(AccountData.TRANSACTION_ID, 0);
 		int positionId = 0;
+		
 		prefs = pb.getPrefs();
+		catEnabled = prefs.getBoolean("category", false);
+		
+		if (catEnabled) {
+			((TableRow) editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
+			
+			editTransactionCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+						@Override
+						public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long id) {
+							// TODO Auto-generated method stub
+							catId = id;
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> arg0) {
+							// TODO Auto-generated method stub
+							catId = 0;
+						}
+
+			});
+
+			incomeCursor = transaction.getCategories("I");
+			startManagingCursor(incomeCursor);
+			expenseCursor = transaction.getCategories("E");
+			startManagingCursor(expenseCursor);
+
+			String[] from = {AccountData.TRANSACTION_CATEGORY};
+			int[] to = {R.id.category_name};
+
+			incomeAdapter = new SimpleCursorAdapter(this,
+					R.layout.category_listview_row, incomeCursor, from, to);
+			expenseAdapter = new SimpleCursorAdapter(this,
+					R.layout.category_listview_row, expenseCursor, from, to);
+
+			editTransactionCategory.setAdapter(incomeAdapter);
+			
+		}
 		if (incomeCursor != null) {
 			incomeCursor.requery();
 		}
 		if (expenseCursor != null){
 			expenseCursor.requery();
+		}
+		
+		if(!transactionIntent.getBooleanExtra("edit", false)){
+			Calendar c = Calendar.getInstance();
+			year = c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH);
+			day = c.get(Calendar.DAY_OF_MONTH);
+			
+			updateDate();
 		}
 		
 		
@@ -272,11 +285,14 @@ public class TransactionActivity extends Activity {
 				startManagingCursor(editTransactionInfo);
 			}
 			
-			int incomeCount = incomeAdapter.getCount();
-			for (int i = 0; i < incomeCount; i++) {
-				if (catId == incomeAdapter.getItemId(i)) {
-					positionId = i;
+			if(catEnabled){
+				int incomeCount = incomeAdapter.getCount();
+				for (int i = 0; i < incomeCount; i++) {
+					if (catId == incomeAdapter.getItemId(i)) {
+						positionId = i;
+					}
 				}
+				editTransactionCategory.setSelection(positionId);
 			}
 
 			editTransactionInfo.requery();
@@ -334,6 +350,7 @@ public class TransactionActivity extends Activity {
 		super.onStop();
 		if(transactionIntent.getBooleanExtra("edit", false)){
 			editTransactionInfo.close();
+			transaction.close();
 		}
 		prefs = pb.getPrefs();
 		if (prefs.getBoolean("category", false)) {
@@ -341,13 +358,13 @@ public class TransactionActivity extends Activity {
 			expenseCursor.close();
 
 		}
+		
 	}
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		transaction.close();
 	}
 
 	/**
