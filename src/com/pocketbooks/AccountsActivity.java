@@ -80,6 +80,7 @@ public class AccountsActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				newAccountIntent.putExtra("edit", false);
 				startActivity(newAccountIntent);
 			}
         	
@@ -96,6 +97,7 @@ public class AccountsActivity extends Activity{
         
         startManagingCursor(cursor);
         if(cursor.getCount() < 1){
+        	newAccountIntent.putExtra("edit", false);
         	startActivity(newAccountIntent);
         }
         

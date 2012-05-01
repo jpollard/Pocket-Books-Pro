@@ -168,6 +168,28 @@ public class AccountData {
 	}
 
 	/**
+	 * <b> public void updateAccount (long id, String accountName)</b>
+	 * 
+	 * Update the transaction represented by id to the new values that have been
+	 * passed in.
+	 * 
+	 * @param id - the category id
+	 * @param accountName - the name/description of the account
+	 *  
+	 */
+	public void updateAccount(long id, String accountName) {
+		// Log.d(TAG, "Updating Transaction");
+
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(AccountData.ACCOUNT_NAME, accountName);
+
+		db.update(DBHelper.ACCOUNTS_TABLE, values, "_id = " + id, null);
+		db.close();
+	}
+	
+	/**
 	 * <b> public Cursor getAccountInfo (Long id) </b>
 	 * 
 	 * This returns a Cursor that is populated with the info of one of the

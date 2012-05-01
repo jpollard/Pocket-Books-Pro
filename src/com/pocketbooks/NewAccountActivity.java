@@ -3,6 +3,8 @@ package com.pocketbooks;
 import java.math.BigDecimal;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -18,6 +20,8 @@ public class NewAccountActivity extends Activity {
 	Button done;
 	AccountData accounts;  
 	TextView headerAccount;
+	Intent accountIntent;
+	long id;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -30,11 +34,14 @@ public class NewAccountActivity extends Activity {
 		
 		headerAccount = (TextView) findViewById(R.id.header_account);
 		headerAccount.setText(R.string.new_account_title);
+		accountIntent = getIntent();
 		
 		accountName = (EditText) findViewById(R.id.new_account_name_edit_text);
 		accountBalance = (EditText) findViewById(R.id.new_account_balance_edit_text);
 		accountBalance.setFilters(new InputFilter[] {new DecimalInputFilter(2)} );
 		done = (Button) findViewById(R.id.new_account_done_button);
+		
+		long id = 0;
 		
 		done.setOnClickListener(new OnClickListener(){
 			@Override
@@ -52,11 +59,42 @@ public class NewAccountActivity extends Activity {
 							//Log.d(TAG, "ERROR! ERROR! \"balance\" not a number!!!!");
 						}
 					}
-					//Log.d(TAG, "about to create table " + accountName.getText().toString() + " with a value of " + balance);
-					accounts.createAccount(accountName.getText().toString(), balance);
-									}
+					if(accountIntent.getBooleanExtra("edit", false)){
+						long id = accountIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
+						accounts.updateAccount(id, accountName.getText().toString());
+						
+					} else {
+					
+						//Log.d(TAG, "about to create table " + accountName.getText().toString() + " with a value of " + balance);
+					
+						accounts.createAccount(accountName.getText().toString(), balance);
+					}
+				}
 				finish();
 			}	
 		});
 	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		if(accountIntent.getBooleanExtra("edit", false)){
+			
+			accountBalance.setEnabled(false);
+			accountBalance.setVisibility(EditText.INVISIBLE);
+			
+			id = accountIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
+			Cursor accountCursor = accounts.getAccountInfo(id);
+			startManagingCursor(accountCursor);
+			
+			accountCursor.moveToFirst();
+			String accountNameString = accountCursor.getString(accountCursor.getColumnIndex(AccountData.ACCOUNT_NAME));
+			
+			accountName.setText(accountNameString);
+			done.setText("Update");
+		}
+	}
+	
+	
 }
