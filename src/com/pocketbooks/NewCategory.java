@@ -140,6 +140,12 @@ public class NewCategory extends Activity{
 		// TODO Auto-generated method stub
 		super.onPause();
 		
+		
+	}
+	@Override
+	public void onStop() {
+		super.onStop();
+		data.close();
 	}
 	
 	
