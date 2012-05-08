@@ -39,22 +39,13 @@
     android:background="#000"
     />
 	
-	<com.admob.android.ads.AdView
-	android:id="@+id/ad"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_above="@id/sep"
-	myapp:backgroundColor="#216C2A"
-	
-	myapp:primaryTextColor="#FFFFFF"
-	myapp:secondaryTextColor="#CCCCCC"
-	/>
+
 	
 	<ListView android:id="@+id/transactionListView" 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:layout_below="@id/header"
-		android:layout_above="@id/ad">
+		android:layout_above="@id/sep">
 	</ListView>
 
 </RelativeLayout>

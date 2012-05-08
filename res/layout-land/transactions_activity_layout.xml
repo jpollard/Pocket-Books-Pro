@@ -33,15 +33,7 @@
 		
 		</LinearLayout>
 		
-	<com.admob.android.ads.AdView
-			android:id="@+id/ad"
-			android:layout_height="wrap_content"
-			myapp:backgroundColor="#216C2A"
-			myapp:primaryTextColor="#FFFFFF"
-			myapp:secondaryTextColor="#CCCCCC"
-			android:layout_width="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_alignParentBottom="true"/>
+
 			
 	<ListView android:id="@+id/transactionListView" 
 		android:layout_width="fill_parent"

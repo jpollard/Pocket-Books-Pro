@@ -1,6 +1,5 @@
 package com.pocketbooks;
 
-import com.admob.android.ads.AdView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +31,6 @@ public class AccountsActivity extends Activity{
 	LinearLayout mNewAccount;
 	LinearLayout header;
 	TextView headerId;
-	AdView adView;	
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -50,7 +48,6 @@ public class AccountsActivity extends Activity{
         headerId.setTextColor(Color.WHITE);
         headerId.setText("Pocket Books");
         list = (ListView) findViewById(R.id.accountNameListView);
-        adView = (AdView) findViewById(R.id.ad);
         
         final Intent newAccountIntent = new Intent(this, NewAccountActivity.class);
         final Intent transactionIntent = new Intent(this, TransactionsActivity.class);
@@ -114,7 +111,6 @@ public class AccountsActivity extends Activity{
 	public void onResume(){
 		super.onResume();
 		cursor.requery();
-		adView.requestFreshAd();
 	}
 	
 	@Override

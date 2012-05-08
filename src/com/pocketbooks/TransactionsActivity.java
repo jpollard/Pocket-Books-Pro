@@ -18,13 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-import com.admob.android.ads.AdManager;
-import com.admob.android.ads.AdView;
 
 public class TransactionsActivity extends Activity {
 	private static String TAG = "PocketBooks::Transactions Activity";
 	
-	AdView adView;
+	
 	ListView list;
 	AccountData transactions;
 	Cursor accountInfo;
@@ -57,7 +55,6 @@ public class TransactionsActivity extends Activity {
         startManagingCursor(accountInfo);
         
         //AdManager.setTestDevices( new String[] { "61288A13F61EE945752EE32D7DB60B3D" } );
-        adView = (AdView) findViewById(R.id.ad);
         
         mNewTransaction = (LinearLayout) findViewById(R.id.footer);
           
@@ -104,8 +101,6 @@ public class TransactionsActivity extends Activity {
     	Log.d(TAG, "" + accountInfo.getColumnCount());
     	updateBalance();
     	
-    	adView.requestFreshAd();
-    	adView.bringToFront();
     	    
     }
     
