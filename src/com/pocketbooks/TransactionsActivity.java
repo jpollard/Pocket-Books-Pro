@@ -1,14 +1,15 @@
 package com.pocketbooks;
 
 import java.math.BigDecimal;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -18,10 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-
 public class TransactionsActivity extends Activity {
-	private static String TAG = "PocketBooks::Transactions Activity";
-	
+	//private static String TAG = "PocketBooks::Transactions Activity";
+	PocketBooksApplication pb;
 	
 	ListView list;
 	AccountData transactions;
@@ -29,11 +29,14 @@ public class TransactionsActivity extends Activity {
 	Cursor cursor;
 	Intent transactionIntent;
 	Intent editTransactionIntent;
+	Intent prefsIntent;
+	Intent categoryIntent; 
 	TextView mAccountName;
 	TextView mAccountBalance;
 	LinearLayout mNewTransaction;
 	LinearLayout mHeader;
 	long id;
+	SharedPreferences prefs;
 	
     /** Called when the activity is first created. */
     @Override
@@ -41,7 +44,12 @@ public class TransactionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
+        prefsIntent = new Intent(this, Prefs.class);
+        categoryIntent = new Intent(this, CategoriesEditActivity.class);
+        editTransactionIntent = new Intent(this, TransactionActivity.class);
         
+        pb = (PocketBooksApplication) this.getApplication();
+        prefs = pb.getPrefs();
         setContentView(R.layout.transactions_activity_layout);
         
         mHeader = (LinearLayout) findViewById(R.id.header);
@@ -55,7 +63,6 @@ public class TransactionsActivity extends Activity {
         startManagingCursor(accountInfo);
         
         //AdManager.setTestDevices( new String[] { "61288A13F61EE945752EE32D7DB60B3D" } );
-        
         mNewTransaction = (LinearLayout) findViewById(R.id.footer);
           
         mNewTransaction.setOnClickListener(new OnClickListener(){
@@ -63,52 +70,54 @@ public class TransactionsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(newTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id));
+				editTransactionIntent.putExtra("edit", false);
+				editTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id);
+				startActivity(editTransactionIntent);
 			}
         	
         });  
         
         list = (ListView) findViewById(R.id.transactionListView);
         
-        Log.d(TAG, "Getting transactions");
+        //Log.d(TAG, "Getting transactions");
         cursor = transactions.getTransactions(id);
         startManagingCursor(cursor);
         
         int[] to = {R.id.transaction_name, R.id.transaction_amount, R.id.transaction_date, R.id.transaction_category, R.id.transaction_memo};
         String[] from = {AccountData.TRANSACTION_NAME, AccountData.TRANSACTION_AMOUNT, AccountData.TRANSACTION_DATE, AccountData.TRANSACTION_CATEGORY, AccountData.TRANSACTION_MEMO};
         
-        Log.d(TAG, "Starting adapter");
+        //Log.d(TAG, "Starting adapter");
        // SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
-       TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to);
+       TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, cursor, from, to, prefs.getBoolean("category", false));
 
 
-        Log.d(TAG, "Setting adapter");
+        //Log.d(TAG, "Setting adapter");
         
         list.setAdapter(adapter);
         registerForContextMenu(list);
         
     }
     
-    @Override
+
+	@Override
     public void onResume(){
     	//TODO SET Header method 
     	super.onResume();
-    	Log.d(TAG, "transactionActivity: onResume");
+    	//Log.d(TAG, "transactionActivity: onResume");
     	accountInfo.requery();
     	cursor.requery();
     	
     	accountInfo.moveToFirst();
-    	Log.d(TAG, "" + accountInfo.getColumnCount());
-    	updateBalance();
     	
-    	    
+    	//Log.d(TAG, "" + accountInfo.getColumnCount());
+    	updateBalance();
     }
     
     
     @Override
     public void onPause(){
     	super.onPause();
-    	Log.d(TAG, "transactionActivity: onPause");
+    	//Log.d(TAG, "transactionActivity: onPause");
     	accountInfo.deactivate();
     	cursor.deactivate();
     }
@@ -116,7 +125,7 @@ public class TransactionsActivity extends Activity {
     @Override
     public void onStop(){
     	super.onStop();
-    	Log.d(TAG, "transactionActivity: onStop");
+    	//Log.d(TAG, "transactionActivity: onStop");
     }
     
     @Override
@@ -157,19 +166,21 @@ public class TransactionsActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo ){
     	super.onCreateContextMenu(menu, v, menuInfo);
     	
-    	menu.setHeaderTitle("Transactions Options");
-    	menu.add(0, 0, 0, "Edit");
-    	menu.add(0, 1, 0, "Delete");
+    	menu.setHeaderTitle(R.string.options);
+    	menu.add(0, 0, 0, R.string.edit);
+    	menu.add(0, 1, 0, R.string.delete);
     }
     
-    @Override
+
+
+	@Override
     public boolean onContextItemSelected(MenuItem item){
     	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     	
     	switch(item.getItemId()){
     		case 0:
-    			editTransactionIntent = new Intent(this, EditTransactionActivity.class);
-    			Log.d(TAG, "id of editTran " + info.id);
+    			//Log.d(TAG, "id of editTran " + info.id);
+    			editTransactionIntent.putExtra("edit", true);
     			editTransactionIntent.putExtra(AccountData.TRANSACTION_ID, info.id);
     			startActivity(editTransactionIntent);
     			return true;
@@ -187,4 +198,42 @@ public class TransactionsActivity extends Activity {
     	}
     	return false;
     }
+    
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_category_menu, menu);
+        return true;
+	}
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	// TODO Auto-generated method stub
+    	
+    	if(prefs.getBoolean("category", false)){
+    		menu.findItem(R.id.categories).setEnabled(true);
+    		menu.findItem(R.id.categories).setVisible(true);
+    	} else {
+    		menu.findItem(R.id.categories).setEnabled(false);
+    		menu.findItem(R.id.categories).setVisible(false);
+    	}
+    	
+    	return super.onPrepareOptionsMenu(menu);
+    }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		//return super.onOptionsItemSelected(item);
+		switch(item.getItemId()){
+			case R.id.preferences:
+				startActivity(prefsIntent);
+				return true;
+			case R.id.categories:
+				startActivity(categoryIntent);
+				return true;
+		}
+		return false;
+	}
+
 }

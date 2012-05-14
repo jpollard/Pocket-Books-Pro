@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Pocket Books</string>
+    <string name="new_account_title">Nueva Cuenta</string>
+    <string name="new_account">Crear una cuenta neuva.</string>
+    <string name="add_new_account">Nueva cuenta</string>
+    <string name="done_button">Hecho</string>
+    <string name="new_account_name_hint">Nombre de la cuenta</string>
+    <string name="new_account_balance_hint">Saldo Inicial</string>
+    <string name="new_transaction">Neuva Transacción</string>
+    <string name="edit_transaction">Edición de Transacción</string>
+    <string name="payee">Beneficiario:</string>
+    <string name="transaction_name_hint">Transacción nombre.</string>
+    <string name="deposit">Depósito</string>
+    <string name="withdrawal">Retirada</string>
+    <string name="amount">Cantidad:</string>
+    <string name="transaction_amount_hint">Monto de la transacción.</string>
+    <string name="date">Fecha:</string>
+    <string name="note">Nota:</string>
+    <string name="transaction_note_hint">Notas de transacción.</string>
+    <string name="add_new_transaction">Neuva transacción.</string>
+    <string name="delete">Borrar</string>
+    <string name="edit">Editar</string>
+    <string name="options">Opiciones</string>
+    
+</resources>
