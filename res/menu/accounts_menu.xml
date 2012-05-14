@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:enabled="true" android:checkable="false" 
-        android:title="@string/delete" 
-        android:checked="false" 
-        android:titleCondensed="@string/delete" 
-        android:id="@+id/account_delete" 
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/account_edit"
+        android:enabled="true"
+        android:title="@string/edit"
+        android:titleCondensed="@string/edit"
         android:visible="true">
-        
     </item>
-    <item android:id="@+id/account_edit" android:title="Edit" android:titleCondensed="Edit" android:enabled="true" android:visible="true"></item>
-    
+    <item
+        android:id="@+id/account_delete"
+        android:checkable="false"
+        android:checked="false"
+        android:enabled="true"
+        android:title="@string/delete"
+        android:titleCondensed="@string/delete"
+        android:visible="true">
+    </item>
+
 </menu>
