@@ -1,4 +1,4 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import android.app.Application;
 import android.content.SharedPreferences;

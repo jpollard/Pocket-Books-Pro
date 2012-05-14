@@ -1,4 +1,4 @@
-package com.pocketbooks;
+package com.happyrobotics.pocketbookspro;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -11,6 +11,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
+import com.pocketbooks.R;
 
 
 import android.content.ContentValues;
