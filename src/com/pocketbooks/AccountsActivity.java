@@ -142,11 +142,16 @@ public class AccountsActivity extends Activity{
 		cursor.requery();
 		accountsSum.requery();
 		accountsSum.moveToFirst();
-		
-		sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
-		sum = sum.movePointLeft(2);
-		
-		headerSum.setText(sum.toPlainString());
+		Log.d(TAG, " " + accountsSum.getCount());
+		if(1 < accountsSum.getCount()){
+			try{
+				sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+			} catch(NumberFormatException e){
+				Log.d(TAG, " " + e);
+			}
+			sum = sum.movePointLeft(2);
+			headerSum.setText(sum.toPlainString());
+		}
 		
 	}
 	

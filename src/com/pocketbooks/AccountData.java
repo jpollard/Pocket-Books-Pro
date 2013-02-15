@@ -12,7 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,6 +19,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.util.Log;
 
 public class AccountData {
 	public static int GREEN = Color.parseColor("#216C2A");
@@ -46,7 +46,7 @@ public class AccountData {
 	DecimalFormat myFormatter = (DecimalFormat) NumberFormat
 			.getInstance(Locale.US);
 
-	// private static final String TAG = AccountData.class.getSimpleName();
+	private static final String TAG = AccountData.class.getSimpleName();
 	Context context;
 	DBHelper dbHelper;
 	String tableName;
@@ -85,7 +85,8 @@ public class AccountData {
 	 * into the ACCOUNTS_TABLE.ACCOUNT_NAME column and "100.00" into
 	 * ACCOUNTS_TABLE.ACCOUNT_BALANCE.
 	 * 
-	 * @param name, balance
+	 * @param name
+	 *            , balance
 	 */
 	public void createAccount(String name, BigDecimal balance) {
 		ContentValues values = new ContentValues();
@@ -115,19 +116,19 @@ public class AccountData {
 		}
 	}
 
-	public Cursor getAccountsSum(){
+	public Cursor getAccountsSum() {
 		Cursor cursor;
-		
+
 		db = dbHelper.getReadableDatabase();
-		sql = "SELECT SUM(" + ACCOUNT_BALANCE + ") AS " + ACCOUNT_BALANCE + " FROM " + DBHelper.ACCOUNTS_TABLE;
+		sql = "SELECT SUM(" + ACCOUNT_BALANCE + ") AS " + ACCOUNT_BALANCE
+				+ " FROM " + DBHelper.ACCOUNTS_TABLE;
 		cursor = db.rawQuery(sql, null);
-		
+
 		return cursor;
 	}
-	
-	
-	
-	/*** public Cursor getAccounts()
+
+	/***
+	 * public Cursor getAccounts()
 	 * 
 	 * returns a Cursor containing all the rows in ACCOUNTS_TABLE, unsorted.
 	 * 
@@ -138,7 +139,7 @@ public class AccountData {
 		Cursor cursor;
 
 		// String array of columns to get from query for the cursor
-		String[] columnsToQuery = {ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_BALANCE};
+		String[] columnsToQuery = { ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_BALANCE };
 
 		// Log.d(TAG, "Trying to open DB");
 		db = dbHelper.getReadableDatabase();
@@ -179,7 +180,7 @@ public class AccountData {
 	public Cursor getAccountInfo(Long id) {
 		// Log.d(TAG, "trying to get account info for account_id " + id);
 		Cursor cursor;
-		String[] columnsToQuery = {ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_BALANCE};
+		String[] columnsToQuery = { ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_BALANCE };
 		// Log.d(TAG, "Trying to open DB");
 
 		db = dbHelper.getReadableDatabase();
@@ -190,7 +191,7 @@ public class AccountData {
 		// cursor.toString());
 
 		// Log.d(TAG, "returning tables in a cursor");
-		
+
 		return cursor;
 	}
 
@@ -200,26 +201,28 @@ public class AccountData {
 	 * Get the details of the transaction that has the _id passed in by the
 	 * parameter.
 	 * 
-	 * @param id - the transaction id of the transaction that the info needs to come from
+	 * @param id
+	 *            - the transaction id of the transaction that the info needs to
+	 *            come from
 	 * @return - cursor populated with the request data
 	 */
 	public Cursor getTransactionInfo(long id) {
 		// Log.d(TAG, "trying to get transaction info for transaction_id " +
 		// id);
 		Cursor cursor;
-		String[] columnsToQuery = {AccountData.TRANSACTION_ID, AccountData.TRANSACTION_NAME,
-				AccountData.TRANSACTION_AMOUNT, AccountData.TRANSACTION_DATE,
-				AccountData.TRANSACTION_CATEGORY, AccountData.TRANSACTION_MEMO};
+		String[] columnsToQuery = { AccountData.TRANSACTION_ID,
+				AccountData.TRANSACTION_NAME, AccountData.TRANSACTION_AMOUNT,
+				AccountData.TRANSACTION_DATE, AccountData.TRANSACTION_CATEGORY,
+				AccountData.TRANSACTION_MEMO };
 		db = dbHelper.getReadableDatabase();
 
 		cursor = db.query(DBHelper.TRANSACTIONS_TABLE, columnsToQuery,
-				TRANSACTION_ID + " LIKE " + Long.toString(id), null, null, null, null);
+				TRANSACTION_ID + " LIKE " + Long.toString(id), null, null,
+				null, null);
 		// Log.d(TAG,cursor.toString());
-		
-		
-		
+
 		// Investigate the complaints of the db not being closed.
-		// db.close(); 
+		// db.close();
 		return cursor;
 	}
 
@@ -237,21 +240,28 @@ public class AccountData {
 	public Cursor getTransactions(long id) {
 		// Log.d(TAG, "Trying to get transactions");
 		Cursor cursor;
-		String[] columnsToQuery = {TRANSACTION_ID, TRANSACTION_ACCOUNT_ID,
+		String[] columnsToQuery = { TRANSACTION_ID, TRANSACTION_ACCOUNT_ID,
 				TRANSACTION_NAME, TRANSACTION_AMOUNT, TRANSACTION_DATE,
-				TRANSACTION_CATEGORY, TRANSACTION_MEMO};
+				TRANSACTION_CATEGORY, TRANSACTION_MEMO };
 
 		// Log.d(TAG, "Trying to open DB");
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		// Log.d(TAG, "Opened DB");
 
 		// Log.d(TAG, "Querying DB");
-		
-		//*works******cursor = db.query(DBHelper.TRANSACTIONS_TABLE, columnsToQuery, TRANSACTION_ACCOUNT_ID + " like " + id, null, null, null, TRANSACTION_DATE + " DESC");
-		//String sql = String.format("SELECT %s, %s, %s, %s, %s, (SELECT income_categories FROM income WHERE income._id = %s.%s) FROM %s WHERE %s LIKE %s" , 
-		//		TRANSACTION_ID, TRANSACTION_ACCOUNT_ID, TRANSACTION_NAME, TRANSACTION_AMOUNT, TRANSACTION_DATE, DBHelper.TRANSACTIONS_TABLE, TRANSACTION_CATEGORY, DBHelper.TRANSACTIONS_TABLE, ACCOUNT_ID, id);
-		
-		String sql = "select _id, account_id, transaction_amount,  transaction_date, transaction_name, transaction_memo,(Select categories.transaction_category from categories where categories._id = pocketBooksTransactions.transaction_category) AS transaction_category From pocketBooksTransactions WHERE account_id LIKE "+ id +" ORDER BY transaction_date DESC";
+
+		// *works******cursor = db.query(DBHelper.TRANSACTIONS_TABLE,
+		// columnsToQuery, TRANSACTION_ACCOUNT_ID + " like " + id, null, null,
+		// null, TRANSACTION_DATE + " DESC");
+		// String sql =
+		// String.format("SELECT %s, %s, %s, %s, %s, (SELECT income_categories FROM income WHERE income._id = %s.%s) FROM %s WHERE %s LIKE %s"
+		// ,
+		// TRANSACTION_ID, TRANSACTION_ACCOUNT_ID, TRANSACTION_NAME,
+		// TRANSACTION_AMOUNT, TRANSACTION_DATE, DBHelper.TRANSACTIONS_TABLE,
+		// TRANSACTION_CATEGORY, DBHelper.TRANSACTIONS_TABLE, ACCOUNT_ID, id);
+
+		String sql = "select _id, account_id, transaction_amount,  transaction_date, transaction_name, transaction_memo,(Select categories.transaction_category from categories where categories._id = pocketBooksTransactions.transaction_category) AS transaction_category From pocketBooksTransactions WHERE account_id LIKE "
+				+ id + " ORDER BY transaction_date DESC";
 		cursor = db.rawQuery(sql, null);
 		// Log.d(TAG, "returning tables in a cursor");
 		// Log.d(TAG,
@@ -261,92 +271,100 @@ public class AccountData {
 	}
 
 	/***
-	 * Returns a cursor populated with a list of categories that are a part of category type, income or expenses.
-	 *
+	 * Returns a cursor populated with a list of categories that are a part of
+	 * category type, income or expenses.
+	 * 
 	 * @param categoryType
 	 * @return
 	 */
 	public Cursor getCategories(String categoryType) {
 		// Log.d(TAG, "Trying to get transactions");
 		Cursor cursor;
-		String[] columnsToQuery = {ACCOUNT_ID, TRANSACTION_CATEGORY, CATEGORY_TYPE};
+		String[] columnsToQuery = { ACCOUNT_ID, TRANSACTION_CATEGORY,
+				CATEGORY_TYPE };
 
 		// Log.d(TAG, "Trying to open DB");
 		db = dbHelper.getReadableDatabase();
 		// Log.d(TAG, "Opened DB");
 
 		// Log.d(TAG, "Querying DB");
-		cursor = db.query(CATEGORY_TABLE, columnsToQuery, CATEGORY_TYPE + " like \""+ categoryType + "\" ", null, null, null,
-				null);
+		cursor = db.query(CATEGORY_TABLE, columnsToQuery, CATEGORY_TYPE
+				+ " like \"" + categoryType + "\" ", null, null, null, null);
 		// Log.d(TAG, "returning tables in a cursor");
 		// Log.d(TAG,
 		// cursor.getColumnName(cursor.getColumnIndex(TRANSACTION_ID)));
 
 		return cursor;
 	}
-	
+
 	/***
 	 * <b> public void addCategory(String categoryName, char categoryType) </b>
 	 * 
-	 * Adds a category of categoryType (I = income, E = expense) with categoryName as its identifier.
+	 * Adds a category of categoryType (I = income, E = expense) with
+	 * categoryName as its identifier.
 	 * 
 	 * @param categoryName
 	 * @param categoryType
 	 */
-	public void addCategory(String categoryName, char categoryType){
+	public void addCategory(String categoryName, char categoryType) {
 		db = dbHelper.getWritableDatabase();
-		
+
 		ContentValues values = new ContentValues();
 		values.put(TRANSACTION_CATEGORY, categoryName);
 		values.put(CATEGORY_TYPE, Character.toString(categoryType));
-		
+
 		db.insert(CATEGORY_TABLE, null, values);
 		db.close();
 	}
-	
-	public void deleteCategory(long id){
+
+	public void deleteCategory(long id) {
 		db = dbHelper.getWritableDatabase();
-		
+
 		db.delete(CATEGORY_TABLE, "_id = " + id, null);
-		
+
 	}
-	
-	 /* <b> public Cursor getCategoryInfo(Long id) </b>
+
+	/*
+	 * <b> public Cursor getCategoryInfo(Long id) </b>
 	 * 
 	 * Get the details of the category that has the _id passed in by the
 	 * parameter.
 	 * 
-	 * @param id - the transaction id of the transaction that the info needs to come from
+	 * @param id - the transaction id of the transaction that the info needs to
+	 * come from
+	 * 
 	 * @return - cursor populated with the request data
 	 */
 	public Cursor getCategoryInfo(long id) {
 		// Log.d(TAG, "trying to get transaction info for transaction_id " +
 		// id);
 		Cursor cursor;
-		String[] columnsToQuery = {TRANSACTION_ID, AccountData.CATEGORY_TYPE,
-				AccountData.TRANSACTION_CATEGORY};
+		String[] columnsToQuery = { TRANSACTION_ID, AccountData.CATEGORY_TYPE,
+				AccountData.TRANSACTION_CATEGORY };
 		db = dbHelper.getReadableDatabase();
 
-		cursor = db.query(CATEGORY_TABLE, columnsToQuery,
-				TRANSACTION_ID + " LIKE " + Long.toString(id), null, null, null, null);
+		cursor = db.query(CATEGORY_TABLE, columnsToQuery, TRANSACTION_ID
+				+ " LIKE " + Long.toString(id), null, null, null, null);
 		// Log.d(TAG,cursor.toString());
-		
-		
-		
+
 		// Investigate the complaints of the db not being closed.
-		// db.close(); 
+		// db.close();
 		return cursor;
 	}
-	
+
 	/**
-	 * <b> public void updateTransaction (long id, String categoryName, String categoryType)</b>
+	 * <b> public void updateTransaction (long id, String categoryName, String
+	 * categoryType)</b>
 	 * 
 	 * Update the transaction represented by id to the new values that have been
 	 * passed in.
 	 * 
-	 * @param id - the category id
-	 * @param categoryName - the name/description of the category
-	 * @param categoryType - the type of category, E - expense: I - income:
+	 * @param id
+	 *            - the category id
+	 * @param categoryName
+	 *            - the name/description of the category
+	 * @param categoryType
+	 *            - the type of category, E - expense: I - income:
 	 * 
 	 */
 	public void updateCategory(long id, String categoryName, String categoryType) {
@@ -386,7 +404,7 @@ public class AccountData {
 	 * 
 	 */
 	public void addTransaction(long id, String payee, BigDecimal amount,
-			long date, long  catId,  String memo) {
+			long date, long catId, String memo) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 		amount = amount.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -459,7 +477,7 @@ public class AccountData {
 
 		db.delete(DBHelper.TRANSACTIONS_TABLE, "_id = " + id, null);
 	}
-	
+
 	/**
 	 * 
 	 * @author jwp
@@ -493,51 +511,49 @@ public class AccountData {
 
 				// Create Transactions table
 				sql = String
-						.format(
-								"CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-										+ "account_id INTEGER REFERENCES %s(_id) NOT NULL, "
-										+ "transaction_number INTEGER, transaction_amount INTEGER, "
-										+ "transaction_name CHARVAR, "
-										+ "transaction_memo CHARVAR, "
-										+ "transaction_category CHARVAR, "
-										+ "transaction_date DATE)",
-								TRANSACTIONS_TABLE, ACCOUNTS_TABLE);
+						.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+								+ "account_id INTEGER REFERENCES %s(_id) NOT NULL, "
+								+ "transaction_number INTEGER, transaction_amount INTEGER, "
+								+ "transaction_name CHARVAR, "
+								+ "transaction_memo CHARVAR, "
+								+ "transaction_category CHARVAR, "
+								+ "transaction_date DATE)", TRANSACTIONS_TABLE,
+								ACCOUNTS_TABLE);
 				// Log.d(TAG, "createTable sql: " + sql);
 				db.execSQL(sql);
 
 				// Create Categories table
-				sql = String.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, %s CHARVAR, %s CHARVAR)",
-								CATEGORY_TABLE, TRANSACTION_CATEGORY, CATEGORY_TYPE);
+				sql = String
+						.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, %s CHARVAR, %s CHARVAR)",
+								CATEGORY_TABLE, TRANSACTION_CATEGORY,
+								CATEGORY_TYPE);
 				db.execSQL(sql);
 
 				// Create insert trigger
 				sql = String
-						.format(
-								"CREATE TRIGGER transaction_insert_trigger BEFORE INSERT ON %s "
-										+ "BEGIN "
-										+ "UPDATE %s SET "
-										+ "account_balance = (account_balance + new.transaction_amount) "
-										+ "WHERE _id = new.account_id; end;",
+						.format("CREATE TRIGGER transaction_insert_trigger BEFORE INSERT ON %s "
+								+ "BEGIN "
+								+ "UPDATE %s SET "
+								+ "account_balance = (account_balance + new.transaction_amount) "
+								+ "WHERE _id = new.account_id; end;",
 								TRANSACTIONS_TABLE, ACCOUNTS_TABLE);
 				db.execSQL(sql);
 
 				// Create account delete trigger
 				sql = String
-						.format(
-								"CREATE TRIGGER account_delete_trigger BEFORE DELETE ON %s "
-										+ "BEGIN "
-										+ "DELETE FROM %s WHERE account_id = old._id; end; ",
+						.format("CREATE TRIGGER account_delete_trigger BEFORE DELETE ON %s "
+								+ "BEGIN "
+								+ "DELETE FROM %s WHERE account_id = old._id; end; ",
 								ACCOUNTS_TABLE, TRANSACTIONS_TABLE);
 				db.execSQL(sql);
 
 				// Create transaction delete trigger
 				sql = String
-						.format(
-								"CREATE TRIGGER transaction_delete_trigger BEFORE DELETE ON %s "
-										+ "BEGIN "
-										+ "UPDATE %s SET "
-										+ "account_balance = (account_balance - old.transaction_amount) "
-										+ "WHERE _id = old.account_id; end;",
+						.format("CREATE TRIGGER transaction_delete_trigger BEFORE DELETE ON %s "
+								+ "BEGIN "
+								+ "UPDATE %s SET "
+								+ "account_balance = (account_balance - old.transaction_amount) "
+								+ "WHERE _id = old.account_id; end;",
 								TRANSACTIONS_TABLE, ACCOUNTS_TABLE);
 				// Log.d(TAG, sql);
 				db.execSQL(sql);
@@ -548,42 +564,42 @@ public class AccountData {
 				db.execSQL(sql);
 
 				// Create update trigger
-				sql = String.format(
-								"CREATE TRIGGER transaction_update_trigger BEFORE UPDATE ON %s "
-										+ "BEGIN "
-										+ "UPDATE %s SET "
-										+ "account_balance = (account_balance - old.transaction_amount + new.transaction_amount) "
-										+ "WHERE _id = old.account_id; end;",
+				sql = String
+						.format("CREATE TRIGGER transaction_update_trigger BEFORE UPDATE ON %s "
+								+ "BEGIN "
+								+ "UPDATE %s SET "
+								+ "account_balance = (account_balance - old.transaction_amount + new.transaction_amount) "
+								+ "WHERE _id = old.account_id; end;",
 								TRANSACTIONS_TABLE, ACCOUNTS_TABLE);
 				db.execSQL(sql);
 
-				// Log.d(TAG,
-				// "done with TABLES############################################");
+				 Log.d(TAG, "done with TABLES############################################");
 				buildCategories(db);
-				
-				
-				
-				
-//				InputStream in = context.getResources().openRawResource(
-//						R.raw.income);
-//				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-//						.newDocumentBuilder();
-//				Document doc = builder.parse(in);
-//				NodeList list = doc.getElementsByTagName("item");
-//				NodeList typeList = doc.getElementsByTagName("type");
-//				for (int i = 0; i < list.getLength(); i++) {
-//					String item = list.item(i).getChildNodes().item(0).getNodeValue();
-//					String type = typeList.item(i).getChildNodes().item(0).getNodeValue();
-//					ContentValues val = new ContentValues();
-//					val.put(TRANSACTION_CATEGORY, item);
-//					val.put(CATEGORY_TYPE, type);
-//					db.insert(CATEGORY_TABLE, null, val);
-//
-//					// sql =
-//					// String.format("INSERT INTO %s (income_category) VALUES ('%s')",
-//					// INCOME_CATEGORIES);
-//					// db.execSQL(sql);
-//				}
+
+				// InputStream in = context.getResources().openRawResource(
+				// R.raw.income);
+				// DocumentBuilder builder =
+				// DocumentBuilderFactory.newInstance()
+				// .newDocumentBuilder();
+				// Document doc = builder.parse(in);
+				// NodeList list = doc.getElementsByTagName("item");
+				// NodeList typeList = doc.getElementsByTagName("type");
+				// for (int i = 0; i < list.getLength(); i++) {
+				// String item =
+				// list.item(i).getChildNodes().item(0).getNodeValue();
+				// String type =
+				// typeList.item(i).getChildNodes().item(0).getNodeValue();
+				// ContentValues val = new ContentValues();
+				// val.put(TRANSACTION_CATEGORY, item);
+				// val.put(CATEGORY_TYPE, type);
+				// db.insert(CATEGORY_TABLE, null, val);
+				//
+				// // sql =
+				// //
+				// String.format("INSERT INTO %s (income_category) VALUES ('%s')",
+				// // INCOME_CATEGORIES);
+				// // db.execSQL(sql);
+				// }
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				// Log.d(TAG,
@@ -595,7 +611,7 @@ public class AccountData {
 		public void buildCategories(SQLiteDatabase db) {
 			// Get the input stream from a raw resource
 			try {
-				
+
 				InputStream in = context.getResources().openRawResource(
 						R.raw.income);
 				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
@@ -604,35 +620,35 @@ public class AccountData {
 				NodeList list = doc.getElementsByTagName("item");
 				NodeList typeList = doc.getElementsByTagName("type");
 				for (int i = 0; i < list.getLength(); i++) {
-					
-					String item = list.item(i).getChildNodes().item(0).getNodeValue();
-					String type = typeList.item(i).getChildNodes().item(0).getNodeValue();
-					
+
+					String item = list.item(i).getChildNodes().item(0)
+							.getNodeValue();
+					String type = typeList.item(i).getChildNodes().item(0)
+							.getNodeValue();
+
 					ContentValues val = new ContentValues();
 					val.put(TRANSACTION_CATEGORY, item);
 					val.put(CATEGORY_TYPE, type);
-					
+
 					db.insert(CATEGORY_TABLE, null, val);
 
-					// sql =
-					// String.format("INSERT INTO %s (income_category) VALUES ('%s')",
-					// INCOME_CATEGORIES);
-					// db.execSQL(sql);
 				}
 			} catch (Throwable t) {
 
 			}
 		}
+
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
 
-			//TODO create category tables
-			
-			sql = String.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, %s CHARVAR, %s CHARVAR)",
-					CATEGORY_TABLE, TRANSACTION_CATEGORY, CATEGORY_TYPE);
+			// TODO create category tables
+
+			sql = String
+					.format("CREATE TABLE %s(_id INTEGER PRIMARY KEY AUTOINCREMENT, %s CHARVAR, %s CHARVAR)",
+							CATEGORY_TABLE, TRANSACTION_CATEGORY, CATEGORY_TYPE);
 			db.execSQL(sql);
-			
+
 			buildCategories(db);
 		}
 
