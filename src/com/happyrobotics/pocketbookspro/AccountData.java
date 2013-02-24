@@ -12,9 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import com.pocketbooks.R;
-
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

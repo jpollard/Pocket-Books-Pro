@@ -4,8 +4,6 @@ package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
 
-import com.pocketbooks.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
