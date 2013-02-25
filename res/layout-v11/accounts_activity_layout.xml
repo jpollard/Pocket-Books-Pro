@@ -5,10 +5,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="fill_parent"
@@ -44,9 +40,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/footer"
-        android:layout_below="@id/header"
-        android:background="#F6FFDA" 
-        android:cacheColorHint="#00000000">
+        android:background="#F6FFDA"
+        android:cacheColorHint="#00000000" >
+
     </ListView>
 
 </RelativeLayout>

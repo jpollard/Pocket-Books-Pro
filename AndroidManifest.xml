@@ -9,28 +9,29 @@
     <application
        android:icon="@drawable/ic_launcher" 
         android:label="@string/app_name"
-        android:theme="@style/headerBackground" android:name="com.happyrobotics.pocketbookspro.PocketBooksApplication" android:debuggable="true">
+        android:theme="@style/headerBackground" 
+        android:name="com.happyrobotics.pocketbookspro.PocketBooksApplication" >
         <activity
             android:label="@string/app_name"
-            android:name="com.pocketbooks.AccountsActivity" >
+            android:name="com.happyrobotics.pocketbooksproAccountsActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pocketbooks.NewAccountActivity" >
+        <activity android:name="com.happyrobotics.pocketbooksproNewAccountActivity" >
         </activity>
-        <activity android:name="com.pocketbooks.TransactionsActivity" >
+        <activity android:name="com.happyrobotics.pocketbooksproTransactionsActivity" >
         </activity>
-        <activity android:name="com.pocketbooks.CategoriesEditActivity" ></activity>
+        <activity android:name="com.happyrobotics.pocketbooksproCategoriesEditActivity" ></activity>
         <activity
-            android:name="com.pocketbooks.NewTransactionActivity"
+            android:name="com.happyrobotics.pocketbooksproNewTransactionActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" >
         </activity>
         <activity android:name=".TransactionActivity" >
         </activity>
-        <activity android:name="com.pocketbooks.Prefs"></activity>
+        <activity android:name="com.happyrobotics.pocketbooksproPrefs"></activity>
         <activity android:name="com.happyrobotics.pocketbookspro.NewCategory"></activity>
     </application>
 
