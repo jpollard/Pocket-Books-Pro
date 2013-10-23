@@ -3,8 +3,8 @@ package com.happyrobotics.pocketbookspro;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceManager;
 
 public class PocketBooksApplication extends Application implements OnPreferenceChangeListener{
 

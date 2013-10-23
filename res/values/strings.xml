@@ -29,4 +29,11 @@
     <string name="add_a_new_category_">Add a new category.</string>
     <string name="new_category">New Category</string>
     <string name="edit_categories">Categories</string>
+    <string name="total_funds">Available Funds</string>
+    <string name="pending">Pending</string>
+    <string name="reacentTransactions">Recent Transactions</string>
+    <string name="overviewTotalHeader">Funds</string>
+    <string name="account">Account</string>
+    <string name="ok">OK</string>
+    <string name="account_action">Action:</string>
 </resources>

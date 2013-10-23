@@ -3,8 +3,6 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import com.pocketbooks.R;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

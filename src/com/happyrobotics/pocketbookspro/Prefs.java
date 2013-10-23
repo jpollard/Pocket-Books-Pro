@@ -1,7 +1,6 @@
 package com.happyrobotics.pocketbookspro;
 
 
-import com.pocketbooks.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

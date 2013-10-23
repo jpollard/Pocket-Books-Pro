@@ -8,17 +8,17 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp" >
 
         <TextView
             android:id="@+id/header_account"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
-        </TextView>
+            android:text="@string/total_funds"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/header_balance"

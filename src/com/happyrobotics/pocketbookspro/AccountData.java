@@ -19,6 +19,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.util.Log;
 
 public class AccountData {
 	public static int GREEN = Color.parseColor("#216C2A");
@@ -45,7 +46,7 @@ public class AccountData {
 	DecimalFormat myFormatter = (DecimalFormat) NumberFormat
 			.getInstance(Locale.US);
 
-	// private static final String TAG = AccountData.class.getSimpleName();
+	private static final String TAG = AccountData.class.getSimpleName();
 	Context context;
 	DBHelper dbHelper;
 	String tableName;
@@ -243,7 +244,41 @@ public class AccountData {
 		// db.close(); 
 		return cursor;
 	}
+	
+	/**
+	 * 
+	 * Get the list of the last 30 "transactions" from the TRANSACTION_TABLE
+	 * 
+	 * public Cursor getTransactions()
+	 * 
+	 * @return - cursor of the transactions based on the id passed in.
+	 */
+	public Cursor getTransactions() {
+		// Log.d(TAG, "Trying to get transactions");
+		Cursor cursor;
+		String[] columnsToQuery = {TRANSACTION_ID, TRANSACTION_ACCOUNT_ID,
+				TRANSACTION_NAME, TRANSACTION_AMOUNT, TRANSACTION_DATE,
+				TRANSACTION_CATEGORY, TRANSACTION_MEMO};
 
+		// Log.d(TAG, "Trying to open DB");
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		// Log.d(TAG, "Opened DB");
+
+		// Log.d(TAG, "Querying DB");
+		cursor = db.query(DBHelper.TRANSACTIONS_TABLE, columnsToQuery, null, null, null, null, TRANSACTION_DATE + " DESC", "30");
+		//*works******cursor = db.query(DBHelper.TRANSACTIONS_TABLE, columnsToQuery, TRANSACTION_ACCOUNT_ID + " like " + id, null, null, null, TRANSACTION_DATE + " DESC");
+		//String sql = String.format("SELECT %s, %s, %s, %s, %s, (SELECT income_categories FROM income WHERE income._id = %s.%s) FROM %s WHERE %s LIKE %s" , 
+		//		TRANSACTION_ID, TRANSACTION_ACCOUNT_ID, TRANSACTION_NAME, TRANSACTION_AMOUNT, TRANSACTION_DATE, DBHelper.TRANSACTIONS_TABLE, TRANSACTION_CATEGORY, DBHelper.TRANSACTIONS_TABLE, ACCOUNT_ID, id);
+		
+		//String sql = "select _id, account_id, transaction_amount,  transaction_date, transaction_name, transaction_memo,(Select categories.transaction_category from categories where categories._id = pocketBooksTransactions.transaction_category) AS transaction_category From pocketBooksTransactions WHERE account_id LIKE "+ id +" ORDER BY transaction_date DESC";
+		//cursor = db.rawQuery(sql, null);
+		// Log.d(TAG, "returning tables in a cursor");
+		// Log.d(TAG,
+		// cursor.getColumnName(cursor.getColumnIndex(TRANSACTION_ID)));
+
+		return cursor;
+	}
+	
 	/**
 	 * 
 	 * Get the list of "transactions" from the TRANSACTION_TABLE based on the
@@ -502,7 +537,6 @@ public class AccountData {
 			// TODO Auto-generated method stub
 
 			try {
-				// TODO Create category table
 
 				// Create Accounts table
 				sql = String.format(
@@ -607,9 +641,8 @@ public class AccountData {
 //				}
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
-				// Log.d(TAG,
-				// "FAIL!!!__________________----------------------------------------------------------------------------------------------------------------- : "
-				// + e);
+				 Log.d(TAG,
+				 "FAIL!!!__________________----------------------------------------------------------------------------------------------------------------- : " + e);
 			}
 		}
 

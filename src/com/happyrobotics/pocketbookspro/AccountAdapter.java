@@ -1,6 +1,7 @@
 package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;

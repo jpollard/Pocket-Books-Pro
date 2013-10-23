@@ -4,13 +4,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.pocketbooks.R;
-
-
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +40,7 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 	 * @param to
 	 * @param showCategory - boolean to show categories in the cursor items.
 	 */
-	public TransactionAdapter(Context context, int layout, Cursor c,
-			String[] from, int[] to, boolean showCategory) {
+	public TransactionAdapter(Context context, int layout, Cursor c, String[] from, int[] to, boolean showCategory) {
 		super(context, layout, c, from, to);
 		// TODO Auto-generated constructor stub
 		this.context = context;
@@ -78,7 +72,7 @@ public class TransactionAdapter extends SimpleCursorAdapter{
 	public View getView(int position, View convertView, ViewGroup parent){
 		View v = super.getView(position, convertView, parent);
 		int colorPos = position % colors.length;
-		v.setBackgroundColor(colors[colorPos]);
+		//v.setBackgroundColor(colors[colorPos]);
 		return v;
 	}
 	

@@ -58,13 +58,14 @@ public class AccountsActivity extends Activity{
         setContentView(R.layout.accounts_activity_layout);
         
         //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.pocketbooks_header);
-        
-        header = (LinearLayout) findViewById(R.id.header);
-        header.setBackgroundColor(Color.parseColor("#216C2A")); 
-        headerId = (TextView) findViewById(R.id.header_account);
-        headerId.setTextColor(Color.WHITE);
-        headerId.setText("Pocket Books");
-        headerSum = (TextView) findViewById(R.id.header_balance);
+       // if(getActionBar() == null){
+//        header = (LinearLayout) findViewById(R.id.header);
+//        header.setBackgroundColor(Color.parseColor("#216C2A")); 
+//        headerId = (TextView) findViewById(R.id.header_account);
+//        headerId.setTextColor(Color.WHITE);
+//        headerId.setText("Pocket Books");
+//        headerSum = (TextView) findViewById(R.id.header_balance);
+//        //}
         sum = BigDecimal.ZERO;
         
         list = (ListView) findViewById(R.id.accountNameListView);
@@ -74,17 +75,17 @@ public class AccountsActivity extends Activity{
         categoriesEditIntent = new Intent(this, CategoriesEditActivity.class);
         prefIntent = new Intent(this, Prefs.class);
        
-        mNewAccount = (LinearLayout) findViewById(R.id.footer);  
-        mNewAccount.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				newAccountIntent.putExtra("edit", false);
-				startActivity(newAccountIntent);
-			}
-        	
-        }); 
+        //mNewAccount = (LinearLayout) findViewById(R.id.footer);  
+//        mNewAccount.setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				newAccountIntent.putExtra("edit", false);
+//				startActivity(newAccountIntent);
+//			}
+//        	
+//        }); 
         
         PreferenceManager.setDefaultValues(this, R.xml.settings, true);
        
@@ -154,7 +155,7 @@ public class AccountsActivity extends Activity{
 		}
 		
 		sum = sum.movePointLeft(2);
-		headerSum.setText(sum.toPlainString());
+		//headerSum.setText(sum.toPlainString());
 		
 	}
 	
@@ -212,7 +213,7 @@ public class AccountsActivity extends Activity{
     			}
     			
     			sum = sum.movePointLeft(2);
-    			headerSum.setText(sum.toPlainString());
+    			//headerSum.setText(sum.toPlainString());
     			return true;
     			
     		case R.id.account_edit:

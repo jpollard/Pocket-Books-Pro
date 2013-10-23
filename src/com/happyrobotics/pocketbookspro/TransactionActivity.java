@@ -3,12 +3,9 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import com.pocketbooks.R;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -17,36 +14,41 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class TransactionActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+
+
+public class TransactionActivity extends SherlockActivity {
 	// final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 
 	PocketBooksApplication pb;
 	AccountData transaction;
+	Spinner accountFromName;
+	Spinner accountToName;
+	Spinner actionSpinner;
 	EditText editTransactionName;
 	EditText editTransactionAmount;
 	EditText editTransactionDate;
 	Spinner editTransactionCategory;
 	EditText editTransactionMemo;
-	Button editTransactionDone;
+	Cursor accountsInfo;
 	Cursor editTransactionInfo;
+	Cursor actions;
 	Intent transactionIntent;
-	RadioGroup editRadioGroup;
-	RadioButton editDeposit;
-	RadioButton editWithdrawl;
+	
 	LinearLayout header;
 	TextView headerAccount;
 	long catId;
@@ -65,14 +67,8 @@ public class TransactionActivity extends Activity {
 	@Override
 	public void onCreate(Bundle SavedInstance) {
 		super.onCreate(SavedInstance);
-
+		getSupportActionBar();
 		setContentView(R.layout.new_transaction_activity_layout);
-
-		header = (LinearLayout) findViewById(R.id.header);
-		header.setBackgroundColor(AccountData.GREEN);
-
-		headerAccount = (TextView) findViewById(R.id.header_account);
-		headerAccount.setText(R.string.edit_transaction);
 
 		transaction = new AccountData(this);
 		pb = (PocketBooksApplication) this.getApplication();
@@ -80,48 +76,17 @@ public class TransactionActivity extends Activity {
 		prefs = pb.getPrefs();
 		catEnabled = prefs.getBoolean("category", false);
 
+		actionSpinner = (Spinner) findViewById(R.id.actionSpinner);
+		accountFromName = (Spinner) findViewById(R.id.account_From_Spinner);
+		accountToName = (Spinner) findViewById(R.id.account_To_Spinner);
 		editTransactionName = (EditText) findViewById(R.id.Payee_editText);
 		editTransactionAmount = (EditText) findViewById(R.id.amount_EditText);
 		editTransactionDate = (EditText) findViewById(R.id.date_EditText);
 		editTransactionCategory = (Spinner) findViewById(R.id.category_Spinner);
-		((TableRow) editTransactionCategory.getParent()).setVisibility(View.GONE);
 		editTransactionMemo = (EditText) findViewById(R.id.note_EditText);
-		editRadioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
-		editDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
-		editWithdrawl = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
-		editTransactionDone = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 		intentHasExtras = false;
 
-		transactionIntent = getIntent();
-
-		
-		
-//		if (transactionIntent.getBooleanExtra("edit", false)) {
-//
-//			editTransactionInfo = transaction.getTransactionInfo(id);
-//			editTransactionInfo.moveToFirst();
-//			startManagingCursor(editTransactionInfo);
-//
-//			catId = editTransactionInfo.getLong(editTransactionInfo.getColumnIndex(AccountData.TRANSACTION_CATEGORY));
-//		}
-		editDeposit.setChecked(true);
-
-		
-
-		editRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == editDeposit.getId() && catEnabled) {
-					editTransactionCategory.setAdapter(incomeAdapter);
-				}
-				if (checkedId == editWithdrawl.getId() && catEnabled) {
-					editTransactionCategory.setAdapter(expenseAdapter);
-				}
-
-			}
-		});
-		// Log.d(TAG, "GOT ID " + id);
+		transactionIntent = getIntent();		
 
 		editTransactionDate.setOnFocusChangeListener(new OnFocusChangeListener() {
 
@@ -149,37 +114,6 @@ public class TransactionActivity extends Activity {
 
 		});
 
-		editTransactionDone.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				BigDecimal newAmount = new BigDecimal("0.00").setScale(2,
-						BigDecimal.ROUND_HALF_UP);
-				if (editTransactionAmount.length() > 0) {
-					newAmount = new BigDecimal(editTransactionAmount.getText()
-							.toString());
-					if (editWithdrawl.isChecked()) {
-						newAmount = newAmount.negate();
-					}
-				}
-				Calendar cal = Calendar.getInstance();
-				cal.set(year, month, day);
-
-				// Log.d(TAG, "Trying to update");
-				if(transactionIntent.getBooleanExtra("edit", false)){
-					transaction.updateTransaction(id, editTransactionName.getText()
-						.toString(), newAmount, cal.getTimeInMillis(), catId,
-						editTransactionMemo.getText().toString());
-				} else {
-					transaction.addTransaction(id, editTransactionName.getText().toString(), newAmount, 
-							cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
-				}
-				finish();
-			}
-
-		});
 	}
 
 	@Override
@@ -319,7 +253,7 @@ public class TransactionActivity extends Activity {
 
 			if (amount.signum() < 0) {
 
-				editWithdrawl.setChecked(true);
+				//editWithdrawl.setChecked(true);
 				amount = amount.abs();
 
 				if (catEnabled) {
@@ -367,6 +301,45 @@ public class TransactionActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+	}
+
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflate = getSupportMenuInflater();
+		inflate.inflate(R.menu.new_transaction_activity_menu, menu);
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+		case R.id.Done:
+			BigDecimal newAmount = new BigDecimal("0.00").setScale(2,
+					BigDecimal.ROUND_HALF_UP);
+			if (editTransactionAmount.length() > 0) {
+				newAmount = new BigDecimal(editTransactionAmount.getText().toString());
+//				if (editWithdrawl.isChecked()) {
+//					newAmount = newAmount.negate();
+//				}
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.set(year, month, day);
+
+			// Log.d(TAG, "Trying to update");
+			if(transactionIntent.getBooleanExtra("edit", false)){
+				transaction.updateTransaction(id, editTransactionName.getText()
+					.toString(), newAmount, cal.getTimeInMillis(), catId,
+					editTransactionMemo.getText().toString());
+			} else {
+				transaction.addTransaction(id, editTransactionName.getText().toString(), newAmount, 
+						cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
+			}
+			finish();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
