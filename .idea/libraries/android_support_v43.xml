@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="android-support-v43">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/JakeWharton-ActionBarSherlock-e5c2d1c/samples/fragments/libs/android-support-v4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
