@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/new_transaction" android:titleCondensed="New" android:title="New Transaction" android:showAsAction="always"></item>
     <item android:id="@+id/transfer" android:titleCondensed="Transfer" android:title="Transfer Money" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/categories" android:title="Categories" android:showAsAction="ifRoom"></item><item android:id="@+id/preferences" android:title="Settings" android:showAsAction="never"></item>
+    
     
 
 </menu>

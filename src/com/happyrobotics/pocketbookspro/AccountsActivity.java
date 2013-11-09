@@ -4,21 +4,13 @@ package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,7 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AccountsActivity extends Activity{
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class AccountsActivity extends SherlockActivity{
 	private static final String TAG = "ListActivity: ";
 	PocketBooksApplication pb;
 	
@@ -181,56 +178,57 @@ public class AccountsActivity extends Activity{
 	}
 	
 	// Context Menu
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo ){
-    	super.onCreateContextMenu(menu, v, menuInfo);
-    	
-    	MenuInflater inflater =  getMenuInflater();
-    	inflater.inflate(R.menu.accounts_menu, menu);
-    	
-    }
-    
-    @Override
-    public boolean onContextItemSelected(MenuItem item){
-    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    	
-    	switch(item.getItemId()){
-    		case R.id.account_delete:
-    			//Log.d(TAG, "Deleting account with id " + info.id);
-    			accounts.deleteAccount(info.id);
-    			cursor.deactivate();
-    			cursor.requery();
-    			if(cursor.getCount() > 0){
-    				accountsSum = accounts.getAccountsSum();
-    				accountsSum.requery();
-    				accountsSum.moveToFirst();
-    			
-    				sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
-    				
-    			} else {
-    				hasAccounts = false;
-    				sum = BigDecimal.ZERO;
-    			}
-    			
-    			sum = sum.movePointLeft(2);
-    			//headerSum.setText(sum.toPlainString());
-    			return true;
-    			
-    		case R.id.account_edit:
-    			
-    			newAccountIntent.putExtra("edit", true);
-    			newAccountIntent.putExtra(AccountData.ACCOUNT_ID, info.id);
-    			//Start the account activity for editing;
-    			startActivity(newAccountIntent);
-    			return true;
-    			
-    	}
-    	return false;
-    }
-    
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo ){
+//    	super.onCreateContextMenu(menu, v, menuInfo);
+//    	
+//    	MenuInflater inflater =  getSupportMenuInflater();
+//    	inflater.inflate(R.menu.accounts_menu, menu);
+//    	
+//    }
+//    
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item){
+//    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+//    	
+//    	switch(item.getItemId()){
+//    		case R.id.account_delete:
+//    			//Log.d(TAG, "Deleting account with id " + info.id);
+//    			accounts.deleteAccount(info.id);
+//    			cursor.deactivate();
+//    			cursor.requery();
+//    			if(cursor.getCount() > 0){
+//    				accountsSum = accounts.getAccountsSum();
+//    				accountsSum.requery();
+//    				accountsSum.moveToFirst();
+//    			
+//    				sum = new BigDecimal(accountsSum.getString(accountsSum.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+//    				
+//    			} else {
+//    				hasAccounts = false;
+//    				sum = BigDecimal.ZERO;
+//    			}
+//    			
+//    			sum = sum.movePointLeft(2);
+//    			//headerSum.setText(sum.toPlainString());
+//    			return true;
+//    			
+//    		case R.id.account_edit:
+//    			
+//    			newAccountIntent.putExtra("edit", true);
+//    			newAccountIntent.putExtra(AccountData.ACCOUNT_ID, info.id);
+//    			//Start the account activity for editing;
+//    			startActivity(newAccountIntent);
+//    			return true;
+//    			
+//    	}
+//    	return false;
+//    }
+//    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    	super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
 
         

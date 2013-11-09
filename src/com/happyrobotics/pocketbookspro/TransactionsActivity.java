@@ -30,10 +30,8 @@ public class TransactionsActivity extends SherlockActivity {
 	Intent editTransactionIntent;
 	Intent prefsIntent;
 	Intent categoryIntent; 
-	TextView mAccountName;
+
 	TextView mAccountBalance;
-	LinearLayout mNewTransaction;
-	LinearLayout mHeader;
 	long id;
 	SharedPreferences prefs;
 	
@@ -42,7 +40,7 @@ public class TransactionsActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        final Intent newTransactionIntent = new Intent(this, NewTransactionActivity.class);
+        transactionIntent = new Intent(this, TransactionActivity.class);
         prefsIntent = new Intent(this, Prefs.class);
         categoryIntent = new Intent(this, CategoriesEditActivity.class);
         editTransactionIntent = new Intent(this, TransactionActivity.class);
@@ -52,10 +50,9 @@ public class TransactionsActivity extends SherlockActivity {
         setContentView(R.layout.transactions_activity_layout);
         getSupportActionBar();
         
-        mHeader = (LinearLayout) findViewById(R.id.header);
         transactions = new AccountData(this);
-        mAccountName = (TextView) findViewById(R.id.header_account);
-        mAccountBalance = (TextView) findViewById(R.id.header_balance);
+        
+        mAccountBalance = (TextView) findViewById(R.id.fundsTextView);
         transactionIntent = getIntent();
         id = transactionIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
         accountInfo = transactions.getAccountInfo(id);
@@ -64,19 +61,19 @@ public class TransactionsActivity extends SherlockActivity {
         
         //AdManager.setTestDevices( new String[] { "61288A13F61EE945752EE32D7DB60B3D" } );
                 
-        mNewTransaction = (LinearLayout) findViewById(R.id.footer);
-          
-        mNewTransaction.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				editTransactionIntent.putExtra("edit", false);
-				editTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id);
-				startActivity(editTransactionIntent);
-			}
-        	
-        });  
+//        mNewTransaction = (LinearLayout) findViewById(R.id.footer);
+//          
+//        mNewTransaction.setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				editTransactionIntent.putExtra("edit", false);
+//				editTransactionIntent.putExtra(AccountData.ACCOUNT_ID, id);
+//				startActivity(editTransactionIntent);
+//			}
+//        	
+//        });  
         
         list = (ListView) findViewById(R.id.transactionListView);
         
@@ -102,7 +99,7 @@ public class TransactionsActivity extends SherlockActivity {
 
 	@Override
     public void onResume(){
-    	//TODO SET Header method 
+
     	super.onResume();
     	//Log.d(TAG, "transactionActivity: onResume");
     	accountInfo.requery();
@@ -149,18 +146,17 @@ public class TransactionsActivity extends SherlockActivity {
     	BigDecimal accountBalance = new BigDecimal(amountNoDecimal);
     	accountBalance = accountBalance.movePointLeft(2);
     	
-    	mAccountBalance.setTextColor(Color.WHITE);
-    	mHeader.setBackgroundColor(AccountData.GREEN);
-    	if(accountBalance.signum() < 0){
-    		mHeader.setBackgroundColor(AccountData.RED);
-    	}
     	
-        mAccountName.setText(accountInfo.getString(accountInfo.getColumnIndex(AccountData.ACCOUNT_NAME)));
+    	//mHeader.setBackgroundColor(AccountData.GREEN);
+    	//if(accountBalance.signum() < 0){
+    	//	mHeader.setBackgroundColor(AccountData.RED);
+    	//}
+    	
+        setTitle(accountInfo.getString(accountInfo.getColumnIndex(AccountData.ACCOUNT_NAME)));
         mAccountBalance.setText(accountBalance.toPlainString());
         
     }
-    
-    
+       
     // Context Menu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo ){
@@ -171,8 +167,6 @@ public class TransactionsActivity extends SherlockActivity {
     	menu.add(0, 1, 0, R.string.delete);
     }
     
-
-
 	public boolean onContextItemSelected(MenuItem item){
 		
     	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
@@ -203,7 +197,7 @@ public class TransactionsActivity extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
     	com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.settings_category_menu, menu);
+        inflater.inflate(R.menu.overview_activity_menu, menu);
         return true;
 	}
 
@@ -224,17 +218,25 @@ public class TransactionsActivity extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		//return super.onOptionsItemSelected(item);
+		
 		switch(item.getItemId()){
-			case R.id.preferences:
-				startActivity(prefsIntent);
-				return true;
+			case R.id.new_transaction:
+				startActivity(transactionIntent);
+				break;
+			
+			case R.id.transfer:
+				startActivity(transactionIntent);
+				break;
+				
 			case R.id.categories:
 				startActivity(categoryIntent);
-				return true;
+				break;
+	
+			case R.id.preferences:
+				startActivity(prefsIntent);
+				break;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 
 }

@@ -39,6 +39,7 @@ public class OverviewActivity extends SherlockActivity {
 	Intent newAccountIntent;
 	Intent accountsIntent;
 	Intent transactionIntent;
+	Intent preferencesIntent;
 	
 	
 	@Override
@@ -48,6 +49,7 @@ public class OverviewActivity extends SherlockActivity {
 		newAccountIntent = new Intent(this, NewAccountActivity.class);
 		accountsIntent = new Intent(this, AccountsActivity.class);
 		transactionIntent = new Intent(this, TransactionActivity.class);
+		preferencesIntent = new Intent(this, Prefs.class);
 		accountCountCursor = accountData.getAccounts();
 		startManagingCursor(accountCountCursor);
 		
@@ -105,6 +107,16 @@ public class OverviewActivity extends SherlockActivity {
 		switch(item.getItemId()){
 		case R.id.new_transaction:
 			startActivity(transactionIntent);
+			break;
+		case R.id.transfer:
+			startActivity(transactionIntent);
+			break;
+		case R.id.categories:
+			// categories Intent
+			break;
+		case R.id.preferences:
+			startActivity(preferencesIntent);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
