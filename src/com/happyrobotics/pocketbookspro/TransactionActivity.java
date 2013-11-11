@@ -35,6 +35,7 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	// final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 
+	//test
 	PocketBooksApplication pb;
 	AccountData transaction;
 	Spinner accountFromName;
