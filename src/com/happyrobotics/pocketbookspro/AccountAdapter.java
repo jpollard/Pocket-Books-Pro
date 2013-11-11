@@ -55,7 +55,7 @@ public class AccountAdapter extends SimpleCursorAdapter {
 		TextView accountName = (TextView) view.findViewById(R.id.account_name);
 		TextView accountBalance = (TextView) view
 				.findViewById(R.id.account_balance);
-		accountName.setTextColor(AccountData.GREEN);
+		//accountName.setTextColor(AccountData.GREEN);
 		accountName.setText(cursor.getString(accountNameIndex));
 
 		// TODO Setup BigDecimal - CurrencyFormat
@@ -64,10 +64,10 @@ public class AccountAdapter extends SimpleCursorAdapter {
 		BigDecimal amount = new BigDecimal(amountNoDecimal);
 		amount = amount.movePointLeft(2);
 
-		accountBalance.setTextColor(AccountData.GREEN);
-		if (amount.signum() < 0) {
-			accountBalance.setTextColor(AccountData.RED);
-		}
+//		accountBalance.setTextColor(AccountData.GREEN);
+//		if (amount.signum() < 0) {
+//			accountBalance.setTextColor(AccountData.RED);
+//		}
 		accountBalance.setText(amount.toPlainString());
 
 	}
