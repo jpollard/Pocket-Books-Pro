@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.pocketbooks" android:versionName="1.01" android:versionCode="2">
-    <uses-sdk android:minSdkVersion="8"/>
+    package="com.happyrobotics.pocketbookspro"
+    android:versionCode="2"
+    android:versionName="1.01" >
 
-    <application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/headerBackground">
-        <activity android:name="AccountsActivity"
-                  android:label="@string/app_name">
-            <intent-filter>
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+    
+    <application
+       android:icon="@drawable/ic_launcher" 
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock.Light" 
+        android:name="com.happyrobotics.pocketbookspro.PocketBooksApplication" >
+        <activity android:name="OverviewActivity">
+             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="NewAccountActivity"></activity>
-        <activity android:name="TransactionsActivity"></activity>
-        <activity android:name="NewTransactionActivity" android:windowSoftInputMode="stateVisible|adjustPan"></activity>
-        <activity android:name="EditTransactionActivity"></activity>
+        <activity
+            android:label="@string/app_name"
+            android:name="com.happyrobotics.pocketbookspro.AccountsActivity" >
+           
+        </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.NewAccountActivity" >
+        </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.TransactionsActivity" >
+        </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.CategoriesEditActivity" ></activity>
+        <activity
+            android:name="com.happyrobotics.pocketbookspro.NewTransactionActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan" >
+        </activity>
+        <activity android:name=".TransactionActivity" >
+        </activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.Prefs"></activity>
+        <activity android:name="com.happyrobotics.pocketbookspro.NewCategory"></activity>
         
-        <!-- The application's publisher ID assigned by AdMob -->
-		<meta-data android:value="a14e4188f5617de" android:name="ADMOB_PUBLISHER_ID" />
-		
-		<!-- AdMobActivity definition -->
-		<activity android:name="com.admob.android.ads.AdMobActivity"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-			android:configChanges="orientation|keyboard|keyboardHidden" />
-
-		<!-- Track Market installs -->
-		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="com.android.vending.INSTALL_REFERRER" />
-			</intent-filter>
-		</receiver>
-        
-
     </application>
-    
-    <!-- AdMob SDK requires Internet permission -->
-	<uses-permission android:name="android.permission.INTERNET" />
-    
+
 </manifest>

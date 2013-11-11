@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="actions">
+        <item name="deposit" >Deposit</item>
+        <item name="withdraw">Withdraw</item>
+        <item name="transferTo">Transfer To</item>
+        <item name="tranferFrom">Transfer From</item>
+    </string-array>
+    
+</resources>

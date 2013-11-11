@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#F6FFDA" >
+
+    <include
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        layout="@layout/header" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupExpenseOrIncome"
+        android:layout_below="@id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radioButtonExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/expense"
+            android:textColor="#000" />
+
+        <RadioButton
+            android:id="@+id/radioButtonIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/income" 
+            android:textColor="#000" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#216C2A"
+        android:clickable="true"
+        android:focusable="true"
+        android:hapticFeedbackEnabled="true" >
+
+        <ImageView
+            android:id="@+id/addTransactionIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:contentDescription="@string/add_a_new_category_"
+            android:src="@android:drawable/ic_menu_add" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/addCategoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/new_category"
+            android:textColor="#FFF"
+            android:textSize="25dp" >
+        </TextView>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewCategories"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/radioGroupExpenseOrIncome"
+        android:cacheColorHint="#00000000" 
+        >
+
+    </ListView>
+
+</RelativeLayout>

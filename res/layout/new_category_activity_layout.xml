@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="#F6FFDA"
+    android:gravity="fill_horizontal" >
+
+    <include
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        layout="@layout/header" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupExpenseOrIncome"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radioButtonExpense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="@string/expense"
+            android:textColor="#000" />
+
+        <RadioButton
+            android:id="@+id/radioButtonIncome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="@string/income"
+            android:textColor="#000" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonDone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:text="@string/done_button" />
+
+    <TextView
+        android:id="@+id/textViewCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/radioGroupExpenseOrIncome"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/category_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/editTextCategoryName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewCategoryName"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:imeOptions="actionDone"
+        android:inputType="textAutoCorrect|textCapWords"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
