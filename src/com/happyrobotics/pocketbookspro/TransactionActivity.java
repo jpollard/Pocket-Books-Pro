@@ -17,12 +17,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -30,7 +31,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 
 
-public class TransactionActivity extends SherlockActivity {
+public class TransactionActivity extends SherlockActivity implements ActionBar.OnNavigationListener{
 	// final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 
@@ -44,7 +45,7 @@ public class TransactionActivity extends SherlockActivity {
 	EditText editTransactionDate;
 	Spinner editTransactionCategory;
 	EditText editTransactionMemo;
-	Cursor accountsInfo;
+	Cursor accountsInfoCursor;
 	Cursor editTransactionInfo;
 	Cursor actions;
 	Intent transactionIntent;
@@ -60,6 +61,7 @@ public class TransactionActivity extends SherlockActivity {
 	Cursor expenseCursor;
 	SimpleCursorAdapter incomeAdapter;
 	SimpleCursorAdapter expenseAdapter;
+	SimpleCursorAdapter accountsAdapter;
 	SharedPreferences prefs;
 	boolean catEnabled;
 	boolean intentHasExtras;
@@ -67,12 +69,25 @@ public class TransactionActivity extends SherlockActivity {
 	@Override
 	public void onCreate(Bundle SavedInstance) {
 		super.onCreate(SavedInstance);
-		getSupportActionBar();
+		final ActionBar actionbar = getSupportActionBar();
+		actionbar.setDisplayShowTitleEnabled(false);
+		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		
+		
 		setContentView(R.layout.new_transaction_activity_layout);
 
 		transaction = new AccountData(this);
 		pb = (PocketBooksApplication) this.getApplication();
-
+		
+		
+		accountsInfoCursor = transaction.getAccounts();
+		startManagingCursor(accountsInfoCursor);
+		String[] fromAccountInfo = {AccountData.ACCOUNT_NAME, AccountData.ACCOUNT_BALANCE};
+		int[] toAccountInfo = {R.id.account_name, R.id.account_balance};
+		accountsAdapter = new SimpleCursorAdapter(this,
+				R.layout.accounts_activity_listview_row, accountsInfoCursor, fromAccountInfo, toAccountInfo);
+		
+		actionbar.setListNavigationCallbacks(accountsAdapter, this);
 		prefs = pb.getPrefs();
 		catEnabled = prefs.getBoolean("category", false);
 
@@ -162,7 +177,7 @@ public class TransactionActivity extends SherlockActivity {
 		catEnabled = prefs.getBoolean("category", false);
 		
 		if (catEnabled) {
-			((TableRow) editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
+			((FrameLayout) editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
 			
 			editTransactionCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -349,6 +364,12 @@ public class TransactionActivity extends SherlockActivity {
 
 		editTransactionDate.setText(new StringBuilder().append(month + 1)
 				.append("/").append(day).append("/").append(year));
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
