@@ -72,6 +72,7 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 		final ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionbar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
 		
 		
 		setContentView(R.layout.new_transaction_activity_layout);
@@ -83,9 +84,9 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 		accountsInfoCursor = transaction.getAccounts();
 		startManagingCursor(accountsInfoCursor);
 		String[] fromAccountInfo = {AccountData.ACCOUNT_NAME, AccountData.ACCOUNT_BALANCE};
-		int[] toAccountInfo = {R.id.account_name, R.id.account_balance};
-		accountsAdapter = new SimpleCursorAdapter(this,
-				R.layout.accounts_activity_listview_row, accountsInfoCursor, fromAccountInfo, toAccountInfo);
+		int[] toAccountInfo = {R.id.account_name, R.id.account_balance, };
+		accountsAdapter = new AccountAdapter(this,
+				R.layout.actionbar_accounts_list_row, accountsInfoCursor, fromAccountInfo, toAccountInfo);
 		
 		actionbar.setListNavigationCallbacks(accountsAdapter, this);
 		prefs = pb.getPrefs();
