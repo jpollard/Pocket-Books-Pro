@@ -3,6 +3,8 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
@@ -10,6 +12,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -23,15 +28,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 
-
-public class TransactionActivity extends SherlockActivity implements ActionBar.OnNavigationListener{
+public class TransactionActivity extends Activity implements ActionBar.OnNavigationListener{
 	// final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 
@@ -70,7 +69,7 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	@Override
 	public void onCreate(Bundle SavedInstance) {
 		super.onCreate(SavedInstance);
-		final ActionBar actionbar = getSupportActionBar();
+		final ActionBar actionbar = getActionBar();
 		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionbar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
@@ -323,7 +322,7 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflate = getSupportMenuInflater();
+		MenuInflater inflate = getMenuInflater();
 		inflate.inflate(R.menu.new_transaction_activity_menu, menu);
 		
 		return super.onCreateOptionsMenu(menu);

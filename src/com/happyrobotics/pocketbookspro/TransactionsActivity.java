@@ -1,24 +1,23 @@
 package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
-public class TransactionsActivity extends SherlockActivity {
+public class TransactionsActivity extends Activity {
 	//private static String TAG = "PocketBooks::Transactions Activity";
 	PocketBooksApplication pb;
 	
@@ -48,7 +47,7 @@ public class TransactionsActivity extends SherlockActivity {
         pb = (PocketBooksApplication) this.getApplication();
         prefs = pb.getPrefs();
         setContentView(R.layout.transactions_activity_layout);
-        getSupportActionBar();
+        getActionBar();
         
         transactions = new AccountData(this);
         
@@ -196,7 +195,7 @@ public class TransactionsActivity extends SherlockActivity {
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
-    	com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
+    	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.overview_activity_menu, menu);
         return true;
 	}
