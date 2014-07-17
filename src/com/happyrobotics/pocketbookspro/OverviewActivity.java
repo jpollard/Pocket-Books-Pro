@@ -3,22 +3,21 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-public class OverviewActivity extends SherlockActivity {
+public class OverviewActivity extends Activity {
 	
 	private static String TAG = "PocketBOOKSPro  ";
 	
@@ -60,7 +59,7 @@ public class OverviewActivity extends SherlockActivity {
 			hasAccounts = true;
 		}
 		
-		getSupportActionBar();
+		getActionBar();
 		setContentView(R.layout.overview_activity_layout);
 		
 		overviewLayout = (LinearLayout) findViewById(R.id.overview);
@@ -93,7 +92,7 @@ public class OverviewActivity extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.overview_activity_menu, menu);
 		
 		return true;
