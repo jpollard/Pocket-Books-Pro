@@ -75,7 +75,7 @@ public class OverviewActivity extends Activity {
 		);
 		
 		
-		fundsTextView = (TextView) findViewById(R.id.fundsTextView);
+		fundsTextView = (TextView) overviewLayout.findViewById(R.id.fundsTextView);
 		currentMonthListView = (ListView) findViewById(R.id.listView1);
 		pb = (PocketBooksApplication) this.getApplication();
 		prefs = pb.getPrefs();
