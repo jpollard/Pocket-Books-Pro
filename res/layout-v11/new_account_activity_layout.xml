@@ -5,10 +5,6 @@
     android:background="#F6FFDA"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
     <EditText
         android:id="@+id/new_account_name_edit_text"
         android:layout_width="fill_parent"

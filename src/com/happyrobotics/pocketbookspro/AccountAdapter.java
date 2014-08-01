@@ -1,6 +1,7 @@
 package com.happyrobotics.pocketbookspro;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -63,7 +64,6 @@ public class AccountAdapter extends SimpleCursorAdapter {
 
 		BigDecimal amount = new BigDecimal(amountNoDecimal);
 		amount = amount.movePointLeft(2);
-
 //		accountBalance.setTextColor(AccountData.GREEN);
 //		if (amount.signum() < 0) {
 //			accountBalance.setTextColor(AccountData.RED);

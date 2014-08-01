@@ -529,7 +529,6 @@ public class AccountData {
 
 		public DBHelper() {
 			super(context, SQL_NAME, null, SQL_VERSION);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
@@ -640,7 +639,6 @@ public class AccountData {
 //					// db.execSQL(sql);
 //				}
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				 Log.d(TAG,
 				 "FAIL!!!__________________----------------------------------------------------------------------------------------------------------------- : " + e);
 			}
