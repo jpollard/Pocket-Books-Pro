@@ -40,6 +40,8 @@ public class OverviewActivity extends SherlockActivity {
 	Intent accountsIntent;
 	Intent transactionIntent;
 	Intent preferencesIntent;
+	Intent overviewIntent;
+	long accountId;
 	
 	
 	@Override
@@ -50,6 +52,8 @@ public class OverviewActivity extends SherlockActivity {
 		accountsIntent = new Intent(this, AccountsActivity.class);
 		transactionIntent = new Intent(this, TransactionActivity.class);
 		preferencesIntent = new Intent(this, Prefs.class);
+		overviewIntent = new Intent(this, OverviewActivity.class);
+		
 		accountCountCursor = accountData.getAccounts();
 		startManagingCursor(accountCountCursor);
 		
@@ -61,7 +65,7 @@ public class OverviewActivity extends SherlockActivity {
 		}
 		
 		getSupportActionBar();
-		setContentView(R.layout.overview_activity_layout);
+		setContentView(R.layout.overview_activity_layout_test);
 		
 		overviewLayout = (LinearLayout) findViewById(R.id.overview);
 		overviewLayout.setOnClickListener(new OnClickListener(){
@@ -72,8 +76,7 @@ public class OverviewActivity extends SherlockActivity {
 				
 			}
 			
-			}
-		);
+		});
 		
 		
 		fundsTextView = (TextView) findViewById(R.id.fundsTextView);
@@ -83,9 +86,6 @@ public class OverviewActivity extends SherlockActivity {
 		sum = BigDecimal.ZERO;
 		
 		fundsTextView.setText(sum.toString());
-		
-		
-		
 		
 	}
 
@@ -108,9 +108,6 @@ public class OverviewActivity extends SherlockActivity {
 		case R.id.new_transaction:
 			startActivity(transactionIntent);
 			break;
-		case R.id.transfer:
-			startActivity(transactionIntent);
-			break;
 		case R.id.categories:
 			// categories Intent
 			break;
@@ -125,6 +122,7 @@ public class OverviewActivity extends SherlockActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		accountId = overviewIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
 		monthInMillis = getCurrentMonth();
 		accountCountCursor = accountData.getAccounts();
 		
@@ -132,21 +130,26 @@ public class OverviewActivity extends SherlockActivity {
 			hasAccounts = true;
 		}
 		
-		if(hasAccounts){
+		if(hasAccounts && accountId == 0){
 			accountsSumCursor = accountData.getAccountsSum();
+			currentMonthTransactionsCursor = accountData.getTransactions();
+		} else {
+			accountsSumCursor = accountData.getAccountInfo(accountId);
+			currentMonthTransactionsCursor = accountData.getTransactions(accountId);
+		}
 			startManagingCursor(accountsSumCursor);
 			accountsSumCursor.requery();
 			accountsSumCursor.moveToFirst();
 		
 			sum = new BigDecimal(accountsSumCursor.getString(accountsSumCursor.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
-			currentMonthTransactionsCursor = accountData.getTransactions();
 			startManagingCursor(currentMonthTransactionsCursor);
 			currentMonthTransactionsCursor.moveToFirst();
 			int[] to = {R.id.transaction_name, R.id.transaction_amount, R.id.transaction_category, R.id.transaction_date, R.id.transaction_memo};
 			String[] from = {AccountData.TRANSACTION_NAME, AccountData.TRANSACTION_AMOUNT, AccountData.TRANSACTION_CATEGORY, AccountData.TRANSACTION_DATE, AccountData.TRANSACTION_MEMO};
 			TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, currentMonthTransactionsCursor, from, to, false);
 			currentMonthListView.setAdapter(adapter);
-		}
+		
+		
 		sum = sum.movePointLeft(2);
 		fundsTextView.setText(sum.toPlainString());
 	}

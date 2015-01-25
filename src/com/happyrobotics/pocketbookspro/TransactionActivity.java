@@ -10,20 +10,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -35,12 +37,12 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	// final static String TAG = EditTransactionActivity.class.getSimpleName();
 	private static final int DATE_DIALOG = 0;
 
-	//test
 	PocketBooksApplication pb;
 	AccountData transaction;
-	Spinner accountFromName;
-	Spinner accountToName;
+	TextView accountFromToTextView;
+	Spinner accountFromToSpinner;
 	Spinner actionSpinner;
+	TextView editTransactionNameTextView;
 	EditText editTransactionName;
 	EditText editTransactionAmount;
 	EditText editTransactionDate;
@@ -50,11 +52,12 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	Cursor editTransactionInfo;
 	Cursor actions;
 	Intent transactionIntent;
+
 	
-	LinearLayout header;
-	TextView headerAccount;
-	long catId;
+	//LinearLayout header;
 	long id;
+	long secondId;
+	long catId;
 	int year;
 	int month;
 	int day;
@@ -66,14 +69,21 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 	SharedPreferences prefs;
 	boolean catEnabled;
 	boolean intentHasExtras;
+	boolean transferTo;
+	boolean transferFrom;
+	
+
 
 	@Override
 	public void onCreate(Bundle SavedInstance) {
+		
+		
 		super.onCreate(SavedInstance);
 		final ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionbar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
+		
 		
 		
 		setContentView(R.layout.new_transaction_activity_layout);
@@ -84,23 +94,53 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 		
 		accountsInfoCursor = transaction.getAccounts();
 		startManagingCursor(accountsInfoCursor);
-		String[] fromAccountInfo = {AccountData.ACCOUNT_NAME, AccountData.ACCOUNT_BALANCE};
+		String[] fromAccountInfo = {AccountData.ACCOUNT_ID, AccountData.ACCOUNT_NAME, AccountData.ACCOUNT_BALANCE};
 		int[] toAccountInfo = {R.id.account_name, R.id.account_balance, };
 		accountsAdapter = new AccountAdapter(this,
 				R.layout.actionbar_accounts_list_row, accountsInfoCursor, fromAccountInfo, toAccountInfo);
 		
-		actionbar.setListNavigationCallbacks(accountsAdapter, this);
+		OnNavigationListener navigationListener = new OnNavigationListener() {
+			
+			
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				Log.d("PocketBOOKS", ""+ itemId);
+				id = itemId;
+				
+				return false;
+			}
+		};
+		actionbar.setListNavigationCallbacks(accountsAdapter, navigationListener);
 		prefs = pb.getPrefs();
 		catEnabled = prefs.getBoolean("category", false);
 
 		actionSpinner = (Spinner) findViewById(R.id.actionSpinner);
-		accountFromName = (Spinner) findViewById(R.id.account_From_Spinner);
-		accountToName = (Spinner) findViewById(R.id.account_To_Spinner);
+		editTransactionNameTextView = (TextView) findViewById(R.id.Payee_textView);
 		editTransactionName = (EditText) findViewById(R.id.Payee_editText);
 		editTransactionAmount = (EditText) findViewById(R.id.amount_EditText);
 		editTransactionDate = (EditText) findViewById(R.id.date_EditText);
 		editTransactionCategory = (Spinner) findViewById(R.id.category_Spinner);
 		editTransactionMemo = (EditText) findViewById(R.id.note_EditText);
+		accountFromToSpinner = (Spinner) findViewById(R.id.account_FromTo_Spinner);
+		accountFromToTextView = (TextView) findViewById(R.id.account_FromTo_TextView);
+		accountFromToSpinner.setAdapter(accountsAdapter);
+		accountFromToSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long id) {
+				// TODO Auto-generated method stub
+				secondId = id;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		});
+		
 		intentHasExtras = false;
 
 		transactionIntent = getIntent();		
@@ -130,6 +170,45 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 			}
 
 		});
+
+		//Setup the actionSpinner to display or hide different views based on the action selected.
+		ArrayAdapter<CharSequence> actionsArray = ArrayAdapter.createFromResource(this, R.array.actions, android.R.layout.simple_spinner_item);
+		actionSpinner.setAdapter(actionsArray);
+		
+		actionSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View item, int position, long id) {
+				if (position == 0 || position == 1){
+					accountFromToSpinner.setVisibility(View.GONE);
+					accountFromToTextView.setVisibility(View.GONE);
+					editTransactionName.setVisibility(View.VISIBLE);
+					editTransactionNameTextView.setVisibility(View.VISIBLE);
+				} else if (position == 2) {
+					transferTo = true;
+					transferFrom = false;
+					editTransactionName.setVisibility(View.GONE);
+					editTransactionNameTextView.setVisibility(View.GONE);
+					accountFromToSpinner.setVisibility(View.VISIBLE);
+					accountFromToTextView.setVisibility(View.VISIBLE);
+				} else if (position == 3) {
+					transferTo = false;
+					transferFrom = true;
+					editTransactionName.setVisibility(View.GONE);
+					editTransactionNameTextView.setVisibility(View.GONE);
+					accountFromToSpinner.setVisibility(View.VISIBLE);
+					accountFromToTextView.setVisibility(View.VISIBLE);
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		actionSpinner.setSelection(1);
 
 	}
 
@@ -178,6 +257,9 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 		prefs = pb.getPrefs();
 		catEnabled = prefs.getBoolean("category", false);
 		
+		
+		
+		
 		if (catEnabled) {
 			((FrameLayout) editTransactionCategory.getParent()).setVisibility(View.VISIBLE);
 			
@@ -213,6 +295,7 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 			editTransactionCategory.setAdapter(incomeAdapter);
 			
 		}
+		
 		if (incomeCursor != null) {
 			incomeCursor.requery();
 		}
@@ -334,13 +417,13 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
 		case R.id.Done:
-			BigDecimal newAmount = new BigDecimal("0.00").setScale(2,
-					BigDecimal.ROUND_HALF_UP);
+			
+			BigDecimal newAmount = new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP);
 			if (editTransactionAmount.length() > 0) {
 				newAmount = new BigDecimal(editTransactionAmount.getText().toString());
-//				if (editWithdrawl.isChecked()) {
-//					newAmount = newAmount.negate();
-//				}
+				if (actionSpinner.getSelectedItemPosition() == 1) {
+					newAmount = newAmount.negate();
+				}
 			}
 			Calendar cal = Calendar.getInstance();
 			cal.set(year, month, day);
@@ -350,7 +433,12 @@ public class TransactionActivity extends SherlockActivity implements ActionBar.O
 				transaction.updateTransaction(id, editTransactionName.getText()
 					.toString(), newAmount, cal.getTimeInMillis(), catId,
 					editTransactionMemo.getText().toString());
+			} else if (transferTo){
+				transaction.transferTransaction(id, secondId, newAmount, cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
+			} else if (transferFrom){
+				transaction.transferTransaction(secondId, id, newAmount, cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
 			} else {
+			
 				transaction.addTransaction(id, editTransactionName.getText().toString(), newAmount, 
 						cal.getTimeInMillis(), catId, editTransactionMemo.getText().toString());
 			}

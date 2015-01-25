@@ -49,8 +49,8 @@ public class CategoriesEditActivity extends Activity {
 
 		accountData = new AccountData(this);
 		radioGroupIncomeExpense = (RadioGroup) findViewById(R.id.radioGroupExpenseOrIncome);
-		radioButtonIncome = (RadioButton) findViewById(R.id.radioButtonIncome);
-		radioButtonExpense = (RadioButton) findViewById(R.id.radioButtonExpense);
+		//radioButtonIncome = (RadioButton) findViewById(R.id.radioButtonIncome);
+		//radioButtonExpense = (RadioButton) findViewById(R.id.radioButtonExpense);
 		textViewHeaderTitle = (TextView) findViewById(R.id.header_account);
 		listViewCategories = (ListView) findViewById(R.id.listViewCategories);
 		footer = (LinearLayout) findViewById(R.id.footer);
@@ -96,16 +96,16 @@ public class CategoriesEditActivity extends Activity {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						// TODO Auto-generated method stub
 
-						switch (checkedId) {
-							case R.id.radioButtonExpense :
-								listViewCategories
-										.setAdapter(cursorAdapterExpense);
-								break;
-							case R.id.radioButtonIncome :
-								listViewCategories
-										.setAdapter(cursorAdapterIncome);
-								break;
-						} // End switch(checkedId)
+//						switch (checkedId) {
+//							case R.id.radioButtonExpense :
+//								listViewCategories
+//										.setAdapter(cursorAdapterExpense);
+//								break;
+//							case R.id.radioButtonIncome :
+//								listViewCategories
+//										.setAdapter(cursorAdapterIncome);
+//								break;
+//						} // End switch(checkedId)
 
 					}// End onCheckedChanged(...)
 
