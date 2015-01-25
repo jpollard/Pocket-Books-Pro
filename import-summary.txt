@@ -1,0 +1,365 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* .idea/
+* .idea/.name
+* .idea/compiler.xml
+* .idea/copyright/
+* .idea/copyright/profiles_settings.xml
+* .idea/encodings.xml
+* .idea/libraries/
+* .idea/libraries/android_support_v4.xml
+* .idea/libraries/android_support_v41.xml
+* .idea/libraries/android_support_v42.xml
+* .idea/libraries/android_support_v43.xml
+* .idea/libraries/android_support_v44.xml
+* .idea/libraries/dexedLibs.xml
+* .idea/libraries/library.xml
+* .idea/libraries/libs.xml
+* .idea/libraries/libs1.xml
+* .idea/misc.xml
+* .idea/modules.xml
+* .idea/scopes/
+* .idea/scopes/scope_settings.xml
+* .idea/vcs.xml
+* .idea/workspace.xml
+* Pocket-Books-Pro.iml
+* README
+* default.properties
+* out/
+* out/production/
+* out/production/library1/
+* out/production/library1/android/
+* out/production/library1/android/support/
+* out/production/library1/android/support/v4/
+* out/production/library1/android/support/v4/app/
+* out/production/library1/android/support/v4/app/Watson$OnCreateOptionsMenuListener.class
+* out/production/library1/android/support/v4/app/Watson$OnOptionsItemSelectedListener.class
+* out/production/library1/android/support/v4/app/Watson$OnPrepareOptionsMenuListener.class
+* out/production/library1/android/support/v4/app/Watson.class
+* out/production/library1/com/
+* out/production/library1/com/actionbarsherlock/
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$Implementation.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnActionModeFinishedListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnActionModeStartedListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnCreateOptionsMenuListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnCreatePanelMenuListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnMenuItemSelectedListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnOptionsItemSelectedListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnPrepareOptionsMenuListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock$OnPreparePanelListener.class
+* out/production/library1/com/actionbarsherlock/ActionBarSherlock.class
+* out/production/library1/com/actionbarsherlock/BuildConfig.class
+* out/production/library1/com/actionbarsherlock/R$attr.class
+* out/production/library1/com/actionbarsherlock/R$bool.class
+* out/production/library1/com/actionbarsherlock/R$color.class
+* out/production/library1/com/actionbarsherlock/R$dimen.class
+* out/production/library1/com/actionbarsherlock/R$drawable.class
+* out/production/library1/com/actionbarsherlock/R$id.class
+* out/production/library1/com/actionbarsherlock/R$integer.class
+* out/production/library1/com/actionbarsherlock/R$layout.class
+* out/production/library1/com/actionbarsherlock/R$string.class
+* out/production/library1/com/actionbarsherlock/R$style.class
+* out/production/library1/com/actionbarsherlock/R$styleable.class
+* out/production/library1/com/actionbarsherlock/R.class
+* out/production/library1/com/actionbarsherlock/app/
+* out/production/library1/com/actionbarsherlock/app/ActionBar$LayoutParams.class
+* out/production/library1/com/actionbarsherlock/app/ActionBar$OnMenuVisibilityListener.class
+* out/production/library1/com/actionbarsherlock/app/ActionBar$OnNavigationListener.class
+* out/production/library1/com/actionbarsherlock/app/ActionBar$Tab.class
+* out/production/library1/com/actionbarsherlock/app/ActionBar$TabListener.class
+* out/production/library1/com/actionbarsherlock/app/ActionBar.class
+* out/production/library1/com/actionbarsherlock/app/SherlockActivity.class
+* out/production/library1/com/actionbarsherlock/app/SherlockDialogFragment.class
+* out/production/library1/com/actionbarsherlock/app/SherlockExpandableListActivity.class
+* out/production/library1/com/actionbarsherlock/app/SherlockFragment.class
+* out/production/library1/com/actionbarsherlock/app/SherlockFragmentActivity.class
+* out/production/library1/com/actionbarsherlock/app/SherlockListActivity.class
+* out/production/library1/com/actionbarsherlock/app/SherlockListFragment.class
+* out/production/library1/com/actionbarsherlock/app/SherlockPreferenceActivity.class
+* out/production/library1/com/actionbarsherlock/internal/
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockCompat$1.class
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockCompat$ActionModeCallbackWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockCompat.class
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockNative$ActionModeCallbackWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockNative$ActionModeWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/ActionBarSherlockNative.class
+* out/production/library1/com/actionbarsherlock/internal/ResourcesCompat.class
+* out/production/library1/com/actionbarsherlock/internal/app/
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarImpl$1.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarImpl$2.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarImpl$ActionModeImpl.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarImpl$TabImpl.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarImpl.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarWrapper$TabWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/app/ActionBarWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Animator$AnimatorListener.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Animator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorListenerAdapter.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$1.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$AnimatorSetListener.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$Builder.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$Dependency.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$DependencyListener.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet$Node.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/AnimatorSet.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/FloatEvaluator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/FloatKeyframeSet.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/IntEvaluator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/IntKeyframeSet.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Keyframe$FloatKeyframe.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Keyframe$IntKeyframe.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Keyframe$ObjectKeyframe.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/Keyframe.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/KeyframeSet.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ObjectAnimator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder$1.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder$FloatPropertyValuesHolder.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder$IntPropertyValuesHolder.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/TypeEvaluator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$1.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$2.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$3.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$4.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$5.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$AnimationHandler.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator$AnimatorUpdateListener.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/view/
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/view/NineViewGroup.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/view/animation/
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/view/animation/AnimatorProxy.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/widget/
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/widget/NineFrameLayout.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/widget/NineHorizontalScrollView.class
+* out/production/library1/com/actionbarsherlock/internal/nineoldandroids/widget/NineLinearLayout.class
+* out/production/library1/com/actionbarsherlock/internal/view/
+* out/production/library1/com/actionbarsherlock/internal/view/ActionProviderWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/view/StandaloneActionMode.class
+* out/production/library1/com/actionbarsherlock/internal/view/View_HasStateListenerSupport.class
+* out/production/library1/com/actionbarsherlock/internal/view/View_OnAttachStateChangeListener.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenu.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuItem.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuItemView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$1.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$ActionButtonSubmenu.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$HasPermanentMenuKey.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$OpenOverflowRunnable.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$OverflowMenuButton.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$OverflowPopup.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$PopupPresenterCallback.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$SavedState$1.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter$SavedState.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuView$ActionMenuChildView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuView$LayoutParams.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ActionMenuView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/BaseMenuPresenter.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/ListMenuItemView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuBuilder$Callback.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuBuilder$ItemInvoker.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuBuilder.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuItemImpl.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuItemWrapper$1.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuItemWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPopupHelper$1.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPopupHelper$ExpandedIndexObserver.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPopupHelper$MenuAdapter.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPopupHelper.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPresenter$Callback.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuPresenter.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuView$ItemView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuView.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/MenuWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/SubMenuBuilder.class
+* out/production/library1/com/actionbarsherlock/internal/view/menu/SubMenuWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/widget/
+* out/production/library1/com/actionbarsherlock/internal/widget/AbsActionBarView$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/AbsActionBarView$VisibilityAnimListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/AbsActionBarView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarContainer.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarContextView$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarContextView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$2.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$3.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$ExpandedActionViewMenuPresenter.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$HomeView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$SavedState$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView$SavedState.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ActionBarView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/CapitalizingButton.class
+* out/production/library1/com/actionbarsherlock/internal/widget/CapitalizingTextView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/CollapsibleActionViewWrapper.class
+* out/production/library1/com/actionbarsherlock/internal/widget/FakeDialogPhoneWindow.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAbsSpinner$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAbsSpinner$RecycleBin.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAbsSpinner$SavedState$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAbsSpinner$SavedState.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAbsSpinner.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$AdapterContextMenuInfo.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$AdapterDataSetObserver.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$OnItemLongClickListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$OnItemSelectedListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView$SelectionNotifier.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsAdapterView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsColorDrawable.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsLinearLayout.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$DropDownListView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$ListSelectorHider.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$PopupDataSetObserver.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$PopupScrollListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$PopupTouchInterceptor.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow$ResizePopupRunnable.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsListPopupWindow.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar$AccessibilityEventSender.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar$RefreshProgressRunnable.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar$SavedState$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar$SavedState.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsProgressBar.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsSpinner$DropDownAdapter.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsSpinner$DropdownPopup$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsSpinner$DropdownPopup.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsSpinner$SpinnerPopup.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsSpinner.class
+* out/production/library1/com/actionbarsherlock/internal/widget/IcsView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView$1.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView$TabAdapter.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView$TabClickListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView$TabView.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView$VisibilityAnimListener.class
+* out/production/library1/com/actionbarsherlock/internal/widget/ScrollingTabContainerView.class
+* out/production/library1/com/actionbarsherlock/view/
+* out/production/library1/com/actionbarsherlock/view/ActionMode$Callback.class
+* out/production/library1/com/actionbarsherlock/view/ActionMode.class
+* out/production/library1/com/actionbarsherlock/view/ActionProvider$SubUiVisibilityListener.class
+* out/production/library1/com/actionbarsherlock/view/ActionProvider.class
+* out/production/library1/com/actionbarsherlock/view/CollapsibleActionView.class
+* out/production/library1/com/actionbarsherlock/view/Menu.class
+* out/production/library1/com/actionbarsherlock/view/MenuInflater$InflatedOnMenuItemClickListener.class
+* out/production/library1/com/actionbarsherlock/view/MenuInflater$MenuState.class
+* out/production/library1/com/actionbarsherlock/view/MenuInflater.class
+* out/production/library1/com/actionbarsherlock/view/MenuItem$OnActionExpandListener.class
+* out/production/library1/com/actionbarsherlock/view/MenuItem$OnMenuItemClickListener.class
+* out/production/library1/com/actionbarsherlock/view/MenuItem.class
+* out/production/library1/com/actionbarsherlock/view/SubMenu.class
+* out/production/library1/com/actionbarsherlock/view/Window$Callback.class
+* out/production/library1/com/actionbarsherlock/view/Window.class
+* out/production/library1/com/actionbarsherlock/widget/
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$1.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$ActivityChooserModelClient.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$ActivityResolveInfo.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$ActivitySorter.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$DefaultSorter.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$HistoricalRecord.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$HistoryLoader$1.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$HistoryLoader.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$HistoryPersister.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel$OnChooseActivityListener.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserModel.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$1.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$2.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$3.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$ActivityChooserViewAdapter.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$Callbacks.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView$SetActivated.class
+* out/production/library1/com/actionbarsherlock/widget/ActivityChooserView.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$1.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$10.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$11.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$12.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$2.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$3.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$4.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$5.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$6.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$7.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$8.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$9.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$OnCloseListener.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$OnQueryTextListener.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$OnSuggestionListener.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView$SearchAutoComplete.class
+* out/production/library1/com/actionbarsherlock/widget/SearchView.class
+* out/production/library1/com/actionbarsherlock/widget/ShareActionProvider$1.class
+* out/production/library1/com/actionbarsherlock/widget/ShareActionProvider$OnShareTargetSelectedListener.class
+* out/production/library1/com/actionbarsherlock/widget/ShareActionProvider$ShareAcitivityChooserModelPolicy.class
+* out/production/library1/com/actionbarsherlock/widget/ShareActionProvider$ShareMenuItemOnMenuItemClickListener.class
+* out/production/library1/com/actionbarsherlock/widget/ShareActionProvider.class
+* out/production/library1/com/actionbarsherlock/widget/SuggestionsAdapter$ChildViewCache.class
+* out/production/library1/com/actionbarsherlock/widget/SuggestionsAdapter.class
+* proguard.cfg
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+library =>
+    com.actionbarsherlock:actionbarsherlock:4.4.0@aar
+    com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
