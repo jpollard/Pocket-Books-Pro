@@ -3,22 +3,21 @@ package com.happyrobotics.pocketbookspro;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-public class OverviewActivity extends SherlockActivity {
+public class OverviewActivity extends Activity {
 	
 	private static String TAG = "PocketBOOKSPro  ";
 	
@@ -40,8 +39,6 @@ public class OverviewActivity extends SherlockActivity {
 	Intent accountsIntent;
 	Intent transactionIntent;
 	Intent preferencesIntent;
-	Intent overviewIntent;
-	long accountId;
 	
 	
 	@Override
@@ -52,8 +49,6 @@ public class OverviewActivity extends SherlockActivity {
 		accountsIntent = new Intent(this, AccountsActivity.class);
 		transactionIntent = new Intent(this, TransactionActivity.class);
 		preferencesIntent = new Intent(this, Prefs.class);
-		overviewIntent = new Intent(this, OverviewActivity.class);
-		
 		accountCountCursor = accountData.getAccounts();
 		startManagingCursor(accountCountCursor);
 		
@@ -64,8 +59,8 @@ public class OverviewActivity extends SherlockActivity {
 			hasAccounts = true;
 		}
 		
-		getSupportActionBar();
-		setContentView(R.layout.overview_activity_layout_test);
+		getActionBar();
+		setContentView(R.layout.overview_activity_layout);
 		
 		overviewLayout = (LinearLayout) findViewById(R.id.overview);
 		overviewLayout.setOnClickListener(new OnClickListener(){
@@ -76,10 +71,11 @@ public class OverviewActivity extends SherlockActivity {
 				
 			}
 			
-		});
+			}
+		);
 		
 		
-		fundsTextView = (TextView) findViewById(R.id.fundsTextView);
+		fundsTextView = (TextView) overviewLayout.findViewById(R.id.fundsTextView);
 		currentMonthListView = (ListView) findViewById(R.id.listView1);
 		pb = (PocketBooksApplication) this.getApplication();
 		prefs = pb.getPrefs();
@@ -87,13 +83,16 @@ public class OverviewActivity extends SherlockActivity {
 		
 		fundsTextView.setText(sum.toString());
 		
+		
+		
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.overview_activity_menu, menu);
 		
 		return true;
@@ -106,6 +105,9 @@ public class OverviewActivity extends SherlockActivity {
 		
 		switch(item.getItemId()){
 		case R.id.new_transaction:
+			startActivity(transactionIntent);
+			break;
+		case R.id.transfer:
 			startActivity(transactionIntent);
 			break;
 		case R.id.categories:
@@ -122,7 +124,6 @@ public class OverviewActivity extends SherlockActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		accountId = overviewIntent.getLongExtra(AccountData.ACCOUNT_ID, 0);
 		monthInMillis = getCurrentMonth();
 		accountCountCursor = accountData.getAccounts();
 		
@@ -130,26 +131,21 @@ public class OverviewActivity extends SherlockActivity {
 			hasAccounts = true;
 		}
 		
-		if(hasAccounts && accountId == 0){
+		if(hasAccounts){
 			accountsSumCursor = accountData.getAccountsSum();
-			currentMonthTransactionsCursor = accountData.getTransactions();
-		} else {
-			accountsSumCursor = accountData.getAccountInfo(accountId);
-			currentMonthTransactionsCursor = accountData.getTransactions(accountId);
-		}
 			startManagingCursor(accountsSumCursor);
 			accountsSumCursor.requery();
 			accountsSumCursor.moveToFirst();
 		
 			sum = new BigDecimal(accountsSumCursor.getString(accountsSumCursor.getColumnIndex(AccountData.ACCOUNT_BALANCE)));
+			currentMonthTransactionsCursor = accountData.getTransactions();
 			startManagingCursor(currentMonthTransactionsCursor);
 			currentMonthTransactionsCursor.moveToFirst();
 			int[] to = {R.id.transaction_name, R.id.transaction_amount, R.id.transaction_category, R.id.transaction_date, R.id.transaction_memo};
 			String[] from = {AccountData.TRANSACTION_NAME, AccountData.TRANSACTION_AMOUNT, AccountData.TRANSACTION_CATEGORY, AccountData.TRANSACTION_DATE, AccountData.TRANSACTION_MEMO};
 			TransactionAdapter adapter = new TransactionAdapter(this, R.layout.transactions_activity_listview_row, currentMonthTransactionsCursor, from, to, false);
 			currentMonthListView.setAdapter(adapter);
-		
-		
+		}
 		sum = sum.movePointLeft(2);
 		fundsTextView.setText(sum.toPlainString());
 	}
