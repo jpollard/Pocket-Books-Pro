@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/preferences"
+        android:enabled="true"
+        android:title="Preferences"
+        android:titleCondensed="Settings"
+        android:visible="true"></item>
+    <item android:id="@+id/categories"
+        android:enabled="false"
+        android:title="@string/categories"
+        android:titleCondensed="@string/categories"
+        android:visible="false"></item>
+
+</menu>

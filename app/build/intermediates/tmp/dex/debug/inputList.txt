@@ -1,0 +1,2 @@
+/home/jwp/AndroidstudioProjects/Pocket-Books-Pro/app/build/intermediates/classes/debug
+/home/jwp/AndroidstudioProjects/Pocket-Books-Pro/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-44570bff29f7f248482c7316327089eac3d0546b.jar

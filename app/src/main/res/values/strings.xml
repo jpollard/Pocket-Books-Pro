@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pocket Books Pro</string>
+    <string name="new_account_title">New Account</string>
+    <string name="new_account">Create a New Account</string>
+    <string name="add_new_account">Add New Account</string>
+    <string name="done_button">Done</string>
+    <string name="new_account_name_hint">Account Name</string>
+    <string name="new_account_balance_hint">Initial Balance</string>
+    <string name="new_transaction">New Transaction</string>
+    <string name="edit_transaction">Edit Transaction</string>
+    <string name="payee">Payee:</string>
+    <string name="transaction_name_hint">Name of the transaction.</string>
+    <string name="deposit">Deposit</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="amount">Amount:</string>
+    <string name="transaction_amount_hint">Transaction Amount</string>
+    <string name="date">Date:</string>
+    <string name="note">Note:</string>
+    <string name="transaction_note_hint">Transaction Notes</string>
+    <string name="add_new_transaction">Add New Transaction</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="options">Options</string>
+    <string name="categories">Categories</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="category_name">Category Name</string>
+    <string name="add_a_new_category_">Add a new category.</string>
+    <string name="new_category">New Category</string>
+    <string name="edit_categories">Categories</string>
+    <string name="total_funds">Available Funds</string>
+    <string name="pending">Pending</string>
+    <string name="reacentTransactions">Recent Transactions</string>
+    <string name="overviewTotalHeader">Funds</string>
+    <string name="account">Account</string>
+    <string name="ok">OK</string>
+    <string name="account_action">Action:</string>
+</resources>

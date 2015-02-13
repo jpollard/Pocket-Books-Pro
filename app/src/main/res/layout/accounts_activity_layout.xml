@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/apk/res/com.happyrobotics.pocketbookspro"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#216C2A"
+        android:clickable="true"
+        android:focusable="true"
+        android:hapticFeedbackEnabled="true" >
+
+        <ImageView
+            android:id="@+id/addTransactionIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@android:drawable/ic_menu_add" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/addAccountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/add_new_account"
+            android:textColor="#fff"
+            android:textSize="25dp" >
+        </TextView>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/accountNameListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/footer"
+        android:background="#F6FFDA" 
+        android:cacheColorHint="#00000000">
+    </ListView>
+
+</RelativeLayout>
