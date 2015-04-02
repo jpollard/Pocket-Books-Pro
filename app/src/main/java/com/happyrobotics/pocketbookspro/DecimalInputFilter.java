@@ -1,9 +1,9 @@
 package com.happyrobotics.pocketbookspro;
 
-import java.text.DecimalFormatSymbols;
-
 import android.text.InputFilter;
 import android.text.Spanned;
+
+import java.text.DecimalFormatSymbols;
 
 public class DecimalInputFilter implements InputFilter {
 
