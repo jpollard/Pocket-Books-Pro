@@ -1,173 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent" 
-	android:layout_height="fill_parent"
-	android:background="#F6FFDA"
-	>
-	<!--android:background="#F6FFDA"-->
-<include android:id="@+id/header" layout="@layout/header" android:layout_alignParentTop="true"/>
-<Button android:id="@+id/new_transaction_activity_done_Button"
-  			android:text="@string/done_button"
-  			android:layout_width="fill_parent"
-  			android:layout_margin="5dp" 
-  			android:layout_height="wrap_content" 
-  			android:layout_weight="1"
-  			android:layout_gravity="left" 
-  			android:layout_alignParentBottom="true"/>
-  				
-<ScrollView android:layout_weight=".1" 
-	android:layout_height="fill_parent" 
-	android:layout_width="fill_parent"
-	android:layout_below="@id/header"
-	android:layout_above="@id/new_transaction_activity_done_Button">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/WhiteSmoke"
+    android:orientation="vertical" >
 
-<TableLayout  
-	android:layout_width="fill_parent" 
-	android:layout_margin="1dp" android:layout_height="fill_parent">
-  	
-  	<TableRow android:layout_width="fill_parent" 
-  		android:baselineAligned="false" 
-  		android:layout_weight="1" 
-  		android:layout_height="fill_parent">
-  		<TextView android:id="@+id/Payee_textView"  
-  			android:text="@string/payee" 
-  			android:textColor="#000"
-  			android:layout_width="fill_parent" 
-  			android:layout_height="wrap_content" 
-  			android:layout_margin="5dp" 
-  			android:layout_gravity="center_vertical">
-  		</TextView>
-  	
-    	<EditText android:id="@+id/Payee_editText"
-    		android:layout_height="wrap_content"  
-    		android:hint="@string/transaction_name_hint" 
-    		android:layout_width="fill_parent" 
-    		android:layout_weight="2" 
-    		android:inputType="text|textCapWords|textAutoComplete" 
-    		android:scrollHorizontally="true" 
-    		android:singleLine="true" 
-    		android:layout_margin="5dp" android:layout_gravity="center_vertical">
-    	</EditText>
-	</TableRow>
-	
-	<RadioGroup android:id="@+id/Deposit_Or_Withdrawl" 
-		android:layout_width="fill_parent" 
-		android:layout_weight="1" 
-		android:layout_height="0dp" 
-		android:orientation="horizontal">
-  	
-  			<RadioButton android:id="@+id/withdrawl_RadioButton"
-  				android:text="@string/withdrawal" 
-  				android:textColor="#000"
-  				android:layout_height="wrap_content" 
-  				android:checked="true" android:layout_weight="1" android:layout_width="0dp">
-  			</RadioButton>
-  	
-  			<RadioButton android:id="@+id/desposit_RadioButton"
-  				android:text="@string/deposit"
-  				android:textColor="#000" 
-  				android:layout_weight="1" 
-  				android:layout_width="0dp" 
-  				android:layout_height="wrap_content">
-  			</RadioButton>
-  	</RadioGroup>
-  	
-  	<TableRow android:id="@+id/tableRow1"
-  		android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="0dp">
-  	
-  		<TextView android:id="@+id/amount_TextView"
-  			android:text="@string/amount"  
-  			android:textColor="#000"
-  			android:layout_width="wrap_content" 
-  			android:layout_height="wrap_content" 
-  			android:layout_margin="5dp" 
-  			android:layout_gravity="center_vertical">
-  		</TextView>
-  	
-  		<EditText android:id="@+id/amount_EditText"
-  			android:hint="@string/transaction_amount_hint"  
-  			android:layout_width="fill_parent" 
-  			android:layout_height="wrap_content" 
-  			android:inputType="numberDecimal" 
-  			android:scrollHorizontally="true" 
-    		android:singleLine="true"
-  			android:layout_weight="2" 
-  			android:layout_margin="5dp" 
-  			android:layout_gravity="center_vertical">
-  		</EditText>
-  	</TableRow>
-  	
-  	<TableRow android:id="@+id/tableRow2"
-  		android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="0dp">
-  	
-  		<TextView android:id="@+id/date_TextView"
-  			android:text="@string/date" 
-  			android:textColor="#000"
-  			android:layout_width="wrap_content" 
-  			android:layout_height="wrap_content" 
-  			android:layout_margin="5dp" 
-  			android:layout_gravity="center_vertical">
-  		</TextView>
-  	
-  		<EditText android:id="@+id/date_EditText"
-  			android:editable="false"  
-  			android:layout_width="fill_parent" 
-  			android:layout_height="wrap_content" 
-  			android:inputType="none" 
-  			android:layout_weight="2" 
-  			android:layout_margin="5dp" android:layout_gravity="center_vertical">
-  		</EditText>
-  	</TableRow>
-  
-  	<TableRow android:id="@+id/tableRow3"
-  		android:layout_width="wrap_content" 
-  		android:baselineAligned="false" android:layout_weight="1" android:layout_height="0dp">
-  	
-  		<TextView android:id="@+id/category_TextView"
-  			android:text="Category:"  
-  			android:textColor="#000"
-  			android:layout_width="wrap_content" 
-  			android:layout_height="wrap_content" 
-  			android:layout_gravity="center_vertical" 
-  			android:layout_margin="5dp">
-  		</TextView>
-  	
-  		<Spinner android:id="@+id/category_Spinner" 
-  			android:layout_width="fill_parent" 
-  			android:layout_height="wrap_content" 
-  			android:layout_weight="2" 
-  			android:layout_margin="5dp">
-  		</Spinner>
-  	</TableRow>
-  	
-  	<TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_gravity="fill" android:layout_height="fill_parent" android:baselineAligned="false" android:layout_weight=".01">
-  	
-  		<TextView android:id="@+id/note_TextView"
-  			android:text="@string/note"  
-  			android:textColor="#000"
-  			android:layout_width="wrap_content" 
-  			android:layout_height="wrap_content" 
-  			android:layout_margin="5dp" android:layout_gravity="center_vertical">
-  		</TextView>
-  	
-  		<EditText android:id="@+id/note_EditText"
-  			android:inputType="text|textCapSentences|textAutoComplete" 
-  			android:hint="@string/transaction_note_hint"  
-  			android:layout_margin="5dp" 
-  			android:gravity="fill_vertical" 
-  			android:layout_width="fill_parent" 
-  			android:layout_gravity="top" android:maxLines="2" 
-  			android:capitalize="sentences" 
-  			android:imeOptions="actionDone|flagNoEnterAction" 
-  			android:isScrollContainer="true" 
-  			android:layout_height="wrap_content" 
-  			android:layout_weight="3">
-  		</EditText>
-  	</TableRow>
-  	<TableRow android:layout_width="fill_parent" android:layout_gravity="center">
-  	
-  	</TableRow>
-</TableLayout>
+	<!--android:background="#F6FFDA"-->
+  				
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight=".1" >
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp" >
+
+    <TextView
+        android:id="@+id/Deposit_Or_Withdrawl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/account_action"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
+
+        <Spinner
+            android:id="@+id/actionSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/account_FromTo_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/account"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/Payee_textView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/payee"
+        android:textColor="#000" >
+    </TextView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
+
+        <EditText
+            android:id="@+id/Payee_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/transaction_name_hint"
+            android:inputType="text|textCapWords|textAutoComplete"
+            android:paddingBottom="4dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+        <Spinner
+            android:id="@+id/account_FromTo_Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/amount_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amount"
+        android:textColor="#000" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
+
+        <EditText
+            android:id="@+id/amount_EditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/transaction_amount_hint"
+            android:inputType="numberDecimal"
+            android:scrollHorizontally="true"
+            android:singleLine="true" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/date_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/date"
+        android:textColor="#000" >
+    </TextView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
+
+        <EditText
+            android:id="@+id/date_EditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:editable="false"
+            android:ems="10"
+            android:inputType="none" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/category_Frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/category_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Category:"
+            android:textColor="#000" />
+
+        <Spinner
+            android:id="@+id/category_Spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/note_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/note"
+        android:textColor="#000" >
+    </TextView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
+
+        <EditText
+            android:id="@+id/note_EditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:capitalize="sentences"
+            android:ems="10"
+            android:gravity="fill_vertical"
+            android:hint="@string/transaction_note_hint"
+            android:imeOptions="actionDone|flagNoEnterAction"
+            android:inputType="text|textCapSentences|textAutoComplete"
+            android:isScrollContainer="true"
+            android:maxLines="2" />
+    </FrameLayout>
+</LinearLayout>
 
 </ScrollView>
 

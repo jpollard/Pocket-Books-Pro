@@ -2,19 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#F6FFDA"
     android:orientation="vertical" >
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
 
     <EditText
         android:id="@+id/new_account_name_edit_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:hint="@string/new_account_name_hint" >
+        android:hint="@string/new_account_name_hint" 
+        android:inputType="textCapWords">
     </EditText>
 
     <EditText
@@ -25,13 +21,5 @@
         android:hint="@string/new_account_balance_hint"
         android:inputType="number|numberSigned|numberDecimal" >
     </EditText>
-
-    <Button
-        android:id="@+id/new_account_done_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/done_button" >
-    </Button>
 
 </LinearLayout>

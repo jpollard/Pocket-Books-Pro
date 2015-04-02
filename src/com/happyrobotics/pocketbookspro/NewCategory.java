@@ -47,9 +47,9 @@ public class NewCategory extends Activity{
 		
 		editTextCategoryName = (EditText) findViewById(R.id.editTextCategoryName);
 		radioGroupExpenseOrIncome = (RadioGroup) findViewById(R.id.radioGroupExpenseOrIncome);
-		radioButtonExpense = (RadioButton) findViewById(R.id.radioButtonExpense);
-		radioButtonIncome = (RadioButton) findViewById(R.id.radioButtonIncome);
-		buttonDone = (Button) findViewById(R.id.buttonDone);
+		//radioButtonExpense = (RadioButton) findViewById(R.id.radioButtonExpense);
+		//radioButtonIncome = (RadioButton) findViewById(R.id.radioButtonIncome);
+		//buttonDone = (Button) findViewById(R.id.buttonDone);
 		headerAccount = (TextView) findViewById(R.id.header_account);
 		headerAccount.setText("Add Category");
 		
@@ -85,10 +85,10 @@ public class NewCategory extends Activity{
 			editTextCategoryName.setText(categoryName);
 			if(categoryTypeString.contentEquals("I")){
 				buttonDone.setEnabled(true);
-				radioGroupExpenseOrIncome.check(R.id.radioButtonIncome);
+				//radioGroupExpenseOrIncome.check(R.id.radioButtonIncome);
 			}else if(categoryTypeString.contentEquals("E")){
 				buttonDone.setEnabled(true);
-				radioGroupExpenseOrIncome.check(R.id.radioButtonExpense);
+				//radioGroupExpenseOrIncome.check(R.id.radioButtonExpense);
 			}
 		}
 		
@@ -97,18 +97,18 @@ public class NewCategory extends Activity{
 			@Override
 			public void onCheckedChanged(RadioGroup radioGroup, int radioButton) {
 				Log.d("CHANING THE ENDO FHTEJ", "BLAH");
-				switch(radioButton){
-					case R.id.radioButtonExpense:
-						buttonDone.setEnabled(true);
-						categoryType = 'E';
-						
-						break;
-					case R.id.radioButtonIncome:
-						buttonDone.setEnabled(true);
-						categoryType = 'I';
-						
-						break;
-				}
+//				switch(radioButton){
+//					case R.id.radioButtonExpense:
+//						buttonDone.setEnabled(true);
+//						categoryType = 'E';
+//						
+//						break;
+//					case R.id.radioButtonIncome:
+//						buttonDone.setEnabled(true);
+//						categoryType = 'I';
+//						
+//						break;
+//				}
 				
 			}
 			

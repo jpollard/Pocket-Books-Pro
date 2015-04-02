@@ -4,7 +4,7 @@
     <string name="new_account_title">New Account</string>
     <string name="new_account">Create a New Account</string>
     <string name="add_new_account">Add New Account</string>
-    <string name="done_button">Done</string>
+    <string name="done">Done</string>
     <string name="new_account_name_hint">Account Name</string>
     <string name="new_account_balance_hint">Initial Balance</string>
     <string name="new_transaction">New Transaction</string>

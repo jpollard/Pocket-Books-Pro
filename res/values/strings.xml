@@ -4,7 +4,7 @@
     <string name="new_account_title">New Account</string>
     <string name="new_account">Create a New Account</string>
     <string name="add_new_account">Add New Account</string>
-    <string name="done_button">Done</string>
+    <string name="done">Done</string>
     <string name="new_account_name_hint">Account Name</string>
     <string name="new_account_balance_hint">Initial Balance</string>
     <string name="new_transaction">New Transaction</string>
@@ -29,11 +29,9 @@
     <string name="add_a_new_category_">Add a new category.</string>
     <string name="new_category">New Category</string>
     <string name="edit_categories">Categories</string>
-    <string name="total_funds">Available Funds</string>
-    <string name="pending">Pending</string>
-    <string name="reacentTransactions">Recent Transactions</string>
-    <string name="overviewTotalHeader">Funds</string>
-    <string name="account">Account</string>
-    <string name="ok">OK</string>
+    <string name="overviewTotalHeader">funds:</string>
+    <string name="recentTransactions">Recent:</string>
+    <string name="account">Account:</string>
     <string name="account_action">Action:</string>
+    <string name="ok">ok</string>
 </resources>

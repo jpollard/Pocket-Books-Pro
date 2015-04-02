@@ -460,6 +460,33 @@ public class AccountData {
 		db.close();
 	}
 
+	public void transferTransaction(long fromId, long toId, BigDecimal amount, long date, long catId, String memo){
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		
+		amount = amount.setScale(2, BigDecimal.ROUND_HALF_UP);
+		amount = amount.movePointRight(2);
+		
+		ContentValues valuesTo = new ContentValues();
+		valuesTo.put(AccountData.TRANSACTION_ACCOUNT_ID, toId);
+		valuesTo.put(AccountData.TRANSACTION_NAME, "Transfer");
+		valuesTo.put(AccountData.TRANSACTION_AMOUNT, amount.toPlainString());
+		valuesTo.put(AccountData.TRANSACTION_DATE, date);
+		valuesTo.put(AccountData.TRANSACTION_CATEGORY, catId);
+		valuesTo.put(AccountData.TRANSACTION_MEMO, memo);
+		db.insert(DBHelper.TRANSACTIONS_TABLE, null, valuesTo);
+		
+		amount = amount.negate();
+		ContentValues valuesFrom = new ContentValues();
+		valuesFrom.put(AccountData.TRANSACTION_ACCOUNT_ID, fromId);
+		valuesFrom.put(AccountData.TRANSACTION_NAME, "Transfer");
+		valuesFrom.put(AccountData.TRANSACTION_AMOUNT, amount.toPlainString());
+		valuesFrom.put(AccountData.TRANSACTION_DATE, date);
+		valuesFrom.put(AccountData.TRANSACTION_CATEGORY, catId);
+		valuesFrom.put(AccountData.TRANSACTION_MEMO, memo);
+		db.insert(DBHelper.TRANSACTIONS_TABLE, null, valuesFrom);
+		db.close();
+
+	}
 	/**
 	 * <b> public void updateTransaction (long id, String payee, BigDecimal
 	 * amount, String date, String memo)</b>
@@ -529,7 +556,6 @@ public class AccountData {
 
 		public DBHelper() {
 			super(context, SQL_NAME, null, SQL_VERSION);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
@@ -640,7 +666,6 @@ public class AccountData {
 //					// db.execSQL(sql);
 //				}
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				 Log.d(TAG,
 				 "FAIL!!!__________________----------------------------------------------------------------------------------------------------------------- : " + e);
 			}

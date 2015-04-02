@@ -95,9 +95,9 @@ public class EditTransactionActivity extends Activity {
 		((TableRow) transactionCategory.getParent()).setVisibility(View.GONE);
 		transactionMemo = (EditText) findViewById(R.id.note_EditText);
 		radioGroup = (RadioGroup) findViewById(R.id.Deposit_Or_Withdrawl);
-		radioDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
-		radioWithdrawl = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
-		transactionDone = (Button) findViewById(R.id.new_transaction_activity_done_Button);
+		//radioDeposit = (RadioButton) findViewById(R.id.desposit_RadioButton);
+		//radioWithdrawl = (RadioButton) findViewById(R.id.withdrawl_RadioButton);
+		//transactionDone = (Button) findViewById(R.id.new_transaction_activity_done_Button);
 
 		radioWithdrawl.setChecked(true);
 
