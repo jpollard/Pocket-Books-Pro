@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="custom_theme_color">@color/SteelBlue</color>
+    <style name="CustomTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBarColor</item>
+    </style>
+    <style name="ActionBarColor" parent="@android:style/Widget.Holo.Light.ActionBar" >
+        <item name="android:background">@color/custom_theme_color</item>
+    </style>
+</resources>

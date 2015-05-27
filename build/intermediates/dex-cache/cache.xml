@@ -6,14 +6,7 @@
         jumboMode="false"
         revision="21.1.2"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="/home/jwp/AndroidstudioProjects/Pocket-Books-Pro/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-44570bff29f7f248482c7316327089eac3d0546b.jar" />
-    </item>
-    <item
-        jar="/home/jwp/AndroidstudioProjects/Pocket-Books-Pro/app/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="af64527b748983a75de9c0756e9768b56b240a49">
-        <dex dex="/home/jwp/AndroidstudioProjects/Pocket-Books-Pro/app/build/intermediates/pre-dexed/debug/classes-0964416123e4bd9da4715b7f3b76c678f5d0b807.jar" />
+        <dex dex="/home/jwp/StudioProjects/Pocket-Books-Pro/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-44570bff29f7f248482c7316327089eac3d0546b.jar" />
     </item>
 
 </items>
