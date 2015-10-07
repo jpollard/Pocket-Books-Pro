@@ -37,7 +37,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:gravity="end"
+            android:gravity="center_vertical|end"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -45,7 +45,8 @@
             android:textAlignment="viewEnd"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:paddingEnd="8dp" />
 
     </LinearLayout>
 
