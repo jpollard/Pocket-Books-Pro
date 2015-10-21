@@ -1,17 +1,5 @@
 package com.happyrobotics.pocketbookspro;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,6 +8,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.nio.channels.FileChannel;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class AccountData {
 	public static int GREEN = Color.parseColor("#216C2A");
@@ -115,6 +119,53 @@ public class AccountData {
 		}
 	}
 
+	/***
+	 * public void backup()
+     *
+     * Creates a backup of the database to external storage.
+     *
+	 *
+	 */
+    public void backup(){
+        File root = android.os.Environment.getRootDirectory();
+        File dir = new File(root.getAbsolutePath() + "/PocketBooks");
+
+        try {
+            dir.mkdirs();
+        } catch(Exception e){
+            Log.d(TAG, "Trying to make dir");
+        }
+
+        File ofile = new File(dir, "pocketbooks.db");
+        File ifile = new File(context.getFilesDir(), "pocketbooks.db");
+
+        try {
+            FileChannel inChannel = new FileInputStream(ifile).getChannel();
+            FileChannel outChannel = new FileOutputStream(ofile).getChannel();
+            Log.d(TAG, "Trying to open channels");
+            try {
+                inChannel.transferTo(0, inChannel.size(), outChannel);
+            } catch (Exception e) {
+                Log.d(TAG, "Failed to open channels");
+            } finally {
+                if (inChannel != null)
+                    try {
+                        inChannel.close();
+                    } catch (Exception e) {
+
+                    }
+                if (outChannel != null)
+                    try {
+                        outChannel.close();
+                    } catch (Exception e) {
+
+                    }
+            }
+        } catch (Exception e) {
+
+        }
+
+    }
 	public Cursor getAccountsSum(){
 		Cursor cursor;
 		

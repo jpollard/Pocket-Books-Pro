@@ -180,7 +180,7 @@ public final class R {
     }
     public static final class id {
         public static final int Deposit_Or_Withdrawl=0x7f0b001c;
-        public static final int Deposit_Or_Withdrawl_Or_Transfer=0x7f0b0033;
+        public static final int Deposit_Or_Withdrawl_Or_Transfer=0x7f0b0038;
         public static final int Done=0x7f0b0042;
         public static final int Payee_editText=0x7f0b001b;
         public static final int Payee_textView=0x7f0b001a;
@@ -198,10 +198,11 @@ public final class R {
         public static final int addAccountText=0x7f0b0007;
         public static final int addCategoryText=0x7f0b000f;
         public static final int addTransactionIcon=0x7f0b0006;
-        public static final int addTransactionText=0x7f0b0037;
-        public static final int add_transaction=0x7f0b0047;
+        public static final int addTransactionText=0x7f0b0035;
+        public static final int add_transaction=0x7f0b0049;
         public static final int amount_EditText=0x7f0b0021;
         public static final int amount_TextView=0x7f0b0020;
+        public static final int backup=0x7f0b0047;
         public static final int buttonDone=0x7f0b0016;
         public static final int categories=0x7f0b0045;
         public static final int category_Frame=0x7f0b0030;
@@ -216,10 +217,11 @@ public final class R {
         public static final int editTextCategoryName=0x7f0b0018;
         public static final int footer=0x7f0b0005;
         public static final int funds=0x7f0b0004;
-        public static final int fundsTextView=0x7f0b0034;
+        public static final int fundsTextView=0x7f0b0032;
+        public static final int help=0x7f0b0048;
         public static final int imageView1=0x7f0b0001;
         public static final int linearLayout1=0x7f0b0002;
-        public static final int listView1=0x7f0b0036;
+        public static final int listView1=0x7f0b0034;
         public static final int listViewCategories=0x7f0b0010;
         public static final int new_account=0x7f0b0000;
         public static final int new_account_balance_edit_text=0x7f0b0014;
@@ -229,9 +231,9 @@ public final class R {
         public static final int new_transaction_activity_done_Button=0x7f0b0019;
         public static final int note_EditText=0x7f0b002a;
         public static final int note_TextView=0x7f0b0029;
-        public static final int overview=0x7f0b0032;
-        public static final int overviewRecentTransactionsHeader=0x7f0b0035;
-        public static final int overviewTotalHeader=0x7f0b0031;
+        public static final int overview=0x7f0b0031;
+        public static final int overviewRecentTransactionsHeader=0x7f0b0033;
+        public static final int overviewTotalHeader=0x7f0b0037;
         public static final int pendingLabel=0x7f0b0003;
         public static final int preferences=0x7f0b0046;
         public static final int radioButtonExpense=0x7f0b000d;
@@ -243,7 +245,7 @@ public final class R {
         public static final int tableRow3=0x7f0b0025;
         public static final int tableRow4=0x7f0b0028;
         public static final int textViewCategoryName=0x7f0b0017;
-        public static final int transactionListView=0x7f0b0038;
+        public static final int transactionListView=0x7f0b0036;
         public static final int transaction_amount=0x7f0b003a;
         public static final int transaction_category=0x7f0b003b;
         public static final int transaction_date=0x7f0b003c;

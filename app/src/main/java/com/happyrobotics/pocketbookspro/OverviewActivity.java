@@ -1,12 +1,10 @@
 package com.happyrobotics.pocketbookspro;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.math.BigDecimal;
+import java.util.Calendar;
 
 public class OverviewActivity extends Activity {
 	
@@ -116,6 +117,13 @@ public class OverviewActivity extends Activity {
 		case R.id.preferences:
 			startActivity(preferencesIntent);
 			break;
+		case R.id.backup:
+            accountData.backup();
+            break;
+		case R.id.help:
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://happyrobotics.com/"));
+			startActivity(browserIntent);
+		break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -261,7 +261,10 @@ public class AccountsActivity extends Activity{
     			return true;
     		case R.id.categories:
     			startActivity(categoriesEditIntent);
-    			return true;    			
+    			return true;
+			case R.id.backup:
+				accounts.backup();
+				return true;
     	}
     	
     	return false;

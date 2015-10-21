@@ -5,24 +5,6 @@
     android:background="#e8e8e8"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/overviewTotalHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:text="@string/overviewTotalHeader"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:typeface="normal" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" >
-
         <LinearLayout
             android:id="@+id/overview"
             android:layout_width="match_parent"
@@ -34,15 +16,8 @@
             android:showDividers="end" >
 
             <TextView
-                android:id="@+id/Deposit_Or_Withdrawl_Or_Transfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.65"
-                android:gravity="left" />
-
-            <TextView
                 android:id="@+id/fundsTextView"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_weight="5"
@@ -55,8 +30,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </LinearLayout>
-
-    </FrameLayout>
 
     <TextView
         android:id="@+id/overviewRecentTransactionsHeader"

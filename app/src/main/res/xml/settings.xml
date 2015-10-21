@@ -7,19 +7,26 @@
             android:key="category"
             android:summary="Enable the use of categories and budgets for advanced tracking."
             android:title="Categories and Budgets" />
-   <!--     <CheckBoxPreference
-            android:enabled="false"
-            android:key="passwordSet"
-            android:selectable="false"
-            android:shouldDisableView="true"
-            android:summary="Enable password protection for Pocket Books."
-            android:title="Enable Password" />
+        <intent
+            android:enabled="true"
+            android:key="dbBackup"
+            android:summary="Export/Import Database"
+            android:title="Export/Import"
+            android:action="./NewCategory"
+            />
+        <!--     <CheckBoxPreference
+                 android:enabled="false"
+                 android:key="passwordSet"
+                 android:selectable="false"
+                 android:shouldDisableView="true"
+                 android:summary="Enable password protection for Pocket Books."
+                 android:title="Enable Password" />
 
-        <EditTextPreference
-            android:dependency="passwordSet"
-            android:enabled="false"
-            android:key="password"
-            android:title="Change Password" /> -->
+             <EditTextPreference
+                 android:dependency="passwordSet"
+                 android:enabled="false"
+                 android:key="password"
+                 android:title="Change Password" /> -->
     </PreferenceCategory>
 
 </PreferenceScreen>

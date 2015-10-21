@@ -12,5 +12,9 @@
         android:title="@string/categories"
         android:titleCondensed="@string/categories"
         android:visible="false"></item>
-
+    <item android:id="@+id/backup"
+        android:enabled="true"
+        android:title="Backup"
+        android:visible="true"
+        ></item>
 </menu>
