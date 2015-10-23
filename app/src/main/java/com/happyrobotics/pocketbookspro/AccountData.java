@@ -129,11 +129,12 @@ public class AccountData {
     public void backup(){
         File root = android.os.Environment.getRootDirectory();
         File dir = new File(root.getAbsolutePath() + "/PocketBooks");
+		Log.d(TAG, "Entering the backup function");
 
         try {
             dir.mkdirs();
         } catch(Exception e){
-            Log.d(TAG, "Trying to make dir");
+            Log.d(TAG, "Trying to make dir.");
         }
 
         File ofile = new File(dir, "pocketbooks.db");

@@ -118,12 +118,13 @@ public class OverviewActivity extends Activity {
 			startActivity(preferencesIntent);
 			break;
 		case R.id.backup:
+			accountData.close();
             accountData.backup();
             break;
 		case R.id.help:
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://happyrobotics.com/"));
 			startActivity(browserIntent);
-		break;
+		    break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
