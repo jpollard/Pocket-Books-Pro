@@ -5,6 +5,7 @@
     <item android:id="@+id/categories" android:title="Categories" android:showAsAction="ifRoom"></item>
     <item android:id="@+id/preferences" android:title="Settings" android:showAsAction="never"></item>
     <item android:id="@+id/backup" android:title="Backup" android:showAsAction="never"></item>
+    <item android:id="@+id/restore" android:title="Restore" android:showAsAction="never"></item>
     <item android:id="@+id/help" android:title="Help" android:showAsAction="never"></item>
     
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -117,8 +118,8 @@ public class OverviewActivity extends Activity {
 		case R.id.preferences:
 			startActivity(preferencesIntent);
 			break;
-		case R.id.backup:
-			accountData.close();
+        case R.id.backup:
+			Log.d(TAG, "Starting backup");
             accountData.backup();
             break;
 		case R.id.help:

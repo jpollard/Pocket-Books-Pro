@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.os.Environment;
 import android.util.Log;
 
 import org.w3c.dom.Document;
@@ -127,18 +128,17 @@ public class AccountData {
 	 *
 	 */
     public void backup(){
-        File root = android.os.Environment.getRootDirectory();
-        File dir = new File(root.getAbsolutePath() + "/PocketBooks");
+        File dir = new File(Environment.getExternalStorageDirectory(), "PocketBooks");
+
 		Log.d(TAG, "Entering the backup function");
 
-        try {
-            dir.mkdirs();
-        } catch(Exception e){
-            Log.d(TAG, "Trying to make dir.");
-        }
+        if(!dir.exists()){
+			dir.mkdirs();
+		}
 
         File ofile = new File(dir, "pocketbooks.db");
-        File ifile = new File(context.getFilesDir(), "pocketbooks.db");
+        File ifile = new File(context.getFilesDir(), "../databases/pocketBooks.db");
+
 
         try {
             FileChannel inChannel = new FileInputStream(ifile).getChannel();
@@ -163,10 +163,16 @@ public class AccountData {
                     }
             }
         } catch (Exception e) {
-
+			Log.d(TAG, "Failed");
+			Log.d(TAG, e.toString());
         }
 
     }
+
+	public boolean restore(File database){
+
+		return false;
+	}
 	public Cursor getAccountsSum(){
 		Cursor cursor;
 		
