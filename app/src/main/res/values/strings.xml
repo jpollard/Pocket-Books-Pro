@@ -36,4 +36,8 @@
     <string name="account">Account</string>
     <string name="ok">OK</string>
     <string name="account_action">Action:</string>
+    <string name="restore_data_title">Restore Data</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

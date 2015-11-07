@@ -1,6 +1,7 @@
 package com.happyrobotics.pocketbookspro;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,12 +15,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-public class OverviewActivity extends Activity {
+public class OverviewActivity extends Activity implements RestoreDialogFragment.OnFragmentInteractionListener {
 	
 	private static String TAG = "PocketBOOKSPro  ";
 	
@@ -41,6 +42,8 @@ public class OverviewActivity extends Activity {
 	Intent accountsIntent;
 	Intent transactionIntent;
 	Intent preferencesIntent;
+    PopupWindow restorePopup;
+    LinearLayout restorePopupLayout;
 	
 	
 	@Override
@@ -85,14 +88,15 @@ public class OverviewActivity extends Activity {
 		
 		fundsTextView.setText(sum.toString());
 		
-		
-		
-		
+		// Restore popup init
+        restorePopupLayout = (LinearLayout) findViewById(R.id.restore_popup);
+        restorePopup = new PopupWindow(restorePopupLayout);
+        restorePopup.setContentView(restorePopupLayout);
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.overview_activity_menu, menu);
@@ -122,6 +126,11 @@ public class OverviewActivity extends Activity {
 			Log.d(TAG, "Starting backup");
             accountData.backup();
             break;
+        case R.id.restore:
+            Log.d(TAG, "Restore");
+			// TODO Setup restore dialog
+            showRestoreDialog();
+            break;
 		case R.id.help:
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://happyrobotics.com/"));
 			startActivity(browserIntent);
@@ -132,7 +141,6 @@ public class OverviewActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		monthInMillis = getCurrentMonth();
 		accountCountCursor = accountData.getAccounts();
@@ -165,7 +173,12 @@ public class OverviewActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStop();
 	}
-	
+
+	public void showRestoreDialog(){
+        DialogFragment dialog = new RestoreDialogFragment();
+        dialog.show(getFragmentManager(), "RestoreDialogFragment");
+    }
+
 	private long getCurrentMonth(){
 		cal = Calendar.getInstance();
 		
@@ -178,4 +191,9 @@ public class OverviewActivity extends Activity {
 		
 		return cal.getTimeInMillis();
 	}
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        
+    }
 }
