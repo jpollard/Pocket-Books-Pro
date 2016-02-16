@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView2"
-        android:layout_weight=".5" />
+        android:layout_weight=".5"
+        android:layout_margin="8dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -24,7 +25,11 @@
             android:id="@+id/cancel"
             android:layout_gravity="bottom"
             android:layout_weight=".5"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp" />
 
         <Button
             android:layout_width="fill_parent"
@@ -32,7 +37,11 @@
             android:text="Restore"
             android:id="@+id/Restore"
             android:layout_gravity="bottom"
-            android:layout_weight=".5" />
+            android:layout_weight=".5"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp" />
     </LinearLayout>
 
 </LinearLayout>

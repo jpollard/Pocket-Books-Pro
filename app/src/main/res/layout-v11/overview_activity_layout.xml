@@ -16,13 +16,6 @@
         android:showDividers="end" >
 
         <TextView
-            android:id="@+id/Deposit_Or_Withdrawl_Or_Transfer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.65"
-            android:gravity="left" />
-
-        <TextView
             android:layout_width="92dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -34,7 +27,7 @@
 
         <TextView
             android:id="@+id/fundsTextView"
-            android:layout_width="250dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="center_vertical|end"
@@ -45,7 +38,6 @@
             android:textAlignment="viewEnd"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black"
-            android:layout_marginRight="16dp"
             android:paddingEnd="8dp" />
 
     </LinearLayout>

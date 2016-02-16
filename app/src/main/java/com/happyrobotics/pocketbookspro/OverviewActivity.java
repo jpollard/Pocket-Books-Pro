@@ -179,21 +179,21 @@ public class OverviewActivity extends Activity implements RestoreDialogFragment.
         dialog.show(getFragmentManager(), "RestoreDialogFragment");
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
 	private long getCurrentMonth(){
 		cal = Calendar.getInstance();
-		
+
 		//Initialize calendar to first day of current month
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+
 		return cal.getTimeInMillis();
 	}
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        
-    }
 }

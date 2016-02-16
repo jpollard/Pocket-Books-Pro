@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/new_transaction" android:titleCondensed="New" android:title="New Transaction" android:showAsAction="always"></item>
-    <item android:id="@+id/transfer" android:titleCondensed="Transfer" android:title="Transfer Money" android:showAsAction="ifRoom"></item>
-    <item android:id="@+id/categories" android:title="Categories" android:showAsAction="ifRoom"></item>
-    <item android:id="@+id/preferences" android:title="Settings" android:showAsAction="never"></item>
-    <item android:id="@+id/backup" android:title="Backup" android:showAsAction="never"></item>
-    <item android:id="@+id/restore" android:title="Restore" android:showAsAction="never"></item>
-    <item android:id="@+id/help" android:title="Help" android:showAsAction="never"></item>
-    
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/new_transaction"
+        android:showAsAction="always"
+        android:title="New Transaction"
+        android:titleCondensed="New"
+        android:icon="@android:drawable/ic_menu_add">
+    </item>
+    <item
+        android:id="@+id/transfer"
+        android:showAsAction="ifRoom"
+        android:title="Transfer Money"
+        android:titleCondensed="Transfer"
+        android:icon="@android:drawable/stat_notify_sync">
+
+    </item>
+    <item
+        android:id="@+id/categories"
+        android:showAsAction="ifRoom"
+        android:title="Categories">
+
+    </item>
+    <item
+        android:id="@+id/preferences"
+        android:showAsAction="never"
+        android:title="Settings">
+
+    </item>
+    <item
+        android:id="@+id/backup"
+        android:showAsAction="never"
+        android:title="Backup">
+
+    </item>
+    <item
+        android:id="@+id/restore"
+        android:showAsAction="never"
+        android:title="Restore">
+
+    </item>
+    <item
+        android:id="@+id/help"
+        android:showAsAction="never"
+        android:title="Help">
+
+    </item>
 
 </menu>
