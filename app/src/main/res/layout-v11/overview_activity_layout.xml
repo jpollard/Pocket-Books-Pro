@@ -3,17 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e8e8e8"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:id="@+id/overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/square_shadowed"
         android:divider="@color/Gray"
         android:dividerHeight="1px"
         android:orientation="horizontal"
-        android:showDividers="end" >
+        android:showDividers="end"
+        >
 
         <TextView
             android:layout_width="92dp"
@@ -21,9 +22,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Balance:"
             android:id="@+id/balance_textView"
-            android:textColor="@color/Black"
             android:gravity="fill_horizontal"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            />
 
         <TextView
             android:id="@+id/fundsTextView"
@@ -37,8 +38,8 @@
             android:paddingTop="16dp"
             android:textAlignment="viewEnd"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/Black"
-            android:paddingEnd="8dp" />
+            android:paddingEnd="8dp"
+            />
 
     </LinearLayout>
 
@@ -46,12 +47,9 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/square_shadowed"
-        android:divider="@color/Gray"
         android:dividerHeight="1px"
         android:paddingBottom="2dp"
-        android:scrollbars="none" >
-
-    </ListView>
+        android:scrollbars="none"
+        />
 
 </LinearLayout>

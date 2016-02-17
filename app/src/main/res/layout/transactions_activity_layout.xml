@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:myapp="http://schemas.android.com/apk/res-auto"
-	
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:background="#F5FFDA">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#F5FFDA"
+	>
 
-	<LinearLayout android:id="@+id/footer"
+	<LinearLayout
+		android:id="@+id/footer"
 		android:layout_alignParentBottom="true" 
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:background="#216C2A" 
-		android:clickable="true" android:focusable="true" android:hapticFeedbackEnabled="true">
+		android:clickable="true"
+		android:focusable="true"
+		android:hapticFeedbackEnabled="true"
+		>
 		
-		<ImageView android:id="@+id/addTransactionIcon"
+		<ImageView
+			android:id="@+id/addTransactionIcon"
 			android:src="@android:drawable/ic_menu_add" 
 			android:layout_height="wrap_content" 
-			android:layout_width="wrap_content" android:layout_margin="5dp">
-		</ImageView>
+			android:layout_width="wrap_content"
+			android:layout_margin="5dp"
+			/>
 		
-		<TextView android:id="@+id/addTransactionText"
+		<TextView
+			android:id="@+id/addTransactionText"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content" 
-			android:text="@string/add_new_transaction" 
-			android:textColor="#FFF"
+			android:text="@string/add_new_transaction"
 			android:textSize="25dp" 
 			android:layout_gravity="center_vertical"
-			android:layout_margin="5dp">
-		</TextView>
-		
+			android:layout_margin="5dp"
+			/>
 	</LinearLayout>
 	
-	<ListView android:id="@+id/transactionListView" 
+	<ListView
+		android:id="@+id/transactionListView"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
-		android:layout_above="@id/footer">
-	</ListView>
-
+		android:layout_above="@id/footer"
+		/>
 </RelativeLayout>

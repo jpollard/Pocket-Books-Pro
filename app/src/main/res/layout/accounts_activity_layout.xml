@@ -10,7 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#216C2A"
         android:clickable="true"
         android:focusable="true"
         android:hapticFeedbackEnabled="true" >
@@ -20,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:src="@android:drawable/ic_menu_add" >
-        </ImageView>
+            android:src="@android:drawable/ic_menu_add"
+            />
 
         <TextView
             android:id="@+id/addAccountText"
@@ -30,9 +29,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:text="@string/add_new_account"
-            android:textColor="#fff"
-            android:textSize="25dp" >
-        </TextView>
+            android:textSize="25dp"
+            />
     </LinearLayout>
 
     <ListView
@@ -40,8 +38,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/footer"
-        android:background="#F6FFDA" 
-        android:cacheColorHint="#00000000">
-    </ListView>
+        />
 
 </RelativeLayout>
