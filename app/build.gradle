@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 17
+    compileSdkVersion 30
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.happyrobotics.pocketbookspro"
         minSdkVersion 11
-        targetSdkVersion 17
+        targetSdkVersion 30
     }
 
     buildTypes {
@@ -15,9 +15,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+        'ad-support' {
+        }
     }
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
 }
